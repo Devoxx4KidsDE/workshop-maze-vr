@@ -24,8 +24,6 @@ var person = {
     }
 };
 
-var ray;
-
 window.wallGeometries = [];
 
 init();
@@ -52,7 +50,11 @@ function init() {
     floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(maze.width, maze.large);
     floorTexture.needsUpdate = true;
-    var ceilingAndFloorMaterial = new THREE.MeshBasicMaterial({map: floorTexture, doubleSided: true, side: THREE.DoubleSide});
+    var ceilingAndFloorMaterial = new THREE.MeshBasicMaterial({
+        map: floorTexture,
+        doubleSided: true,
+        side: THREE.DoubleSide
+    });
 
     var wallTexture = THREE.ImageUtils.loadTexture('textures/wall.jpg');
     wallTexture.wrapS = THREE.RepeatWrapping;
@@ -197,11 +199,10 @@ function onKeyDown(e) {
     if (keyCode == 65) {
         camera.translateX(-30);
     }
-    ray = new THREE.Raycaster(camera.position, center.clone().normalize());
+
+    var ray = new THREE.Raycaster(camera.position, center.clone().normalize());
     ray.far = 100;
-
     if (ray.intersectObjects(wallGeometries).length > 0) {
-
         if (keyCode == 87) {
             camera.translateZ(30);
         }
