@@ -17,7 +17,13 @@ var windowHalfY = window.innerHeight / 2;
 var incrementoX = Math.PI / (windowHalfX);
 var incrementoY = Math.PI / (windowHalfY);
 
-var posInitial = {x: 1, z: 8};
+var person = {
+    startPosition: {
+        x: 1,
+        z: 8
+    }
+};
+
 var ray;
 
 window.wallGeometries = [];
@@ -28,8 +34,8 @@ function init() {
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.x = (posInitial.x - maze.width / 2) * maze.cellSize;
-    camera.position.z = (posInitial.z - maze.large / 2) * maze.cellSize - maze.cellSize / 2;
+    camera.position.x = (person.startPosition.x - maze.width / 2) * maze.cellSize;
+    camera.position.z = (person.startPosition.z - maze.large / 2) * maze.cellSize - maze.cellSize / 2;
 
     center = new THREE.Vector3(camera.position.x + 250, 0, 0);
 
@@ -46,7 +52,7 @@ function init() {
     floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(maze.width, maze.large);
     floorTexture.needsUpdate = true;
-    var floorMaterial = new THREE.MeshBasicMaterial({map: floorTexture, doubleSided: true, side: THREE.DoubleSide});
+    var ceilingAndFloorMaterial = new THREE.MeshBasicMaterial({map: floorTexture, doubleSided: true, side: THREE.DoubleSide});
 
     var wallTexture = THREE.ImageUtils.loadTexture('textures/wall.jpg');
     wallTexture.wrapS = THREE.RepeatWrapping;
@@ -64,63 +70,64 @@ function init() {
     sphere.position.z = 2000;
     sphere.position.x = 1000;
 
-    var floorPlane = new THREE.Mesh(geometryPlane, floorMaterial);
-    floorPlane.side = THREE.DoubleSide;
+    var ceiling = new THREE.Mesh(geometryPlane, ceilingAndFloorMaterial);
+    ceiling.side = THREE.DoubleSide;
+    ceiling.rotation.x = -Math.PI / 2;
+    ceiling.position.y = 250;
+    ceiling.position.x = 0;
+    ceiling.position.z = 0;
+    scene.add(ceiling);
 
-    floorPlane.rotation.x = -Math.PI / 2;
-    floorPlane.position.y = 250;
-    floorPlane.position.x = 0;
-    floorPlane.position.z = 0;
+    var floor = new THREE.Mesh(geometryPlane, ceilingAndFloorMaterial);
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.y = -250;
+    floor.position.x = 0;
+    floor.position.z = 0;
+    scene.add(floor);
 
-    var plane2 = new THREE.Mesh(geometryPlane, floorMaterial);
-    plane2.rotation.x = -Math.PI / 2;
-    plane2.position.y = -250;
-    floorPlane.position.x = 0;
-    floorPlane.position.z = 0;
-
-    var wall;
     var wallMaterial = new THREE.MeshBasicMaterial({map: wallTexture, doubleSided: true, side: THREE.DoubleSide});
-
+    // South and North walls
     for (var actualMazeWidth = 0; actualMazeWidth < maze.width; actualMazeWidth++) {
-        wall = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        wall.position.z = maze.large / 2 * maze.cellSize;
-        wall.position.y = 0;
-        wall.position.x = (actualMazeWidth - maze.width / 2) * maze.cellSize + maze.cellSize / 2;
-        scene.add(wall);
-        wallGeometries.push(wall);
+        var borderWallSN = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallSN.position.z = maze.large / 2 * maze.cellSize;
+        borderWallSN.position.y = 0;
+        borderWallSN.position.x = (actualMazeWidth - maze.width / 2) * maze.cellSize + maze.cellSize / 2;
+        scene.add(borderWallSN);
+        wallGeometries.push(borderWallSN);
 
-        wall = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        wall.position.z = -maze.large / 2 * maze.cellSize;
-        wall.position.y = 0;
-        wall.position.x = (actualMazeWidth - maze.width / 2) * maze.cellSize + maze.cellSize / 2;
-        scene.add(wall);
-        wallGeometries.push(wall);
+        borderWallSN = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallSN.position.z = -maze.large / 2 * maze.cellSize;
+        borderWallSN.position.y = 0;
+        borderWallSN.position.x = (actualMazeWidth - maze.width / 2) * maze.cellSize + maze.cellSize / 2;
+        scene.add(borderWallSN);
+        wallGeometries.push(borderWallSN);
     }
 
+    // East and West walls
     for (var actualMazeLarge = 0; actualMazeLarge < maze.large; actualMazeLarge++) {
-        wall = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        wall.position.x = maze.width / 2 * maze.cellSize;
-        wall.rotation.y = Math.PI / 2;
-        wall.position.y = 0;
-        wall.position.z = (actualMazeLarge - maze.large / 2) * maze.cellSize + maze.cellSize / 2;
-        scene.add(wall);
-        wallGeometries.push(wall);
+        var borderWallEW = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallEW.position.x = maze.width / 2 * maze.cellSize;
+        borderWallEW.rotation.y = Math.PI / 2;
+        borderWallEW.position.y = 0;
+        borderWallEW.position.z = (actualMazeLarge - maze.large / 2) * maze.cellSize + maze.cellSize / 2;
+        scene.add(borderWallEW);
+        wallGeometries.push(borderWallEW);
 
-        wall = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        wall.position.x = -maze.width / 2 * maze.cellSize;
-        wall.rotation.y = Math.PI / 2;
-        wall.position.y = 0;
-        wall.position.z = (actualMazeLarge - maze.large / 2) * maze.cellSize + maze.cellSize / 2;
-        scene.add(wall);
-        wallGeometries.push(wall);
+        borderWallEW = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallEW.position.x = -maze.width / 2 * maze.cellSize;
+        borderWallEW.rotation.y = Math.PI / 2;
+        borderWallEW.position.y = 0;
+        borderWallEW.position.z = (actualMazeLarge - maze.large / 2) * maze.cellSize + maze.cellSize / 2;
+        scene.add(borderWallEW);
+        wallGeometries.push(borderWallEW);
     }
 
+    // walls inside the maze
     var offsizeX = 0;
     var offsizeZ = 0;
-
     for (var i = 0; i < walls.length; i++) {
         var wallData = walls[i];
-        wall = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        var insideWalls = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
         if (wallData.orientation == 'front') {
             offsizeX = -250;
             offsizeZ = -maze.cellSize;
@@ -134,34 +141,30 @@ function init() {
             offsizeX = 0;
             offsizeZ = -250;
         }
-        wall.position.x = (wallData.x - maze.width / 2) * maze.cellSize + offsizeX;
-        wall.rotation.y = wallData.orientation == 'left' || wallData.orientation == 'right' ? Math.PI / 2 : 0;
-        wall.position.y = 0;
-        wall.position.z = (wallData.z - maze.large / 2) * maze.cellSize + offsizeZ;
-        scene.add(wall);
-        wallGeometries.push(wall);
+        insideWalls.position.x = (wallData.x - maze.width / 2) * maze.cellSize + offsizeX;
+        insideWalls.rotation.y = wallData.orientation == 'left' || wallData.orientation == 'right' ? Math.PI / 2 : 0;
+        insideWalls.position.y = 0;
+        insideWalls.position.z = (wallData.z - maze.large / 2) * maze.cellSize + offsizeZ;
+        scene.add(insideWalls);
+        wallGeometries.push(insideWalls);
     }
-    //wall.rotation.x = -Math.PI/2;
 
     scene.add(mesh);
     scene.add(sphere);
-    scene.add(floorPlane);
-    scene.add(plane2);
 
-    //addiding some light to the scene
+    //adding some light to the scene
     var pointLight = new THREE.DirectionalLight(0xffffff);
     pointLight.position.set(0, 0, 1).normalize();
-
     scene.add(pointLight);
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight * .75);
     document.body.insertBefore(renderer.domElement, document.getElementById('footer'));
-    document.addEventListener('mousemove', onDocumentMouseMove, false);
-    document.addEventListener('keydown', onDocumentKeyDown, false);
+    document.addEventListener('mousemove', onMouseMove, false);
+    document.addEventListener('keydown', onKeyDown, false);
 }
 
-function onDocumentMouseMove(e) {
+function onMouseMove(e) {
     var difference = mouseX - e.clientX;
     angleX -= incrementoX * difference;
 
@@ -176,7 +179,7 @@ function onDocumentMouseMove(e) {
     e.preventDefault();
 }
 
-function onDocumentKeyDown(e) {
+function onKeyDown(e) {
     var keyCode = e.which || e.keyCode;
     if (keyCode == 87) {
         camera.translateZ(-30);
