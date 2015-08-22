@@ -38,15 +38,10 @@ function init() {
 
     // ceiling
     var ceiling = new THREE.Mesh(geometryPlane, new THREE.MeshBasicMaterial({
-        map: THREE.ImageUtils.loadTexture('textures/ceiling.jpg'),
-        doubleSided: true,
-        side: THREE.DoubleSide
+        map: THREE.ImageUtils.loadTexture('textures/ceiling.jpg')
     }));
-    ceiling.side = THREE.DoubleSide;
-    ceiling.rotation.x = -Math.PI / 2;
-    ceiling.position.y = 250;
-    ceiling.position.x = 0;
-    ceiling.position.z = 0;
+    ceiling.rotation.x = Math.PI / 2;
+    ceiling.position.y = maze.cellSize / 2;
     scene.add(ceiling);
 
     // floor
@@ -56,19 +51,14 @@ function init() {
     floorTexture.repeat.set(maze.width, maze.large);
 
     var floor = new THREE.Mesh(geometryPlane, new THREE.MeshBasicMaterial({
-        map: floorTexture,
-        doubleSided: true,
-        side: THREE.DoubleSide
+        map: floorTexture
     }));
     floor.rotation.x = -Math.PI / 2;
-    floor.position.y = -250;
-    floor.position.x = 0;
-    floor.position.z = 0;
+    floor.position.y = -maze.cellSize / 2;
     scene.add(floor);
 
     var wallMaterial = new THREE.MeshBasicMaterial({
         map: THREE.ImageUtils.loadTexture('textures/wall.png'),
-        doubleSided: true,
         side: THREE.DoubleSide
     });
     // South and North walls
