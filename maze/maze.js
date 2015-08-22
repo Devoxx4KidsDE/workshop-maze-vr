@@ -174,7 +174,7 @@ function onKeyDown(e) {
     var ray = new THREE.Raycaster(camera.position, center.clone().normalize(), 0, 100);
 
     // This makes it impossible to walk through walls
-    if (ray.intersectObjects(wallGeometries).length !== 1) {
+    if (ray.intersectObjects(wallGeometries).length === 0) {
         var keyCode = e.which || e.keyCode;
         // w
         if (keyCode === 87) {
@@ -194,11 +194,11 @@ function onKeyDown(e) {
         }
     }
 
-    if (ray.intersectObject(collectibleItemCube).length === 1) {
+    if (rayCaster.intersectObject(collectibleItemCube).length > 0) {
         scene.remove(collectibleItemCube);
         document.getElementById('cube').classList.add('found');
     }
-    if (ray.intersectObject(collectibleItemSphere).length === 1) {
+    if (rayCaster.intersectObject(collectibleItemSphere).length > 0) {
         scene.remove(collectibleItemSphere);
         document.getElementById('ball').classList.add('found');
     }
