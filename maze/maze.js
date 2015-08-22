@@ -5,8 +5,6 @@ var mesh;
 var sphere;
 var center;
 
-var mouseX = 0;
-
 var maze = {width: 15, large: 9, cellSize: 500};
 
 var angleY = 0;
@@ -16,6 +14,8 @@ var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 var incrementoX = Math.PI / (windowHalfX);
 var incrementoY = Math.PI / (windowHalfY);
+
+var mouseX = windowHalfX;
 
 var person = {
     startPosition: {
