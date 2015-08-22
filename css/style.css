@@ -1,0 +1,15 @@
+body {
+    color: #ffffff;
+    font-family: Monospace, sans-serif;
+    font-size: 13px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #000000;
+    margin: 0;
+    overflow: hidden;
+    cursor: none;
+}
+
+ul {
+    list-style: none;
+}
