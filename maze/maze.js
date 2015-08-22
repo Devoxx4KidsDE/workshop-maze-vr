@@ -220,11 +220,11 @@ function onKeyDown(e) {
     }
     if (ray.intersectObject(mesh).length > 0) {
         scene.remove(mesh);
-        document.getElementById('cube').setAttribute('style', 'text-decoration:line-through;color:#007700');
+        document.getElementById('cube').classList.add('found');
     }
     if (ray.intersectObject(sphere).length > 0) {
         scene.remove(sphere);
-        document.getElementById('ball').setAttribute('style', 'text-decoration:line-through;color:#EE8712');
+        document.getElementById('ball').classList.add('found');
     }
 }
 

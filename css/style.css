@@ -18,6 +18,16 @@ ul {
     color: #009900;
 }
 
+#cube.found {
+    text-decoration: line-through;
+    color: #007700;
+}
+
 #ball {
     color: #FF9722;
+}
+
+#ball.found {
+    text-decoration: line-through;
+    color: #EE8712;
 }
