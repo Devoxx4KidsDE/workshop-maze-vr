@@ -181,17 +181,21 @@ function onMouseMove(e) {
 
 function onKeyDown(e) {
     var keyCode = e.which || e.keyCode;
+    // w
     if (keyCode == 87) {
         camera.translateZ(-30);
     }
+    // d
     if (keyCode == 68) {
-        //    camera.translateX(30);
+        camera.translateX(30);
     }
+    //s
     if (keyCode == 83) {
         camera.translateZ(30);
     }
+    // a
     if (keyCode == 65) {
-        //    camera.translateX(-30);
+        camera.translateX(-30);
     }
     ray = new THREE.Raycaster(camera.position, center.clone().normalize());
     ray.far = 100;
