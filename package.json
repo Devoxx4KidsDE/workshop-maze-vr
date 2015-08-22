@@ -1,0 +1,18 @@
+{
+  "name": "devoxx4kids-vr-maze",
+  "version": "1.0.0",
+  "description": "Designed for a devoxx4kids workshop to show children how to do objective programming and see what their maze in virtual reality look like",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/derTobsch/maze3D.git"
+  },
+  "author": "Devoxx4kids.de",
+  "bugs": {
+    "url": "https://github.com/derTobsch/maze3D/issues"
+  },
+  "homepage": "https://github.com/derTobsch/maze3D",
+  "devDependencies": {
+    "eslint": "1.2.1"
+  }
+}
