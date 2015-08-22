@@ -9,7 +9,7 @@ var maze = {width: 15, large: 9, cellSize: 500};
 
 var angleX = 0;
 var windowHalfX = window.innerWidth / 2;
-var incrementoX = Math.PI / (windowHalfX);
+var incrementoX = Math.PI / windowHalfX;
 
 var mouseX = windowHalfX;
 
@@ -103,20 +103,20 @@ function init() {
     for (var i = 0; i < walls.length; i++) {
         var wallData = walls[i];
         var insideWalls = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        if (wallData.orientation == 'front') {
+        if (wallData.orientation === 'front') {
             offsizeX = -250;
             offsizeZ = -maze.cellSize;
-        } else if (wallData.orientation == 'back') {
+        } else if (wallData.orientation === 'back') {
             offsizeX = -250;
             offsizeZ = 0;
-        } else if (wallData.orientation == 'left') {
+        } else if (wallData.orientation === 'left') {
             offsizeX = -maze.cellSize;
             offsizeZ = -250;
-        } else if (wallData.orientation == 'right') {
+        } else if (wallData.orientation === 'right') {
             offsizeX = 0;
             offsizeZ = -250;
         }
-        insideWalls.rotation.y = wallData.orientation == 'left' || wallData.orientation == 'right' ? Math.PI / 2 : 0;
+        insideWalls.rotation.y = wallData.orientation === 'left' || wallData.orientation === 'right' ? Math.PI / 2 : 0;
         insideWalls.position.x = (wallData.x - maze.width / 2) * maze.cellSize + offsizeX;
         insideWalls.position.y = 0;
         insideWalls.position.z = (wallData.z - maze.large / 2) * maze.cellSize + offsizeZ;
@@ -177,19 +177,19 @@ function onKeyDown(e) {
     if (ray.intersectObjects(wallGeometries).length !== 1) {
         var keyCode = e.which || e.keyCode;
         // w
-        if (keyCode == 87) {
+        if (keyCode === 87) {
             camera.translateZ(-30);
         }
         // d
-        if (keyCode == 68) {
+        if (keyCode === 68) {
             camera.translateX(30);
         }
         //s
-        if (keyCode == 83) {
+        if (keyCode === 83) {
             camera.translateZ(30);
         }
         // a
-        if (keyCode == 65) {
+        if (keyCode === 65) {
             camera.translateX(-30);
         }
     }
