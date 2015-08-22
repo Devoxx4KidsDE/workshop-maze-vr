@@ -7,13 +7,9 @@ var center;
 
 var maze = {width: 15, large: 9, cellSize: 500};
 
-var angleY = 0;
 var angleX = 0;
-
 var windowHalfX = window.innerWidth / 2;
-var windowHalfY = window.innerHeight / 2;
 var incrementoX = Math.PI / (windowHalfX);
-var incrementoY = Math.PI / (windowHalfY);
 
 var mouseX = windowHalfX;
 
@@ -215,9 +211,6 @@ function onKeyDown(e) {
         if (keyCode == 65) {
             camera.translateX(30);
         }
-    } else {
-        angleY += incrementoY;
-        center.y = 400 * Math.sin(angleY * 80);
     }
     if (ray.intersectObject(mesh).length > 0) {
         scene.remove(mesh);
