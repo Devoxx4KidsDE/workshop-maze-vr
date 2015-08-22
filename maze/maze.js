@@ -1,8 +1,8 @@
 var camera;
 var scene;
 var renderer;
-var mesh;
-var sphere;
+var collectibleItemCube;
+var collectibleItemSphere;
 var center;
 
 var maze = {width: 15, large: 9, cellSize: 500};
@@ -20,7 +20,7 @@ var person = {
     }
 };
 
-window.wallGeometries = [];
+wallGeometries = [];
 
 init();
 
@@ -33,42 +33,15 @@ function init() {
 
     center = new THREE.Vector3(camera.position.x + 250, 0, 0);
 
-    var geometryCube = new THREE.CubeGeometry(200, 200, 200);
-    var geometrySphere = new THREE.SphereGeometry(75, 16, 16);
-    var geometryPlane = new THREE.PlaneGeometry(maze.width * maze.cellSize, maze.large * maze.cellSize);
-    var geometryPlaneBasic = new THREE.PlaneGeometry(maze.cellSize, maze.cellSize, 1, 1);
+    var geometryPlane = new THREE.PlaneBufferGeometry(maze.width * maze.cellSize, maze.large * maze.cellSize);
+    var geometryPlaneBasic = new THREE.PlaneBufferGeometry(maze.cellSize, maze.cellSize, 1, 1);
 
-    var floorTexture = THREE.ImageUtils.loadTexture('textures/floor.jpg', {}, function () {
-        renderer.render(scene, camera);
-        animate();
-    });
-    floorTexture.wrapS = THREE.RepeatWrapping;
-    floorTexture.wrapT = THREE.RepeatWrapping;
-    floorTexture.repeat.set(maze.width, maze.large);
-    floorTexture.needsUpdate = true;
-    var ceilingAndFloorMaterial = new THREE.MeshBasicMaterial({
-        map: floorTexture,
+    // ceiling
+    var ceiling = new THREE.Mesh(geometryPlane, new THREE.MeshBasicMaterial({
+        color: 'blue',
         doubleSided: true,
         side: THREE.DoubleSide
-    });
-
-    var wallTexture = THREE.ImageUtils.loadTexture('textures/wall.jpg');
-    wallTexture.wrapS = THREE.RepeatWrapping;
-    wallTexture.wrapT = THREE.RepeatWrapping;
-    wallTexture.needsUpdate = true;
-
-    mesh = new THREE.Mesh(geometryCube, new THREE.MeshBasicMaterial({
-        map: wallTexture,
-        color: 0x009900,
-        wireframe: false
     }));
-    mesh.position.z = -1500;
-
-    sphere = new THREE.Mesh(geometrySphere, new THREE.MeshBasicMaterial({map: new THREE.ImageUtils.loadTexture('textures/fire.jpg')}));
-    sphere.position.z = 2000;
-    sphere.position.x = 1000;
-
-    var ceiling = new THREE.Mesh(geometryPlane, ceilingAndFloorMaterial);
     ceiling.side = THREE.DoubleSide;
     ceiling.rotation.x = -Math.PI / 2;
     ceiling.position.y = 250;
@@ -76,14 +49,19 @@ function init() {
     ceiling.position.z = 0;
     scene.add(ceiling);
 
-    var floor = new THREE.Mesh(geometryPlane, ceilingAndFloorMaterial);
+    // floor
+    var floor = new THREE.Mesh(geometryPlane, new THREE.MeshBasicMaterial({
+        color: 'black',
+        doubleSided: true,
+        side: THREE.DoubleSide
+    }));
     floor.rotation.x = -Math.PI / 2;
     floor.position.y = -250;
     floor.position.x = 0;
     floor.position.z = 0;
     scene.add(floor);
 
-    var wallMaterial = new THREE.MeshBasicMaterial({map: wallTexture, doubleSided: true, side: THREE.DoubleSide});
+    var wallMaterial = new THREE.MeshBasicMaterial({color: 'grey', doubleSided: true, side: THREE.DoubleSide});
     // South and North walls
     for (var actualMazeWidth = 0; actualMazeWidth < maze.width; actualMazeWidth++) {
         var borderWallSN = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
@@ -147,8 +125,20 @@ function init() {
         wallGeometries.push(insideWalls);
     }
 
-    scene.add(mesh);
-    scene.add(sphere);
+    // cube
+    collectibleItemCube = new THREE.Mesh(new THREE.BoxGeometry(200, 200, 200), new THREE.MeshBasicMaterial({
+        color: 'green'
+    }));
+    collectibleItemCube.position.z = -1500;
+    scene.add(collectibleItemCube);
+
+    // sphere
+    collectibleItemSphere = new THREE.Mesh(new THREE.SphereGeometry(75, 16, 16), new THREE.MeshBasicMaterial({
+        color: 'yellow'
+    }));
+    collectibleItemSphere.position.z = 2000;
+    collectibleItemSphere.position.x = 1000;
+    scene.add(collectibleItemSphere);
 
     //adding some light to the scene
     var pointLight = new THREE.DirectionalLight(0xffffff);
@@ -160,6 +150,8 @@ function init() {
     document.body.insertBefore(renderer.domElement, document.getElementById('footer'));
     document.addEventListener('mousemove', onMouseMove, false);
     document.addEventListener('keydown', onKeyDown, false);
+
+    animate();
 }
 
 function onMouseMove(e) {
@@ -201,12 +193,12 @@ function onKeyDown(e) {
         }
     }
 
-    if (ray.intersectObject(mesh).length === 1) {
-        scene.remove(mesh);
+    if (ray.intersectObject(collectibleItemCube).length === 1) {
+        scene.remove(collectibleItemCube);
         document.getElementById('cube').classList.add('found');
     }
-    if (ray.intersectObject(sphere).length === 1) {
-        scene.remove(sphere);
+    if (ray.intersectObject(collectibleItemSphere).length === 1) {
+        scene.remove(collectibleItemSphere);
         document.getElementById('ball').classList.add('found');
     }
 }
@@ -224,12 +216,10 @@ function animate() {
 
     requestAnimationFrame(animate);
 
-    mesh.rotation.x += 0.01;
-    mesh.rotation.y += 0.02;
-    sphere.rotation.y -= 0.01;
+    collectibleItemCube.rotation.x += 0.01;
+    collectibleItemCube.rotation.y += 0.02;
+    collectibleItemSphere.rotation.y -= 0.01;
 
-    //camera.position.x += (mouseX - camera.position.x) * 0.05;
-    //camera.position.y += (-mouseY - camera.position.y) * 0.05;
     camera.lookAt(center);
     renderer.render(scene, camera);
 }
