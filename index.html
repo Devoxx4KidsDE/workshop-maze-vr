@@ -2,22 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Maze3D</title>
+    <title>Devoxx4Kids - MazeVR</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <footer id="footer">
-    <h1>Simple maze in 3D</h1>
-
     <p>Use the mouse to look around and move with:</p>
-    <ul>
-        <li>W: forward</li>
-        <li>S: backward</li>
-    </ul>
+
+    <div>
+        <div>W: Forward</div>
+        <div>
+            <span>A: Left</span>
+            <span>S: Backward</span>
+            <span>D: Right</span>
+        </div>
+    </div>
     <p>Find the <span id="cube">green cube</span> and the <span id="ball">fire ball</span>
     </p>
 </footer>
-
 <script src="libs/three.js"></script>
 <script src="walls.js"></script>
 <script src="maze/maze.js"></script>
