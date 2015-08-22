@@ -38,7 +38,7 @@ function init() {
 
     // ceiling
     var ceiling = new THREE.Mesh(geometryPlane, new THREE.MeshBasicMaterial({
-        color: 'blue',
+        map: THREE.ImageUtils.loadTexture('textures/ceiling.jpg'),
         doubleSided: true,
         side: THREE.DoubleSide
     }));
@@ -50,8 +50,13 @@ function init() {
     scene.add(ceiling);
 
     // floor
+    var floorTexture = THREE.ImageUtils.loadTexture('textures/floor.png');
+    floorTexture.wrapS = THREE.RepeatWrapping;
+    floorTexture.wrapT = THREE.RepeatWrapping;
+    floorTexture.repeat.set(maze.width, maze.large);
+
     var floor = new THREE.Mesh(geometryPlane, new THREE.MeshBasicMaterial({
-        color: 'black',
+        map: floorTexture,
         doubleSided: true,
         side: THREE.DoubleSide
     }));
@@ -61,7 +66,11 @@ function init() {
     floor.position.z = 0;
     scene.add(floor);
 
-    var wallMaterial = new THREE.MeshBasicMaterial({color: 'grey', doubleSided: true, side: THREE.DoubleSide});
+    var wallMaterial = new THREE.MeshBasicMaterial({
+        map: THREE.ImageUtils.loadTexture('textures/wall.png'),
+        doubleSided: true,
+        side: THREE.DoubleSide
+    });
     // South and North walls
     for (var actualMazeWidth = 0; actualMazeWidth < maze.width; actualMazeWidth++) {
         var borderWallSN = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
@@ -148,6 +157,8 @@ function init() {
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight * .75);
     document.body.insertBefore(renderer.domElement, document.getElementById('footer'));
+
+    // listeners
     document.addEventListener('mousemove', onMouseMove, false);
     document.addEventListener('keydown', onKeyDown, false);
 
