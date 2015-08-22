@@ -194,11 +194,11 @@ function onKeyDown(e) {
         }
     }
 
-    if (rayCaster.intersectObject(collectibleItemCube).length > 0) {
+    if (ray.intersectObject(collectibleItemCube).length > 0) {
         scene.remove(collectibleItemCube);
         document.getElementById('cube').classList.add('found');
     }
-    if (rayCaster.intersectObject(collectibleItemSphere).length > 0) {
+    if (ray.intersectObject(collectibleItemSphere).length > 0) {
         scene.remove(collectibleItemSphere);
         document.getElementById('ball').classList.add('found');
     }
