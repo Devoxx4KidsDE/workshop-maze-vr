@@ -178,45 +178,34 @@ function onMouseMove(e) {
 }
 
 function onKeyDown(e) {
-    var keyCode = e.which || e.keyCode;
-    // w
-    if (keyCode == 87) {
-        camera.translateZ(-30);
-    }
-    // d
-    if (keyCode == 68) {
-        camera.translateX(30);
-    }
-    //s
-    if (keyCode == 83) {
-        camera.translateZ(30);
-    }
-    // a
-    if (keyCode == 65) {
-        camera.translateX(-30);
-    }
+    var ray = new THREE.Raycaster(camera.position, center.clone().normalize(), 0, 100);
 
-    var ray = new THREE.Raycaster(camera.position, center.clone().normalize());
-    ray.far = 100;
-    if (ray.intersectObjects(wallGeometries).length > 0) {
+    // This makes it impossible to walk through walls
+    if (ray.intersectObjects(wallGeometries).length !== 1) {
+        var keyCode = e.which || e.keyCode;
+        // w
         if (keyCode == 87) {
-            camera.translateZ(30);
-        }
-        if (keyCode == 68) {
-            camera.translateX(-30);
-        }
-        if (keyCode == 83) {
             camera.translateZ(-30);
         }
-        if (keyCode == 65) {
+        // d
+        if (keyCode == 68) {
             camera.translateX(30);
         }
+        //s
+        if (keyCode == 83) {
+            camera.translateZ(30);
+        }
+        // a
+        if (keyCode == 65) {
+            camera.translateX(-30);
+        }
     }
-    if (ray.intersectObject(mesh).length > 0) {
+
+    if (ray.intersectObject(mesh).length === 1) {
         scene.remove(mesh);
         document.getElementById('cube').classList.add('found');
     }
-    if (ray.intersectObject(sphere).length > 0) {
+    if (ray.intersectObject(sphere).length === 1) {
         scene.remove(sphere);
         document.getElementById('ball').classList.add('found');
     }
