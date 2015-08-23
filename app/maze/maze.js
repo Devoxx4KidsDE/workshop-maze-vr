@@ -1,3 +1,6 @@
+
+import * as THREE from './../libs/three.js';
+
 var camera;
 var scene;
 var renderer;
@@ -20,11 +23,9 @@ var person = {
     }
 };
 
-wallGeometries = [];
+var wallGeometries = [];
 
-init();
-
-function init() {
+export function init(walls) {
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
