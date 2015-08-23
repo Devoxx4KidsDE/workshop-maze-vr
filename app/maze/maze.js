@@ -99,31 +99,33 @@ export function init(walls) {
     }
 
     // walls inside the maze
-    var offsizeX = 0;
-    var offsizeZ = 0;
-    for (var i = 0; i < walls.length; i++) {
-        var wallData = walls[i];
-        var insideWalls = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        if (wallData.orientation === 'front') {
+    walls.forEach (wall => {
+        var offsizeX = 0;
+        var offsizeZ = 0;
+
+        if (wall.orientation === 'front') {
             offsizeX = -250;
             offsizeZ = -maze.cellSize;
-        } else if (wallData.orientation === 'back') {
+        } else if (wall.orientation === 'back') {
             offsizeX = -250;
             offsizeZ = 0;
-        } else if (wallData.orientation === 'left') {
+        } else if (wall.orientation === 'left') {
             offsizeX = -maze.cellSize;
             offsizeZ = -250;
-        } else if (wallData.orientation === 'right') {
+        } else if (wall.orientation === 'right') {
             offsizeX = 0;
             offsizeZ = -250;
         }
-        insideWalls.rotation.y = wallData.orientation === 'left' || wallData.orientation === 'right' ? Math.PI / 2 : 0;
-        insideWalls.position.x = (wallData.x - maze.width / 2) * maze.cellSize + offsizeX;
-        insideWalls.position.y = 0;
-        insideWalls.position.z = (wallData.z - maze.large / 2) * maze.cellSize + offsizeZ;
+
+        var insideWalls = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+            insideWalls.rotation.y = wall.orientation === 'left' || wall.orientation === 'right' ? Math.PI / 2 : 0;
+            insideWalls.position.x = (wall.x - maze.width / 2) * maze.cellSize + offsizeX;
+            insideWalls.position.y = 0;
+            insideWalls.position.z = (wall.z - maze.large / 2) * maze.cellSize + offsizeZ;
+
         scene.add(insideWalls);
         wallGeometries.push(insideWalls);
-    }
+    });
 
     // cube
     collectibleItemCube = new THREE.Mesh(new THREE.BoxGeometry(200, 200, 200), new THREE.MeshBasicMaterial({
