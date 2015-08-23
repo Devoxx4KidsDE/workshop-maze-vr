@@ -13,9 +13,10 @@
   },
   "homepage": "https://github.com/derTobsch/maze3D",
   "devDependencies": {
-    "eslint": "1.2.1"
+    "eslint": "1.2.1",
+    "webpack-dev-server": "^1.10.1"
   },
-  "dependencies": {
-    "express": "4.13.3"
+  "scripts": {
+    "start": "webpack-dev-server"
   }
 }
