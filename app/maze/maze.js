@@ -117,7 +117,7 @@ export function init(walls) {
             offsizeZ = -250;
         }
 
-        var insideWalls = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        var insideWalls = new THREE.Mesh(geometryPlaneBasic, wall.material);
             insideWalls.rotation.y = wall.orientation === 'left' || wall.orientation === 'right' ? Math.PI / 2 : 0;
             insideWalls.position.x = (wall.x - maze.width / 2) * maze.cellSize + offsizeX;
             insideWalls.position.y = 0;
