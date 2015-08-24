@@ -9,7 +9,7 @@ const walls = wallsData.map((w, i) => {
     return wall.create(w);
 });
 
-var options = {width: 15, large: 9, cellSize: 500};
+var options = {length: 15, width: 9, cellSize: 500};
 maze.create(options);
 maze.addWalls(walls, options);
 maze.addItem(

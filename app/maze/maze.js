@@ -18,7 +18,7 @@ var wallGeometries = [];
 function create(options) {
     scene = new THREE.Scene();
 
-    var basePlane = new THREE.PlaneBufferGeometry(options.width * options.cellSize, options.large * options.cellSize);
+    var basePlane = new THREE.PlaneBufferGeometry(options.length * options.cellSize, options.width * options.cellSize);
 
     // ceiling
     var ceiling = new THREE.Mesh(basePlane, new THREE.MeshBasicMaterial({
@@ -32,7 +32,7 @@ function create(options) {
     var floorTexture = THREE.ImageUtils.loadTexture('textures/floor.png');
     floorTexture.wrapS = THREE.RepeatWrapping;
     floorTexture.wrapT = THREE.RepeatWrapping;
-    floorTexture.repeat.set(options.width, options.large);
+    floorTexture.repeat.set(options.length, options.width);
 
     var floor = new THREE.Mesh(basePlane, new THREE.MeshBasicMaterial({
         map: floorTexture
@@ -48,39 +48,35 @@ function create(options) {
         side: THREE.DoubleSide
     });
     // South and North walls
-    for (var actualMazeWidth = 0; actualMazeWidth < options.width; actualMazeWidth++) {
-        var borderWallSN = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        borderWallSN.position.z = options.large / 2 * options.cellSize;
-        borderWallSN.position.y = 0;
-        borderWallSN.position.x = (actualMazeWidth - options.width / 2) * options.cellSize + options.cellSize / 2;
-        scene.add(borderWallSN);
-        wallGeometries.push(borderWallSN);
+    for (var actualMazeLength = 0; actualMazeLength < options.length; actualMazeLength++) {
+        var borderWallRight = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallRight.position.z = options.width / 2 * options.cellSize;
+        borderWallRight.position.x = (actualMazeLength - options.length / 2) * options.cellSize + options.cellSize / 2;
+        scene.add(borderWallRight);
+        wallGeometries.push(borderWallRight);
 
-        borderWallSN = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        borderWallSN.position.z = -options.large / 2 * options.cellSize;
-        borderWallSN.position.y = 0;
-        borderWallSN.position.x = (actualMazeWidth - options.width / 2) * options.cellSize + options.cellSize / 2;
-        scene.add(borderWallSN);
-        wallGeometries.push(borderWallSN);
+        var borderWallLeft = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallLeft.position.z = -options.width / 2 * options.cellSize;
+        borderWallLeft.position.x = (actualMazeLength - options.length / 2) * options.cellSize + options.cellSize / 2;
+        scene.add(borderWallLeft);
+        wallGeometries.push(borderWallLeft);
     }
 
     // East and West walls
-    for (var actualMazeLarge = 0; actualMazeLarge < options.large; actualMazeLarge++) {
-        var borderWallEW = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        borderWallEW.rotation.y = Math.PI / 2;
-        borderWallEW.position.x = options.width / 2 * options.cellSize;
-        borderWallEW.position.y = 0;
-        borderWallEW.position.z = (actualMazeLarge - options.large / 2) * options.cellSize + options.cellSize / 2;
-        scene.add(borderWallEW);
-        wallGeometries.push(borderWallEW);
+    for (var actualMazeWidth = 0; actualMazeWidth < options.width; actualMazeWidth++) {
+        var borderWallTop = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallTop.rotation.y = Math.PI / 2;
+        borderWallTop.position.x = options.length / 2 * options.cellSize;
+        borderWallTop.position.z = (actualMazeWidth - options.width / 2) * options.cellSize + options.cellSize / 2;
+        scene.add(borderWallTop);
+        wallGeometries.push(borderWallTop);
 
-        borderWallEW = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        borderWallEW.rotation.y = Math.PI / 2;
-        borderWallEW.position.x = -options.width / 2 * options.cellSize;
-        borderWallEW.position.y = 0;
-        borderWallEW.position.z = (actualMazeLarge - options.large / 2) * options.cellSize + options.cellSize / 2;
-        scene.add(borderWallEW);
-        wallGeometries.push(borderWallEW);
+        var borderWallBottom = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallBottom.rotation.y = Math.PI / 2;
+        borderWallBottom.position.x = -options.length / 2 * options.cellSize;
+        borderWallBottom.position.z = (actualMazeWidth - options.width / 2) * options.cellSize + options.cellSize / 2;
+        scene.add(borderWallBottom);
+        wallGeometries.push(borderWallBottom);
     }
 }
 
@@ -106,9 +102,9 @@ function addWalls(walls, options) {
 
         var insideWalls = new THREE.Mesh(new THREE.PlaneBufferGeometry(options.cellSize, options.cellSize, 1, 1), wall.material);
         insideWalls.rotation.y = wall.orientation === 'left' || wall.orientation === 'right' ? Math.PI / 2 : 0;
-        insideWalls.position.x = (wall.x - options.width / 2) * options.cellSize + offsizeX;
+        insideWalls.position.x = (wall.x - options.length / 2) * options.cellSize + offsizeX;
         insideWalls.position.y = 0;
-        insideWalls.position.z = (wall.z - options.large / 2) * options.cellSize + offsizeZ;
+        insideWalls.position.z = (wall.z - options.width / 2) * options.cellSize + offsizeZ;
 
         scene.add(insideWalls);
         wallGeometries.push(insideWalls);
@@ -133,8 +129,9 @@ function addItem(item, position, id) {
 
 function init(options, player) {
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.x = (player.x - options.width / 2) * options.cellSize;
-    camera.position.z = (player.z - options.large / 2) * options.cellSize - options.cellSize / 2;
+    camera.position.x = (player.x - options.length / 2) * options.cellSize;
+    camera.position.y = 10 * options.cellSize;
+    camera.position.z = (player.z - options.width / 2) * options.cellSize - options.cellSize / 2;
 
     center = new THREE.Vector3(camera.position.x + 250, 0, 0);
 
