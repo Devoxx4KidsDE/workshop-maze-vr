@@ -1,4 +1,3 @@
-
 import * as THREE from './../libs/three.js';
 
 var camera;
@@ -99,7 +98,7 @@ export function init(walls) {
     }
 
     // walls inside the maze
-    walls.forEach (wall => {
+    walls.forEach(wall => {
         var offsizeX = 0;
         var offsizeZ = 0;
 
@@ -118,10 +117,10 @@ export function init(walls) {
         }
 
         var insideWalls = new THREE.Mesh(geometryPlaneBasic, wall.material);
-            insideWalls.rotation.y = wall.orientation === 'left' || wall.orientation === 'right' ? Math.PI / 2 : 0;
-            insideWalls.position.x = (wall.x - maze.width / 2) * maze.cellSize + offsizeX;
-            insideWalls.position.y = 0;
-            insideWalls.position.z = (wall.z - maze.large / 2) * maze.cellSize + offsizeZ;
+        insideWalls.rotation.y = wall.orientation === 'left' || wall.orientation === 'right' ? Math.PI / 2 : 0;
+        insideWalls.position.x = (wall.x - maze.width / 2) * maze.cellSize + offsizeX;
+        insideWalls.position.y = 0;
+        insideWalls.position.z = (wall.z - maze.large / 2) * maze.cellSize + offsizeZ;
 
         scene.add(insideWalls);
         wallGeometries.push(insideWalls);

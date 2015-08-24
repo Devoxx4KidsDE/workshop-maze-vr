@@ -35,13 +35,11 @@ export default [
     {x:4, z:7, orientation:'right'},
     {x:4, z:9, orientation:'right'},
 
-
     {x:5, z:4, orientation:'right'},
     {x:5, z:4, orientation:'back'},
     {x:5, z:7, orientation:'back'},
     {x:5, z:9, orientation:'right'},
     {x:5, z:9, orientation:'front'},
-
 
     {x:6, z:3, orientation:'front'},
     {x:6, z:3, orientation:'left'},

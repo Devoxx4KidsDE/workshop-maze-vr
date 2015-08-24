@@ -1,8 +1,6 @@
-
 import * as THREE from '../libs/three.js';
 
-
-function create ({x,z,orientation,texture = 'wall'}) {
+function create({x,z,orientation,texture = 'wall'}) {
 
     const wall = {};
 
@@ -10,8 +8,8 @@ function create ({x,z,orientation,texture = 'wall'}) {
     wall.z = z;
     wall.orientation = orientation;
 
-    wall.material = new THREE.MeshBasicMaterial ({
-        map : THREE.ImageUtils.loadTexture (`../textures/${texture}.png`),
+    wall.material = new THREE.MeshBasicMaterial({
+        map: THREE.ImageUtils.loadTexture(`../textures/${texture}.png`),
         side: THREE.DoubleSide
     });
 
