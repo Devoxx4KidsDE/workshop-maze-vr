@@ -47,7 +47,7 @@ function create(options) {
         map: THREE.ImageUtils.loadTexture('textures/wall.png'),
         side: THREE.DoubleSide
     });
-    // East and West walls
+    // East and Wests walls
     for (var actualMazeLength = 0; actualMazeLength < options.length; actualMazeLength++) {
         var borderWallEast = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
         borderWallEast.position.z = options.width / 2 * options.cellSize;
@@ -130,7 +130,6 @@ function addItem(item, position, id) {
 function init(options, player) {
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
     camera.position.x = (player.x - options.length / 2) * options.cellSize;
-    camera.position.y = 10 * options.cellSize;
     camera.position.z = (player.z - options.width / 2) * options.cellSize - options.cellSize / 2;
 
     center = new THREE.Vector3(camera.position.x + 250, 0, 0);
