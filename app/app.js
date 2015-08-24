@@ -29,6 +29,6 @@ maze.addItem(
         })
     ),
     {x: 1000, y: 0, z: 2000},
-    'cube'
+    'ball'
 );
 maze.init(options, {x: 2, z: 8});
