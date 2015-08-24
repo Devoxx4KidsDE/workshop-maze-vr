@@ -11,7 +11,7 @@ const walls = wallsData.map((w, i) => {
 
 var options = {length: 4, width: 4, cellSize: 500};
 maze.create(options);
-maze.init(options, {x: 2, z: 2});
+maze.init(options, {x: 1, z: 1});
 //maze.addWalls(walls, options);
 maze.addItem(
     new THREE.Mesh(

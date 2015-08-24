@@ -31,7 +31,7 @@ function create(options) {
     scene.add(ceiling);
 
     // floor
-    var floorTexture = THREE.ImageUtils.loadTexture('textures/floor.png');
+    var floorTexture = THREE.ImageUtils.loadTexture('textures/floor2.png');
     floorTexture.wrapS = THREE.RepeatWrapping;
     floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(options.length, options.width);
@@ -130,8 +130,8 @@ function addItem(item, position, id, options) {
 
 function init(options, player) {
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.x = player.x * options.cellSize;
-    camera.position.z = player.z * options.cellSize;
+    camera.position.x = (player.x * options.cellSize) + (options.cellSize / 2);
+    camera.position.z = (player.z * options.cellSize) + (options.cellSize / 2);
 
     center = new THREE.Vector3(camera.position.x + 250, 0, 0);
 
