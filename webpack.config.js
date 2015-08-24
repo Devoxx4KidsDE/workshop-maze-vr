@@ -1,6 +1,5 @@
-
-var path    = require ('path');
-var webpack = require ('webpack');
+var path = require('path');
+var webpack = require('webpack');
 
 var config = {
     port: 4000
@@ -15,21 +14,21 @@ module.exports = {
 
     output: {
         publicPath: '/',
-        filename  : 'app.js'
+        filename: 'app.js'
     },
 
     devtool: 'source-map',
 
     module: {
         loaders: [
-            {test: /\.js$/, include: path.join (__dirname, 'app'), loader: 'babel-loader'}
+            {test: /\.js$/, include: path.join(__dirname, 'app'), loader: 'babel-loader'}
         ]
     },
 
     debug: true,
 
     devServer: {
-       contentBase: "./app",
+        contentBase: './app',
         port: config.port
     }
 };
