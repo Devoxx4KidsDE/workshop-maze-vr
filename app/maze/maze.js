@@ -26,6 +26,8 @@ function create(options) {
     }));
     ceiling.rotation.x = Math.PI / 2;
     ceiling.position.y = options.cellSize / 2;
+    ceiling.position.x = (options.length * options.cellSize) / 2;
+    ceiling.position.z = (options.width * options.cellSize) / 2;
     scene.add(ceiling);
 
     // floor
@@ -39,6 +41,8 @@ function create(options) {
     }));
     floor.rotation.x = -Math.PI / 2;
     floor.position.y = -options.cellSize / 2;
+    floor.position.x = (options.length * options.cellSize) / 2;
+    floor.position.z = (options.width * options.cellSize) / 2;
     scene.add(floor);
 
     var geometryPlaneBasic = new THREE.PlaneBufferGeometry(options.cellSize, options.cellSize, 1, 1);
@@ -49,32 +53,30 @@ function create(options) {
     });
     // East and Wests walls
     for (var actualMazeLength = 0; actualMazeLength < options.length; actualMazeLength++) {
-        var borderWallEast = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        borderWallEast.position.z = options.width / 2 * options.cellSize;
-        borderWallEast.position.x = (actualMazeLength - options.length / 2) * options.cellSize + options.cellSize / 2;
-        scene.add(borderWallEast);
-        wallGeometries.push(borderWallEast);
-
         var borderWallWest = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        borderWallWest.position.z = -options.width / 2 * options.cellSize;
-        borderWallWest.position.x = (actualMazeLength - options.length / 2) * options.cellSize + options.cellSize / 2;
+        borderWallWest.position.x = (actualMazeLength * options.cellSize) + (options.cellSize / 2);
         scene.add(borderWallWest);
         wallGeometries.push(borderWallWest);
+
+        var borderWallEast = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallEast.position.z = options.width * options.cellSize;
+        borderWallEast.position.x = (actualMazeLength * options.cellSize) + (options.cellSize / 2);
+        scene.add(borderWallEast);
+        wallGeometries.push(borderWallEast);
     }
 
     // North and South walls
     for (var actualMazeWidth = 0; actualMazeWidth < options.width; actualMazeWidth++) {
         var borderWallNorth = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
         borderWallNorth.rotation.y = Math.PI / 2;
-        borderWallNorth.position.x = options.length / 2 * options.cellSize;
-        borderWallNorth.position.z = (actualMazeWidth - options.width / 2) * options.cellSize + options.cellSize / 2;
+        borderWallNorth.position.x = options.length * options.cellSize;
+        borderWallNorth.position.z = (actualMazeWidth * options.cellSize) + (options.cellSize / 2);
         scene.add(borderWallNorth);
         wallGeometries.push(borderWallNorth);
 
         var borderWallSouth = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
         borderWallSouth.rotation.y = Math.PI / 2;
-        borderWallSouth.position.x = -options.length / 2 * options.cellSize;
-        borderWallSouth.position.z = (actualMazeWidth - options.width / 2) * options.cellSize + options.cellSize / 2;
+        borderWallSouth.position.z = (actualMazeWidth * options.cellSize) + (options.cellSize / 2);
         scene.add(borderWallSouth);
         wallGeometries.push(borderWallSouth);
     }
@@ -87,17 +89,17 @@ function addWalls(walls, options) {
         var offsizeZ = 0;
 
         if (wall.orientation === 'front') {
-            offsizeX = -250;
+            offsizeX = -options.cellSize / 2;
             offsizeZ = -options.cellSize;
         } else if (wall.orientation === 'back') {
-            offsizeX = -250;
+            offsizeX = -options.cellSize / 2;
             offsizeZ = 0;
         } else if (wall.orientation === 'left') {
             offsizeX = -options.cellSize;
-            offsizeZ = -250;
+            offsizeZ = -options.cellSize / 2;
         } else if (wall.orientation === 'right') {
             offsizeX = 0;
-            offsizeZ = -250;
+            offsizeZ = -options.cellSize / 2;
         }
 
         var insideWalls = new THREE.Mesh(new THREE.PlaneBufferGeometry(options.cellSize, options.cellSize, 1, 1), wall.material);
@@ -111,11 +113,10 @@ function addWalls(walls, options) {
     });
 }
 
-function addItem(item, position, id) {
+function addItem(item, position, id, options) {
 
-    item.position.x = position.x;
-    item.position.y = position.y;
-    item.position.z = position.z;
+    item.position.x = (position.x * options.cellSize) + options.cellSize / 2;
+    item.position.z = (position.z * options.cellSize) + options.cellSize / 2;
     scene.add(item);
 
     document.addEventListener('keydown', function () {
@@ -129,8 +130,8 @@ function addItem(item, position, id) {
 
 function init(options, player) {
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.x = (player.x - options.length / 2) * options.cellSize;
-    camera.position.z = (player.z - options.width / 2) * options.cellSize - options.cellSize / 2;
+    camera.position.x = player.x * options.cellSize;
+    camera.position.z = player.z * options.cellSize;
 
     center = new THREE.Vector3(camera.position.x + 250, 0, 0);
 

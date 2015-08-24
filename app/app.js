@@ -9,18 +9,10 @@ const walls = wallsData.map((w, i) => {
     return wall.create(w);
 });
 
-var options = {length: 15, width: 9, cellSize: 500};
+var options = {length: 4, width: 4, cellSize: 500};
 maze.create(options);
-maze.addWalls(walls, options);
-maze.addItem(
-    new THREE.Mesh(new THREE.BoxGeometry(200, 200, 200),
-        new THREE.MeshBasicMaterial({
-            color: 'green'
-        })
-    ),
-    {x: 0, y: 0, z: -1500},
-    'cube'
-);
+maze.init(options, {x: 2, z: 2});
+//maze.addWalls(walls, options);
 maze.addItem(
     new THREE.Mesh(
         new THREE.SphereGeometry(75, 16, 16),
@@ -28,7 +20,7 @@ maze.addItem(
             color: 'yellow'
         })
     ),
-    {x: 1000, y: 0, z: 2000},
-    'ball'
+    {x: 0, y: 0, z: 0},
+    'ball',
+    options
 );
-maze.init(options, {x: 2, z: 8});
