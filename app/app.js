@@ -3,7 +3,7 @@ import * as wall from './maze/wall.js';
 import * as maze from './maze/maze.js';
 import * as THREE from './libs/three.js';
 
-var options = {length: 4, width: 4, cellSize: 500};
+var options = {length: 20, width: 10, cellSize: 500};
 
 const walls = wallsData.map((w, i) => {
     w = Object.assign(w);
