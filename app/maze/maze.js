@@ -31,7 +31,7 @@ function create(options) {
     scene.add(ceiling);
 
     // floor
-    var floorTexture = THREE.ImageUtils.loadTexture('textures/floor2.png');
+    var floorTexture = THREE.ImageUtils.loadTexture('textures/floor.png');
     floorTexture.wrapS = THREE.RepeatWrapping;
     floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(options.length, options.width);
