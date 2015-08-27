@@ -3,16 +3,17 @@ import * as wall from './maze/wall.js';
 import * as maze from './maze/maze.js';
 import * as THREE from './libs/three.js';
 
+var options = {length: 4, width: 4, cellSize: 500};
+
 const walls = wallsData.map((w, i) => {
     w = Object.assign(w);
     w.texture = i % 2 ? 'wall' : 'wall_d4k';
-    return wall.create(w);
+    return wall.create(w, options.cellSize);
 });
 
-var options = {length: 4, width: 4, cellSize: 500};
 maze.create(options);
 maze.init(options, {x: 1, z: 1});
-//maze.addWalls(walls, options);
+maze.addWalls(walls);
 maze.addItem(
     new THREE.Mesh(
         new THREE.SphereGeometry(75, 16, 16),
