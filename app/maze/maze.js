@@ -1,13 +1,11 @@
 import * as THREE from './../libs/three.js';
 
 var camera;
-var scene;
 var renderer;
 var collectibleItemCube;
 var collectibleItemSphere;
 var center;
-
-var maze = {width: 15, large: 9, cellSize: 500};
+var scene;
 
 var angleX = 0;
 var windowHalfX = window.innerWidth / 2;
@@ -15,136 +13,103 @@ var incrementoX = Math.PI / windowHalfX;
 
 var mouseX = windowHalfX;
 
-var person = {
-    startPosition: {
-        x: 1,
-        z: 8
-    }
-};
-
 var wallGeometries = [];
 
-export function init(walls) {
+function create(options) {
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.x = (person.startPosition.x - maze.width / 2) * maze.cellSize;
-    camera.position.z = (person.startPosition.z - maze.large / 2) * maze.cellSize - maze.cellSize / 2;
-
-    center = new THREE.Vector3(camera.position.x + 250, 0, 0);
-
-    var geometryPlane = new THREE.PlaneBufferGeometry(maze.width * maze.cellSize, maze.large * maze.cellSize);
-    var geometryPlaneBasic = new THREE.PlaneBufferGeometry(maze.cellSize, maze.cellSize, 1, 1);
+    var basePlane = new THREE.PlaneBufferGeometry(options.length * options.cellSize, options.width * options.cellSize);
 
     // ceiling
-    var ceiling = new THREE.Mesh(geometryPlane, new THREE.MeshBasicMaterial({
+    var ceiling = new THREE.Mesh(basePlane, new THREE.MeshBasicMaterial({
         map: THREE.ImageUtils.loadTexture('textures/ceiling.jpg')
     }));
     ceiling.rotation.x = Math.PI / 2;
-    ceiling.position.y = maze.cellSize / 2;
+    ceiling.position.y = options.cellSize / 2;
+    ceiling.position.x = (options.length * options.cellSize) / 2;
+    ceiling.position.z = (options.width * options.cellSize) / 2;
     scene.add(ceiling);
 
     // floor
-    var floorTexture = THREE.ImageUtils.loadTexture('textures/floor.png');
+    var floorTexture = THREE.ImageUtils.loadTexture('textures/floor2.png');
     floorTexture.wrapS = THREE.RepeatWrapping;
     floorTexture.wrapT = THREE.RepeatWrapping;
-    floorTexture.repeat.set(maze.width, maze.large);
+    floorTexture.repeat.set(options.length, options.width);
 
-    var floor = new THREE.Mesh(geometryPlane, new THREE.MeshBasicMaterial({
+    var floor = new THREE.Mesh(basePlane, new THREE.MeshBasicMaterial({
         map: floorTexture
     }));
     floor.rotation.x = -Math.PI / 2;
-    floor.position.y = -maze.cellSize / 2;
+    floor.position.y = -options.cellSize / 2;
+    floor.position.x = (options.length * options.cellSize) / 2;
+    floor.position.z = (options.width * options.cellSize) / 2;
     scene.add(floor);
+
+    var geometryPlaneBasic = new THREE.PlaneBufferGeometry(options.cellSize, options.cellSize, 1, 1);
 
     var wallMaterial = new THREE.MeshBasicMaterial({
         map: THREE.ImageUtils.loadTexture('textures/wall.png'),
         side: THREE.DoubleSide
     });
-    // South and North walls
-    for (var actualMazeWidth = 0; actualMazeWidth < maze.width; actualMazeWidth++) {
-        var borderWallSN = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        borderWallSN.position.z = maze.large / 2 * maze.cellSize;
-        borderWallSN.position.y = 0;
-        borderWallSN.position.x = (actualMazeWidth - maze.width / 2) * maze.cellSize + maze.cellSize / 2;
-        scene.add(borderWallSN);
-        wallGeometries.push(borderWallSN);
+    // East and Wests walls
+    for (var actualMazeLength = 0; actualMazeLength < options.length; actualMazeLength++) {
+        var borderWallWest = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallWest.position.x = (actualMazeLength * options.cellSize) + (options.cellSize / 2);
+        scene.add(borderWallWest);
+        wallGeometries.push(borderWallWest);
 
-        borderWallSN = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        borderWallSN.position.z = -maze.large / 2 * maze.cellSize;
-        borderWallSN.position.y = 0;
-        borderWallSN.position.x = (actualMazeWidth - maze.width / 2) * maze.cellSize + maze.cellSize / 2;
-        scene.add(borderWallSN);
-        wallGeometries.push(borderWallSN);
+        var borderWallEast = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallEast.position.z = options.width * options.cellSize;
+        borderWallEast.position.x = (actualMazeLength * options.cellSize) + (options.cellSize / 2);
+        scene.add(borderWallEast);
+        wallGeometries.push(borderWallEast);
     }
 
-    // East and West walls
-    for (var actualMazeLarge = 0; actualMazeLarge < maze.large; actualMazeLarge++) {
-        var borderWallEW = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        borderWallEW.rotation.y = Math.PI / 2;
-        borderWallEW.position.x = maze.width / 2 * maze.cellSize;
-        borderWallEW.position.y = 0;
-        borderWallEW.position.z = (actualMazeLarge - maze.large / 2) * maze.cellSize + maze.cellSize / 2;
-        scene.add(borderWallEW);
-        wallGeometries.push(borderWallEW);
+    // North and South walls
+    for (var actualMazeWidth = 0; actualMazeWidth < options.width; actualMazeWidth++) {
+        var borderWallNorth = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallNorth.rotation.y = Math.PI / 2;
+        borderWallNorth.position.x = options.length * options.cellSize;
+        borderWallNorth.position.z = (actualMazeWidth * options.cellSize) + (options.cellSize / 2);
+        scene.add(borderWallNorth);
+        wallGeometries.push(borderWallNorth);
 
-        borderWallEW = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
-        borderWallEW.rotation.y = Math.PI / 2;
-        borderWallEW.position.x = -maze.width / 2 * maze.cellSize;
-        borderWallEW.position.y = 0;
-        borderWallEW.position.z = (actualMazeLarge - maze.large / 2) * maze.cellSize + maze.cellSize / 2;
-        scene.add(borderWallEW);
-        wallGeometries.push(borderWallEW);
+        var borderWallSouth = new THREE.Mesh(geometryPlaneBasic, wallMaterial);
+        borderWallSouth.rotation.y = Math.PI / 2;
+        borderWallSouth.position.z = (actualMazeWidth * options.cellSize) + (options.cellSize / 2);
+        scene.add(borderWallSouth);
+        wallGeometries.push(borderWallSouth);
     }
+}
 
-    // walls inside the maze
+function addWalls(walls) {
     walls.forEach(wall => {
-        var offsizeX = 0;
-        var offsizeZ = 0;
-
-        if (wall.orientation === 'front') {
-            offsizeX = -250;
-            offsizeZ = -maze.cellSize;
-        } else if (wall.orientation === 'back') {
-            offsizeX = -250;
-            offsizeZ = 0;
-        } else if (wall.orientation === 'left') {
-            offsizeX = -maze.cellSize;
-            offsizeZ = -250;
-        } else if (wall.orientation === 'right') {
-            offsizeX = 0;
-            offsizeZ = -250;
-        }
-
-        var insideWalls = new THREE.Mesh(geometryPlaneBasic, wall.material);
-        insideWalls.rotation.y = wall.orientation === 'left' || wall.orientation === 'right' ? Math.PI / 2 : 0;
-        insideWalls.position.x = (wall.x - maze.width / 2) * maze.cellSize + offsizeX;
-        insideWalls.position.y = 0;
-        insideWalls.position.z = (wall.z - maze.large / 2) * maze.cellSize + offsizeZ;
-
-        scene.add(insideWalls);
-        wallGeometries.push(insideWalls);
+        scene.add(wall);
+        wallGeometries.push(wall);
     });
+}
 
-    // cube
-    collectibleItemCube = new THREE.Mesh(new THREE.BoxGeometry(200, 200, 200), new THREE.MeshBasicMaterial({
-        color: 'green'
-    }));
-    collectibleItemCube.position.z = -1500;
-    scene.add(collectibleItemCube);
+function addItem(item, position, id, options) {
 
-    // sphere
-    collectibleItemSphere = new THREE.Mesh(new THREE.SphereGeometry(75, 16, 16), new THREE.MeshBasicMaterial({
-        color: 'yellow'
-    }));
-    collectibleItemSphere.position.z = 2000;
-    collectibleItemSphere.position.x = 1000;
-    scene.add(collectibleItemSphere);
+    item.position.x = (position.x * options.cellSize) + options.cellSize / 2;
+    item.position.z = (position.z * options.cellSize) + options.cellSize / 2;
+    scene.add(item);
 
-    //adding some light to the scene
-    var pointLight = new THREE.DirectionalLight(0xffffff);
-    pointLight.position.set(0, 0, 1).normalize();
-    scene.add(pointLight);
+    document.addEventListener('keydown', function () {
+        var ray = new THREE.Raycaster(camera.position, new THREE.Vector3(camera.position.x + 250, 0, 0).normalize(), 0, 100);
+        if (ray.intersectObject(item).length > 0) {
+            scene.remove(item);
+            document.getElementById(id).classList.add('found');
+        }
+    }, false);
+}
+
+function init(options, player) {
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    camera.position.x = (player.x * options.cellSize) + (options.cellSize / 2);
+    camera.position.z = (player.z * options.cellSize) + (options.cellSize / 2);
+
+    center = new THREE.Vector3(camera.position.x + 250, 0, 0);
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight * .75);
@@ -195,15 +160,6 @@ function onKeyDown(e) {
             camera.translateX(-30);
         }
     }
-
-    if (ray.intersectObject(collectibleItemCube).length > 0) {
-        scene.remove(collectibleItemCube);
-        document.getElementById('cube').classList.add('found');
-    }
-    if (ray.intersectObject(collectibleItemSphere).length > 0) {
-        scene.remove(collectibleItemSphere);
-        document.getElementById('ball').classList.add('found');
-    }
 }
 
 function animate() {
@@ -219,10 +175,8 @@ function animate() {
 
     requestAnimationFrame(animate);
 
-    collectibleItemCube.rotation.x += 0.01;
-    collectibleItemCube.rotation.y += 0.02;
-    collectibleItemSphere.rotation.y -= 0.01;
-
     camera.lookAt(center);
     renderer.render(scene, camera);
 }
+
+export {create, init, addWalls, addItem}
