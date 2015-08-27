@@ -111,11 +111,6 @@ function init(options, player) {
 
     center = new THREE.Vector3(camera.position.x + 250, 0, 0);
 
-    //adding some light to the scene
-    var pointLight = new THREE.DirectionalLight(0xffffff);
-    pointLight.position.set(0, 0, 1).normalize();
-    scene.add(pointLight);
-
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight * .75);
     document.body.insertBefore(renderer.domElement, document.getElementById('footer'));
