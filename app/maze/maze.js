@@ -82,34 +82,10 @@ function create(options) {
     }
 }
 
-function addWalls(walls, options) {
-    // walls inside the maze
+function addWalls(walls) {
     walls.forEach(wall => {
-        var offsizeX = 0;
-        var offsizeZ = 0;
-
-        if (wall.orientation === 'front') {
-            offsizeX = -options.cellSize / 2;
-            offsizeZ = -options.cellSize;
-        } else if (wall.orientation === 'back') {
-            offsizeX = -options.cellSize / 2;
-            offsizeZ = 0;
-        } else if (wall.orientation === 'left') {
-            offsizeX = -options.cellSize;
-            offsizeZ = -options.cellSize / 2;
-        } else if (wall.orientation === 'right') {
-            offsizeX = 0;
-            offsizeZ = -options.cellSize / 2;
-        }
-
-        var insideWalls = new THREE.Mesh(new THREE.PlaneBufferGeometry(options.cellSize, options.cellSize, 1, 1), wall.material);
-        insideWalls.rotation.y = wall.orientation === 'left' || wall.orientation === 'right' ? Math.PI / 2 : 0;
-        insideWalls.position.x = (wall.x - options.length / 2) * options.cellSize + offsizeX;
-        insideWalls.position.y = 0;
-        insideWalls.position.z = (wall.z - options.width / 2) * options.cellSize + offsizeZ;
-
-        scene.add(insideWalls);
-        wallGeometries.push(insideWalls);
+        scene.add(wall);
+        wallGeometries.push(wall);
     });
 }
 
