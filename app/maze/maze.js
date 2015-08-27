@@ -19,14 +19,15 @@ var wallGeometries = [];
 function create(options) {
     scene = new THREE.Scene();
 
-    var basePlane = new THREE.PlaneBufferGeometry(options.length * options.cellSize, options.width * options.cellSize);
-
     // ceiling
-    var ceiling = new THREE.Mesh(basePlane, new THREE.MeshBasicMaterial({
-        map: THREE.ImageUtils.loadTexture('textures/ceiling.jpg')
-    }));
+    var ceiling = new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(2 * options.length * options.cellSize, 2 * options.width * options.cellSize),
+        new THREE.MeshBasicMaterial({
+            map: THREE.ImageUtils.loadTexture('textures/ceiling.jpg')
+        })
+    );
     ceiling.rotation.x = Math.PI / 2;
-    ceiling.position.y = options.cellSize / 2;
+    ceiling.position.y = options.cellSize;
     ceiling.position.x = (options.length * options.cellSize) / 2;
     ceiling.position.z = (options.width * options.cellSize) / 2;
     scene.add(ceiling);
@@ -37,9 +38,12 @@ function create(options) {
     floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(options.length, options.width);
 
-    var floor = new THREE.Mesh(basePlane, new THREE.MeshBasicMaterial({
-        map: floorTexture
-    }));
+    var floor = new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(options.length * options.cellSize, options.width * options.cellSize),
+        new THREE.MeshBasicMaterial({
+            map: floorTexture
+        })
+    );
     floor.rotation.x = -Math.PI / 2;
     floor.position.y = -options.cellSize / 2;
     floor.position.x = (options.length * options.cellSize) / 2;
