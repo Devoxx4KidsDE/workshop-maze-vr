@@ -1,17 +1,17 @@
 {
-  "name": "devoxx4kids-vr-maze",
+  "name": "devoxx4kids-workshop-maze-vr",
   "version": "1.0.0",
   "description": "Designed for a devoxx4kids workshop to show children how to do objective programming and see what their maze in virtual reality look like",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/derTobsch/maze3D.git"
+    "url": "https://github.com/Devoxx4KidsDE/workshop-maze-vr.git"
   },
   "author": "Devoxx4kids.de",
   "bugs": {
-    "url": "https://github.com/derTobsch/maze3D/issues"
+    "url": "https://github.com/Devoxx4KidsDE/workshop-maze-vr/issues"
   },
-  "homepage": "https://github.com/derTobsch/maze3D",
+  "homepage": "https://github.com/Devoxx4KidsDE/workshop-maze-vr",
   "devDependencies": {
     "babel-core": "^5.8.22",
     "babel-loader": "^5.3.2",
