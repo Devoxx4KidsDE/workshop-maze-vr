@@ -129,7 +129,7 @@ class MazeTemplate {
 
     start() {
         let renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight * .75);
+        renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('maze').appendChild(renderer.domElement);
 
         this.renderer = renderer;
