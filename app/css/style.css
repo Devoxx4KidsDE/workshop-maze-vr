@@ -33,7 +33,8 @@ ul {
 }
 
 .player-information {
-    font-weight: bolder;
+    font-size: 1.2em;
+    font-weight: bold;
     position: absolute;
     left: 0;
     top: 0;
