@@ -5,7 +5,7 @@ function create({x,z,orientation,texture}, cellSize) {
     var offSizeX = 0;
     var offSizeZ = 0;
 
-    switch(orientation) {
+    switch (orientation) {
         case 'front':
             offSizeX = cellSize / 2;
             break;
@@ -23,7 +23,7 @@ function create({x,z,orientation,texture}, cellSize) {
         map: THREE.ImageUtils.loadTexture(`../textures/${texture}.png`),
         side: THREE.DoubleSide
     });
-    
+
     var wall = new THREE.Mesh(new THREE.PlaneBufferGeometry(cellSize, cellSize, 1, 1), material);
     wall.rotation.y = (orientation === 'left' || orientation === 'right') ? 0 : Math.PI / 2;
     wall.position.x = (x * cellSize) + (cellSize / 2) + offSizeX;

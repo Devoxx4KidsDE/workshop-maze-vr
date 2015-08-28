@@ -1,27 +1,13 @@
-import wallsData from './walls.js';
-import * as wall from './maze/wall.js';
-import * as maze from './maze/maze.js';
-import * as THREE from './libs/three.js';
+import * as Maze from './maze/mazen.js';
+import * as Player from './maze/player.js';
 
-var options = {length: 20, width: 10, cellSize: 500};
+let options = {length: 20, width: 10, cellSize: 500};
 
-const walls = wallsData.map((w, i) => {
-    w = Object.assign(w);
-    w.texture = i % 2 ? 'wall' : 'wall_d4k';
-    return wall.create(w, options.cellSize);
+let maze = Maze.create(options);
+let player = Player.create('HoBeTo', {x: 1, y: 0, z: 1}, {
+    width: options.cellSize / 3,
+    height: options.cellSize / 3,
+    depth: options.cellSize / 3
 });
-
-maze.create(options);
-maze.init(options, {x: 1, z: 1});
-maze.addWalls(walls);
-maze.addItem(
-    new THREE.Mesh(
-        new THREE.SphereGeometry(75, 16, 16),
-        new THREE.MeshBasicMaterial({
-            color: 'yellow'
-        })
-    ),
-    {x: 0, z: 0},
-    'ball',
-    options
-);
+maze.addPlayer(player);
+maze.start();

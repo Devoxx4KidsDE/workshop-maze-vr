@@ -73,7 +73,6 @@ function create(options) {
 
     // North and South walls
     for (var actualMazeWidth = 0; actualMazeWidth < options.width; actualMazeWidth++) {
-
         var borderWallNorth = wall.create({
             z: actualMazeWidth,
             x: options.length - 1,
@@ -86,7 +85,7 @@ function create(options) {
         var borderWallSouth = wall.create({
             z: actualMazeWidth,
             x: 0,
-            orientation: 'front',
+            orientation: 'back',
             texture: 'wall'
         }, options.cellSize);
         scene.add(borderWallSouth);
@@ -116,7 +115,7 @@ function addItem(item, position, id, options) {
     }, false);
 }
 
-function init(options, player) {
+function setPlayer(options, player) {
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
     camera.position.x = (player.x * options.cellSize) + (options.cellSize / 2);
     camera.position.z = (player.z * options.cellSize) + (options.cellSize / 2);
@@ -171,6 +170,14 @@ function onKeyDown(e) {
         if (keyCode === 65) {
             camera.translateX(-30);
         }
+        // j
+        if (keyCode === 74) {
+            camera.translateY(-60);
+        }
+        // j
+        if (keyCode === 85) {
+            camera.translateY(60);
+        }
     }
 }
 
@@ -191,4 +198,4 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-export {create, init, addWalls, addItem}
+export {create, setPlayer, addWalls, addItem}
