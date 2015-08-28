@@ -28,7 +28,7 @@ class MazeTemplate {
         this.renderer = undefined;
 
         this[animate] = () => {
-            let windowHawlfX = window.innerWidth / 2;
+            let windowHalfX = window.innerWidth / 2;
             let incrementX = Math.PI / windowHalfX;
 
             if (this.mouse.x <= 100) {
