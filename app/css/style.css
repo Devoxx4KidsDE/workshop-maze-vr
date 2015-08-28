@@ -31,3 +31,11 @@ ul {
     text-decoration: line-through;
     color: #EE8712;
 }
+
+.player-information {
+    font-weight: bolder;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 1em;
+}

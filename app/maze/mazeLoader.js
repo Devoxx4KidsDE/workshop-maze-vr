@@ -1,6 +1,7 @@
 import * as Wall from './../maze/wall.js';
 import * as Maze from './../maze/mazen.js';
 import * as Player from './../maze/player.js';
+import * as UI from './../maze/ui.js';
 
 function load(name) {
     return fetch('configuration/' + name + '.json').then(configurationResponse => {
@@ -21,6 +22,11 @@ function load(name) {
 
             let player = Player.create(configuration.player.name, configuration.player.position, {});
             maze.addPlayer(player);
+
+            UI.draw({
+                id: 'player-name',
+                text: configuration.player.name
+            });
 
             return maze;
         });
