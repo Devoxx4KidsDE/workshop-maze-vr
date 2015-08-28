@@ -3,6 +3,7 @@ import * as wall from './../maze/wall.js';
 
 const animate = Symbol();
 const keyDown = Symbol();
+const mouseMove = Symbol();
 
 class MazeTemplate {
     constructor() {
@@ -15,6 +16,11 @@ class MazeTemplate {
             camera: undefined,
             center: undefined
         };
+        this.mouse = {
+            x: window.innerWidth / 2,
+            y: undefined,
+            z: undefined
+        };
         this.walls = [];
         this.floor = [];
         this.items = [];
@@ -22,8 +28,22 @@ class MazeTemplate {
         this.renderer = undefined;
 
         this[animate] = () => {
+            let windowHawlfX = window.innerWidth / 2;
+            let incrementX = Math.PI / windowHalfX;
+
+            if (this.mouse.x <= 100) {
+                this.player.angle.x -= incrementX * 10;
+            }
+            if (this.mouse.x >= windowHalfX * 2 - 100) {
+                this.player.angle.x += incrementX * 10;
+            }
+
+            this.player.center.x = windowHalfX * 32 * Math.cos(this.player.angle.x);
+            this.player.center.z = windowHalfX * 32 * Math.sin(this.player.angle.x);
+
             requestAnimationFrame(this[animate]);
 
+            this.player.camera.lookAt(this.player.center);
             this.renderer.render(this.scene, this.player.camera);
         };
 
@@ -53,7 +73,24 @@ class MazeTemplate {
             if (keyCode === 85) {
                 this.player.camera.translateY(60);
             }
-        }
+        };
+
+        this[mouseMove] = (event) => {
+            let windowHalfX = window.innerWidth / 2;
+            let incrementX = Math.PI / windowHalfX;
+
+            let difference = this.mouse.x - event.clientX;
+            this.player.angle.x -= incrementX * difference;
+
+            this.mouse.x = event.clientX;
+            if (this.mouse.x <= windowHalfX - 100 && difference > 0) {
+                this.player.angle.x -= incrementX * 5;
+            }
+            if (this.mouse.x >= windowHalfX + 100 && difference < 0) {
+                this.player.angle.x += incrementX * 5;
+            }
+            event.preventDefault();
+        };
     }
 
     addCeilings(ceilings) {
@@ -86,6 +123,8 @@ class MazeTemplate {
         this.player.camera = camera;
 
         this.player.center = new THREE.Vector3(camera.position.x, 0, camera.position.z + (this.cellSize / 2));
+
+        this.player.angle = {x: 0, y: 0, z: 0};
     }
 
     start() {
@@ -96,6 +135,7 @@ class MazeTemplate {
         this.renderer = renderer;
 
         document.addEventListener('keydown', this[keyDown], false);
+        document.addEventListener('mousemove', this[mouseMove], false);
 
         this[animate]();
     }

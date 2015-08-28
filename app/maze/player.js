@@ -7,6 +7,11 @@ class Player {
             speed: 1
         };
         this.body = undefined;
+        this.angle = {
+            x: undefined,
+            y: undefined,
+            z: undefined
+        };
         this.position = {
             x: undefined,
             y: undefined,
