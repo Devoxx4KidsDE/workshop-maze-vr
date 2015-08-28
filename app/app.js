@@ -4,7 +4,7 @@ import * as Player from './maze/player.js';
 let options = {length: 20, width: 10, cellSize: 500};
 
 let maze = Maze.create(options);
-let player = Player.create('HoBeTo', {x: 1, y: 0, z: 1}, {
+let player = Player.create('HoBeTo', {x: 0, y: 0, z: 0}, {
     width: options.cellSize / 3,
     height: options.cellSize / 3,
     depth: options.cellSize / 3

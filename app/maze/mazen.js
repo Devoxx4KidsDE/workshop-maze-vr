@@ -57,7 +57,7 @@ class MazeTemplate {
         camera.position.z = (player.position.z * this.cellSize) + (this.cellSize / 2);
         this.player.camera = camera;
 
-        this.player.center = new THREE.Vector3(camera.position.x + this.cellSize / 2, 0, 0);
+        this.player.center = new THREE.Vector3(camera.position.x, 0, camera.position.z + (this.cellSize / 2));
     }
 
     start() {
