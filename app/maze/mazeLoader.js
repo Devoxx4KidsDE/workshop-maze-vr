@@ -19,11 +19,7 @@ function load(name) {
             });
             maze.addWalls(walls);
 
-            let player = Player.create(configuration.player.name, {
-                x: configuration.player.position.x,
-                y: configuration.player.position.y,
-                z: configuration.player.position.z
-            }, {});
+            let player = Player.create(configuration.player.name, configuration.player.position, {});
             maze.addPlayer(player);
 
             return maze;
