@@ -182,4 +182,27 @@ function create({length, width, cellSize}) {
     return maze;
 }
 
-export {create}
+function load(name) {
+    return fetch('configuration/' + name + '.json').then(mazeConfigurationResponse => {
+
+        return mazeConfigurationResponse.json().then(mazeConfiguration => {
+            let maze = create({
+                length: mazeConfiguration.length,
+                width: mazeConfiguration.width,
+                cellSize: mazeConfiguration.cellSize
+            });
+
+            let walls = mazeConfiguration.walls.map((w, i) => {
+                w = Object.assign(w);
+                w.texture = i % 2 ? 'wall' : 'wall_d4k';
+                return wall.create(w, mazeConfiguration.cellSize);
+            });
+
+            maze.addWalls(walls);
+
+            return maze;
+        });
+    });
+}
+
+export {create, load}
