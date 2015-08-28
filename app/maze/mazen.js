@@ -1,5 +1,6 @@
 import * as THREE from './../libs/three.js';
 import * as wall from './../maze/wall.js';
+import * as UI from './../maze/ui.js';
 
 const animate = Symbol();
 const keyDown = Symbol();
@@ -136,6 +137,11 @@ class MazeTemplate {
 
         document.addEventListener('keydown', this[keyDown], false);
         document.addEventListener('mousemove', this[mouseMove], false);
+
+        UI.draw({
+            id: 'player-name',
+            text: this.player.player.name
+        });
 
         this[animate]();
     }
