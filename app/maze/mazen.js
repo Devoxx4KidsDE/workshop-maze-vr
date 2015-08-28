@@ -2,6 +2,7 @@ import * as THREE from './../libs/three.js';
 import * as wall from './../maze/wall.js';
 
 const animate = Symbol();
+const keyDown = Symbol();
 
 class MazeTemplate {
     constructor() {
@@ -23,9 +24,36 @@ class MazeTemplate {
         this[animate] = () => {
             requestAnimationFrame(this[animate]);
 
-            this.player.camera.lookAt(this.player.center);
             this.renderer.render(this.scene, this.player.camera);
         };
+
+        this[keyDown] = (event) => {
+            var keyCode = event.which || event.keyCode;
+            // w
+            if (keyCode === 87) {
+                this.player.camera.translateZ(-30);
+            }
+            // d
+            if (keyCode === 68) {
+                this.player.camera.translateX(30);
+            }
+            //s
+            if (keyCode === 83) {
+                this.player.camera.translateZ(30);
+            }
+            // a
+            if (keyCode === 65) {
+                this.player.camera.translateX(-30);
+            }
+            // j
+            if (keyCode === 74) {
+                this.player.camera.translateY(-60);
+            }
+            // u
+            if (keyCode === 85) {
+                this.player.camera.translateY(60);
+            }
+        }
     }
 
     addCeilings(ceilings) {
@@ -66,6 +94,8 @@ class MazeTemplate {
         document.getElementById('maze').appendChild(renderer.domElement);
 
         this.renderer = renderer;
+
+        document.addEventListener('keydown', this[keyDown], false);
 
         this[animate]();
     }
