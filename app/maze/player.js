@@ -15,7 +15,7 @@ class Player {
     }
 }
 
-function create(name, {x,y,z}, {width, height, depth}) {
+function create(name, {x,y,z}, {width = 100, height = 100, depth = 100}) {
     let player = new Player();
 
     player.name = name;
@@ -25,7 +25,7 @@ function create(name, {x,y,z}, {width, height, depth}) {
     player.position.z = z;
 
     player.body = new THREE.BoxGeometry(width, height, depth);
-    
+
     return player;
 }
 
