@@ -10,4 +10,9 @@ let player = Player.create('HoBeTo', {x: 0, y: 0, z: 0}, {
     depth: options.cellSize / 3
 });
 maze.addPlayer(player);
-maze.start();
+//maze.start();
+
+import * as MazeLoader from './maze/mazeLoader.js';
+let maze2 = MazeLoader.load('maze1').then(maze => {
+    maze.start()
+});

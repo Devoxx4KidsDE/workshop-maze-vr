@@ -13,9 +13,10 @@ class MazeTemplate {
         this.cellSize = undefined;
         this.scene = undefined;
         this.player = {
-            player: undefined,
+            geometry: undefined,
+            configuration: undefined,
             camera: undefined,
-            center: undefined
+            direction: undefined
         };
         this.mouse = {
             x: window.innerWidth / 2,
@@ -29,22 +30,24 @@ class MazeTemplate {
         this.renderer = undefined;
 
         this[animate] = () => {
-            let windowHalfX = window.innerWidth / 2;
-            let incrementX = Math.PI / windowHalfX;
+            /*
+             let windowHalfX = window.innerWidth / 2;
+             let incrementX = Math.PI / windowHalfX;
 
-            if (this.mouse.x <= 100) {
-                this.player.angle.x -= incrementX * 10;
-            }
-            if (this.mouse.x >= windowHalfX * 2 - 100) {
-                this.player.angle.x += incrementX * 10;
-            }
+             if (this.mouse.x <= 100) {
+             this.player.configuration.angle.x -= incrementX * 10;
+             }
+             if (this.mouse.x >= windowHalfX * 2 - 100) {
+             this.player.configuration.angle.x += incrementX * 10;
+             }
 
-            this.player.center.x = windowHalfX * 32 * Math.cos(this.player.angle.x);
-            this.player.center.z = windowHalfX * 32 * Math.sin(this.player.angle.x);
+             this.player.direction.x = windowHalfX * 32 * Math.cos(this.player.configuration.angle.x);
+             this.player.direction.z = windowHalfX * 32 * Math.sin(this.player.configuration.angle.x);
+             */
 
             requestAnimationFrame(this[animate]);
 
-            this.player.camera.lookAt(this.player.center);
+            this.player.camera.lookAt(this.player.direction);
             this.renderer.render(this.scene, this.player.camera);
         };
 
@@ -52,26 +55,32 @@ class MazeTemplate {
             var keyCode = event.which || event.keyCode;
             // w
             if (keyCode === 87) {
-                this.player.camera.translateZ(-30);
+                this.player.geometry.translateZ(30);
+                this.player.camera.translateZ(30);
             }
             // d
             if (keyCode === 68) {
+                this.player.geometry.translateX(30);
                 this.player.camera.translateX(30);
             }
-            //s
+            // s
             if (keyCode === 83) {
-                this.player.camera.translateZ(30);
+                this.player.geometry.translateZ(-30);
+                this.player.camera.translateZ(-30);
             }
             // a
             if (keyCode === 65) {
+                this.player.geometry.translateX(-30);
                 this.player.camera.translateX(-30);
             }
             // j
             if (keyCode === 74) {
-                this.player.camera.translateY(-60);
+                //this.player.geometry.translateY(-60);
+                this.player.camera.rotateX(10);
             }
             // u
             if (keyCode === 85) {
+                // this.player.geometry.translateY(60);
                 this.player.camera.translateY(60);
             }
         };
@@ -81,14 +90,14 @@ class MazeTemplate {
             let incrementX = Math.PI / windowHalfX;
 
             let difference = this.mouse.x - event.clientX;
-            this.player.angle.x -= incrementX * difference;
+            this.player.configuration.angle.x -= incrementX * difference;
 
             this.mouse.x = event.clientX;
             if (this.mouse.x <= windowHalfX - 100 && difference > 0) {
-                this.player.angle.x -= incrementX * 5;
+                this.player.configuration.angle.x -= incrementX * 5;
             }
             if (this.mouse.x >= windowHalfX + 100 && difference < 0) {
-                this.player.angle.x += incrementX * 5;
+                this.player.configuration.angle.x += incrementX * 5;
             }
             event.preventDefault();
         };
@@ -115,12 +124,25 @@ class MazeTemplate {
         });
     }
 
-    addPlayer(player) {
-        this.player.player = player;
+    addPlayer(playerConfiguration) {
 
-        let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-        camera.position.x = (player.position.x * this.cellSize) + (this.cellSize / 2);
-        camera.position.z = (player.position.z * this.cellSize) + (this.cellSize / 2);
+        this.player.configuration = playerConfiguration;
+
+        let playerGeometry = new THREE.Mesh(
+            new THREE.BoxGeometry(playerConfiguration.body.width, playerConfiguration.body.height, playerConfiguration.body.depth),
+            new THREE.MeshBasicMaterial({
+                map: THREE.ImageUtils.loadTexture('textures/player.png'),
+                side: THREE.FrontSide
+            })
+        );
+        playerGeometry.position.x = (playerConfiguration.position.x * this.cellSize) + (this.cellSize / 2);
+        playerGeometry.position.z = (playerConfiguration.position.z * this.cellSize) + (this.cellSize / 2);
+        this.player.geometry = playerGeometry;
+        this.scene.add(playerGeometry);
+
+        let camera = new THREE.PerspectiveCamera(74, window.innerWidth / window.innerHeight, 1, 10000);
+        camera.position.x = playerGeometry.position.x;
+        camera.position.z = playerGeometry.position.z;
         this.player.camera = camera;
 
         this.player.center = new THREE.Vector3(camera.position.x, 0, camera.position.z + (this.cellSize / 2));
@@ -136,11 +158,11 @@ class MazeTemplate {
         this.renderer = renderer;
 
         document.addEventListener('keydown', this[keyDown], false);
-        document.addEventListener('mousemove', this[mouseMove], false);
+        //document.addEventListener('mousemove', this[mouseMove], false);
 
         UI.draw({
             id: 'player-name',
-            text: this.player.player.name
+            text: this.player.configuration.name
         });
 
         this[animate]();
@@ -189,40 +211,40 @@ function create({length, width, cellSize}) {
 
     // East and Wests walls
     for (let actualMazeLength = 0; actualMazeLength < length; actualMazeLength++) {
-        let borderWallWest = wall.create({
+        let borderWallBack = wall.create({
             z: 0,
             x: actualMazeLength,
             orientation: 'left',
             texture: 'wall'
         }, cellSize);
-        maze.addWalls([borderWallWest]);
+        maze.addWalls([borderWallBack]);
 
-        let borderWallEast = wall.create({
+        let borderWallFront = wall.create({
             z: width - 1,
             x: actualMazeLength,
             orientation: 'right',
             texture: 'wall'
         }, cellSize);
-        maze.addWalls([borderWallEast]);
+        maze.addWalls([borderWallFront]);
     }
 
     // North and South walls
     for (let actualMazeWidth = 0; actualMazeWidth < width; actualMazeWidth++) {
-        let borderWallNorth = wall.create({
+        let borderWallRight = wall.create({
             z: actualMazeWidth,
             x: length - 1,
             orientation: 'front',
             texture: 'wall'
         }, cellSize);
-        maze.addWalls([borderWallNorth]);
+        maze.addWalls([borderWallRight]);
 
-        let borderWallSouth = wall.create({
+        let borderWallLeft = wall.create({
             z: actualMazeWidth,
             x: 0,
             orientation: 'back',
             texture: 'wall'
         }, cellSize);
-        maze.addWalls([borderWallSouth]);
+        maze.addWalls([borderWallLeft]);
     }
 
     return maze;

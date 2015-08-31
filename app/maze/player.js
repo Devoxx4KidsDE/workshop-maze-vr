@@ -1,5 +1,3 @@
-import * as THREE from './../libs/three.js';
-
 class Player {
     constructor() {
         this.name = undefined;
@@ -20,7 +18,7 @@ class Player {
     }
 }
 
-function create(name, {x,y,z}, {width = 100, height = 100, depth = 100}) {
+function create(name, {x,y,z}, {width = 200, height = 500, depth = 200}) {
     let player = new Player();
 
     player.name = name;
@@ -29,7 +27,11 @@ function create(name, {x,y,z}, {width = 100, height = 100, depth = 100}) {
     player.position.y = y;
     player.position.z = z;
 
-    player.body = new THREE.BoxGeometry(width, height, depth);
+    player.angle.x = 0;
+    player.angle.y = 0;
+    player.angle.z = 0;
+
+    player.body = {width: width, height: height, depth: depth};
 
     return player;
 }
