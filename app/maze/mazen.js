@@ -2,6 +2,7 @@ import * as THREE from './../libs/three.js';
 import * as wall from './../maze/wall.js';
 import * as UI from './../maze/ui.js';
 import * as KeyboardControls from './../maze/keyboardControls';
+import * as MouseControls from './../maze/mouseControls';
 
 const animate = Symbol();
 const mouseMove = Symbol();
@@ -25,6 +26,7 @@ class MazeTemplate {
         this.floor = [];
         this.items = [];
         this.ceiling = [];
+
         this.renderer = undefined;
 
         this[animate] = () => {
@@ -80,6 +82,7 @@ class MazeTemplate {
         this.player.camera = camera;
 
         this.player.keyboardControls = KeyboardControls.create();
+        //this.player.mouseControls = MouseControls.create(camera);
     }
 
     start() {
