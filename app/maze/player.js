@@ -1,4 +1,4 @@
-import * as THREE from './../libs/three.js';
+import * as THREE from './../libs/three';
 
 class Player {
     constructor() {

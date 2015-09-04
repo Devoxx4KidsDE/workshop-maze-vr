@@ -1,5 +1,5 @@
-import * as Maze from './maze/mazen.js';
-import * as Player from './maze/player.js';
+import * as Maze from './maze/mazen';
+import * as Player from './maze/player';
 
 let options = {length: 20, width: 10, cellSize: 500};
 

@@ -1,4 +1,4 @@
-import * as THREE from '../libs/three.js';
+import * as THREE from '../libs/three';
 
 function create({x,z,orientation,texture}, cellSize) {
 
