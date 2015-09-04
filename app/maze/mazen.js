@@ -1,9 +1,9 @@
 import * as THREE from './../libs/three.js';
 import * as wall from './../maze/wall.js';
 import * as UI from './../maze/ui.js';
+import * as KeyboardControls from './../maze/keyboardControls';
 
 const animate = Symbol();
-const keyDown = Symbol();
 const mouseMove = Symbol();
 
 class MazeTemplate {
@@ -12,17 +12,15 @@ class MazeTemplate {
         this.width = undefined;
         this.cellSize = undefined;
         this.scene = undefined;
+
         this.player = {
             geometry: undefined,
             configuration: undefined,
             camera: undefined,
-            direction: undefined
+            keyboardControls: undefined,
+            mouseControls: undefined
         };
-        this.mouse = {
-            x: window.innerWidth / 2,
-            y: undefined,
-            z: undefined
-        };
+
         this.walls = [];
         this.floor = [];
         this.items = [];
@@ -30,76 +28,11 @@ class MazeTemplate {
         this.renderer = undefined;
 
         this[animate] = () => {
-            /*
-             let windowHalfX = window.innerWidth / 2;
-             let incrementX = Math.PI / windowHalfX;
-
-             if (this.mouse.x <= 100) {
-             this.player.configuration.angle.x -= incrementX * 10;
-             }
-             if (this.mouse.x >= windowHalfX * 2 - 100) {
-             this.player.configuration.angle.x += incrementX * 10;
-             }
-
-             this.player.direction.x = windowHalfX * 32 * Math.cos(this.player.configuration.angle.x);
-             this.player.direction.z = windowHalfX * 32 * Math.sin(this.player.configuration.angle.x);
-             */
-
             requestAnimationFrame(this[animate]);
 
-            this.player.camera.lookAt(this.player.direction);
+            this.player.keyboardControls.update(this.player.camera);
+
             this.renderer.render(this.scene, this.player.camera);
-        };
-
-        this[keyDown] = (event) => {
-            var keyCode = event.which || event.keyCode;
-            // w
-            if (keyCode === 87) {
-                this.player.geometry.translateZ(30);
-                this.player.camera.translateZ(30);
-            }
-            // d
-            if (keyCode === 68) {
-                this.player.geometry.translateX(30);
-                this.player.camera.translateX(30);
-            }
-            // s
-            if (keyCode === 83) {
-                this.player.geometry.translateZ(-30);
-                this.player.camera.translateZ(-30);
-            }
-            // a
-            if (keyCode === 65) {
-                this.player.geometry.translateX(-30);
-                this.player.camera.translateX(-30);
-            }
-            // j
-            if (keyCode === 74) {
-                //this.player.geometry.translateY(-60);
-                this.player.camera.rotateX(10);
-            }
-            // u
-            if (keyCode === 85) {
-                // this.player.geometry.translateY(60);
-                this.player.camera.translateY(60);
-            }
-        };
-
-        this[mouseMove] = (event) => {
-            let windowHalfX = window.innerWidth / 2;
-            let incrementX = Math.PI / windowHalfX;
-
-            let difference = this.mouse.x - event.clientX;
-            this.player.configuration.angle.x -= incrementX * difference;
-
-            this.mouse.x = event.clientX;
-            if (this.mouse.x <= windowHalfX - 100 && difference > 0) {
-                this.player.configuration.angle.x -= incrementX * 5;
-            }
-            if (this.mouse.x >= windowHalfX + 100 && difference < 0) {
-                this.player.configuration.angle.x += incrementX * 5;
-            }
-            event.preventDefault();
         };
     }
 
@@ -143,11 +76,10 @@ class MazeTemplate {
         let camera = new THREE.PerspectiveCamera(74, window.innerWidth / window.innerHeight, 1, 10000);
         camera.position.x = playerGeometry.position.x;
         camera.position.z = playerGeometry.position.z;
+        camera.position.y = playerGeometry.position.y;
         this.player.camera = camera;
 
-        this.player.center = new THREE.Vector3(camera.position.x, 0, camera.position.z + (this.cellSize / 2));
-
-        this.player.angle = {x: 0, y: 0, z: 0};
+        this.player.keyboardControls = KeyboardControls.create();
     }
 
     start() {
@@ -156,9 +88,6 @@ class MazeTemplate {
         document.getElementById('maze').appendChild(renderer.domElement);
 
         this.renderer = renderer;
-
-        document.addEventListener('keydown', this[keyDown], false);
-        //document.addEventListener('mousemove', this[mouseMove], false);
 
         UI.draw({
             id: 'player-name',
