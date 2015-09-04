@@ -30,7 +30,7 @@ class MazeTemplate {
         this[animate] = () => {
             requestAnimationFrame(this[animate]);
 
-            this.player.keyboardControls.update(this.player.camera);
+            this.player.keyboardControls.update(this.player.camera, this.player.configuration.skills);
 
             this.renderer.render(this.scene, this.player.camera);
         };

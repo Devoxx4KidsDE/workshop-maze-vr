@@ -70,7 +70,7 @@ class KeyboardControls {
         document.addEventListener('keyup', this[keyUp], false);
     }
 
-    update(yawCamera) {
+    update(yawCamera, skills) {
         const time = performance.now();
         const delta = ( time - this.prevTime ) / 250;
 
@@ -78,13 +78,13 @@ class KeyboardControls {
         this.velocity.z -= this.velocity.z * 10.0 * delta;
         this.velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
 
-        if (this.moveForward) this.velocity.z -= 400.0 * delta;
-        if (this.moveBackward) this.velocity.z += 400.0 * delta;
-        if (this.moveLeft) this.velocity.x -= 400.0 * delta;
-        if (this.moveRight) this.velocity.x += 400.0 * delta;
+        if (this.moveForward) this.velocity.z -= 400.0 * delta * skills.speed;
+        if (this.moveBackward) this.velocity.z += 400.0 * delta * skills.speed;
+        if (this.moveLeft) this.velocity.x -= 400.0 * delta * skills.speed;
+        if (this.moveRight) this.velocity.x += 400.0 * delta * skills.speed;
 
         yawCamera.translateX(this.velocity.x * delta);
-        yawCamera.translateY(this.velocity.y * delta * 2.5);
+        yawCamera.translateY(this.velocity.y * delta * 2.5 * skills.jump);
         yawCamera.translateZ(this.velocity.z * delta);
 
         this.velocity.y = Math.max(0, this.velocity.y);

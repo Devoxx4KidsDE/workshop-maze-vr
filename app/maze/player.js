@@ -2,7 +2,8 @@ class Player {
     constructor() {
         this.name = undefined;
         this.skills = {
-            speed: 1
+            speed: 1,
+            jump: 1
         };
         this.body = undefined;
         this.position = {
