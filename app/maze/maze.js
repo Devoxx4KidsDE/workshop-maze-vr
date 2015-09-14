@@ -1,5 +1,5 @@
-import * as THREE from './../libs/three.js';
-import * as wall from './../maze/wall.js';
+import * as THREE from './../libs/three';
+import * as wall from './../maze/wall';
 
 var camera;
 var renderer;

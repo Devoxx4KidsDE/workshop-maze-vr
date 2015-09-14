@@ -1,6 +1,6 @@
-import * as THREE from './../libs/three.js';
-import * as wall from './../maze/wall.js';
-import * as UI from './../maze/ui.js';
+import * as THREE from './../libs/three';
+import * as wall from './../maze/wall';
+import * as UI from './../maze/ui';
 import * as KeyboardControls from './../maze/keyboardControls';
 
 const animate = Symbol();
