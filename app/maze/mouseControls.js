@@ -3,19 +3,23 @@ import * as THREE from './../libs/three.js';
 const mouseMove = Symbol();
 const PI_2 = Math.PI / 2;
 
+/**
+ * based on http://mrdoob.github.io/three.js/examples/misc_controls_pointerlock.html
+ */
 class MouseControls {
     constructor(camera) {
 
         camera.rotation.set(0, 0, 0);
-        
+
         this.pitchObject = new THREE.Object3D();
-        this.pitchObject.set(camera);
+        this.pitchObject.add(camera);
 
         this.yawObject = new THREE.Object3D();
         this.yawObject.position.y = 10;
         this.yawObject.add(this.pitchObject);
 
         this[mouseMove] = (event) => {
+
             const movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
             const movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
