@@ -2,7 +2,8 @@ var path = require('path');
 var webpack = require('webpack');
 
 var config = {
-    port: 4000
+    port: 8080,
+	  host: '0.0.0.0'
 };
 
 module.exports = {
@@ -29,6 +30,7 @@ module.exports = {
 
     devServer: {
         contentBase: './app',
-        port: config.port
+        port: config.port,
+        host: config.host
     }
 };
