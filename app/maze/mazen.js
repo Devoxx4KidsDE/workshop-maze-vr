@@ -4,6 +4,9 @@ import * as UI from './../maze/ui';
 import * as KeyboardControls from './../maze/keyboardControls';
 import * as MouseControls from './../maze/mouseControls';
 import DeviceOrientationController from './../maze/deviceOrientationController';
+import VREffect from './../libs/VREffect';
+import './../libs/webvr-manager';
+import './../libs/webvr-polyfill';
 
 const animate = Symbol();
 const mouseMove = Symbol();
@@ -30,13 +33,14 @@ class MazeTemplate {
 
         this.renderer = undefined;
 
-        this[animate] = () => {
+        this[animate] = (timestamp) => {
             requestAnimationFrame(this[animate]);
 
-            this.player.keyboardControls.update(this.player.controls.getObject(), this.player.configuration.skills);
+            //this.player.keyboardControls.update(this.player.controls.getObject(), this.player.configuration.skills);
             this.player.controls.update();
 
-            this.renderer.render(this.scene, this.player.camera);
+            //this.renderer.render(this.scene, this.player.camera);
+            this.manager.render(this.scene, this.player.camera, timestamp);
         };
     }
 
@@ -77,21 +81,28 @@ class MazeTemplate {
         this.player.geometry = playerGeometry;
         this.scene.add(playerGeometry);
 
-        let camera = new THREE.PerspectiveCamera(74, window.innerWidth / window.innerHeight, 1, 10000);
+        let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 10000);
         camera.position.x = playerGeometry.position.x;
         camera.position.z = playerGeometry.position.z;
         camera.position.y = playerGeometry.position.y;
         this.player.camera = camera;
 
-        this.player.keyboardControls = KeyboardControls.create();
+        //this.player.keyboardControls = KeyboardControls.create();
     }
 
     start() {
-        let renderer = new THREE.WebGLRenderer();
+        let renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('maze').appendChild(renderer.domElement);
 
         this.renderer = renderer;
+
+        // Apply VR stereo rendering to renderer.
+        this.effect = new VREffect(renderer);
+        this.effect.setSize(window.innerWidth, window.innerHeight);
+
+        // Create a VR manager helper to enter and exit VR mode.
+        this.manager = new WebVRManager(renderer, this.effect, {hideButton: false});
 
         this.player.controls = new DeviceOrientationController( this.player.camera, this.renderer.domElement );
         this.player.controls.connect();
@@ -102,7 +113,16 @@ class MazeTemplate {
         });
 
         this[animate]();
+        window.addEventListener('resize'. this.onWindowResize);
     }
+
+    onWindowResize() {
+        this.player.camera.aspect = window.innerWidth / window.innerHeight;
+        this.player.camera.updateProjectionMatrix();
+
+        this.effect.setSize( window.innerWidth, window.innerHeight );
+    };
+
 }
 
 function create({length, width, cellSize}) {
