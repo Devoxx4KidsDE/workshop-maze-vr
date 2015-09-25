@@ -3,6 +3,7 @@ import * as wall from './../maze/wall';
 import * as UI from './../maze/ui';
 import * as KeyboardControls from './../maze/keyboardControls';
 import * as MouseControls from './../maze/mouseControls';
+import DeviceOrientationController from './../maze/deviceOrientationController';
 
 const animate = Symbol();
 const mouseMove = Symbol();
@@ -19,7 +20,7 @@ class MazeTemplate {
             configuration: undefined,
             camera: undefined,
             keyboardControls: undefined,
-            mouseControls: undefined
+            controls: undefined
         };
 
         this.walls = [];
@@ -32,7 +33,8 @@ class MazeTemplate {
         this[animate] = () => {
             requestAnimationFrame(this[animate]);
 
-            this.player.keyboardControls.update(this.player.mouseControls.getObject(), this.player.configuration.skills);
+            this.player.keyboardControls.update(this.player.controls.getObject(), this.player.configuration.skills);
+            this.player.controls.update();
 
             this.renderer.render(this.scene, this.player.camera);
         };
@@ -82,11 +84,6 @@ class MazeTemplate {
         this.player.camera = camera;
 
         this.player.keyboardControls = KeyboardControls.create();
-        this.player.mouseControls = MouseControls.create(camera);
-
-        //this.scene.add(this.player.camera);
-        //this.scene.add(this.player.keyboardControls);
-        this.scene.add(this.player.mouseControls.getObject());
     }
 
     start() {
@@ -95,6 +92,9 @@ class MazeTemplate {
         document.getElementById('maze').appendChild(renderer.domElement);
 
         this.renderer = renderer;
+
+        this.player.controls = new DeviceOrientationController( this.player.camera, this.renderer.domElement );
+        this.player.controls.connect();
 
         UI.draw({
             id: 'player-name',
