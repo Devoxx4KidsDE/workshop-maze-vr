@@ -9,4 +9,11 @@ Designed for a devoxx4kids workshop to show children how to do objective program
 Just clone this repository and type 'npm install' in the workshop-maze-vr directory. After the dependencies are installed start the server with 'npm start'.
 The server is now available at http://localhost:4000
 
+## Dependencies
+This project is based on:
+* [three.js](http://threejs.org/)
+* [threeVR](https://github.com/richtr/threeVR)
+* [webvr-boilerplate](https://github.com/borismus/webvr-boilerplate)
+* [Maze3D](https://github.com/agar3s/maze3D)
+
 Have fun.
