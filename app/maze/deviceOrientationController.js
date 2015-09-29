@@ -13,9 +13,10 @@ import * as THREE from './../libs/three.js';
  *
  **/
 
-var DeviceOrientationController = function ( object, domElement ) {
+var DeviceOrientationController = function ( object, skills, domElement ) {
 
     this.object = object;
+    this.skills = skills;
     this.element = domElement || document;
 
     this.freeze = true;
@@ -435,6 +436,9 @@ var DeviceOrientationController = function ( object, domElement ) {
         if ( appState !== CONTROLLER_STATE.AUTO ) {
             this.updateManualMove();
         }
+
+        this.object.position.setY(0); //no movement up and down
+        this.object.translateZ(-this.skills.speed);
     };
 
     this.connect = function () {

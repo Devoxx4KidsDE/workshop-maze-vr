@@ -35,11 +35,7 @@ class MazeTemplate {
 
         this[animate] = (timestamp) => {
             requestAnimationFrame(this[animate]);
-
-            //this.player.keyboardControls.update(this.player.controls.getObject(), this.player.configuration.skills);
             this.player.controls.update();
-
-            //this.renderer.render(this.scene, this.player.camera);
             this.manager.render(this.scene, this.player.camera, timestamp);
         };
     }
@@ -86,8 +82,6 @@ class MazeTemplate {
         camera.position.z = playerGeometry.position.z;
         camera.position.y = playerGeometry.position.y;
         this.player.camera = camera;
-
-        //this.player.keyboardControls = KeyboardControls.create();
     }
 
     start() {
@@ -104,7 +98,7 @@ class MazeTemplate {
         // Create a VR manager helper to enter and exit VR mode.
         this.manager = new WebVRManager(renderer, this.effect, {hideButton: false});
 
-        this.player.controls = new DeviceOrientationController( this.player.camera, this.renderer.domElement );
+        this.player.controls = new DeviceOrientationController( this.player.camera, this.player.configuration.skills, this.renderer.domElement );
         this.player.controls.connect();
 
         UI.draw({
