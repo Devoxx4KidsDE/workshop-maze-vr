@@ -107,7 +107,7 @@ class MazeTemplate {
         });
 
         this[animate]();
-        window.addEventListener('resize'. this.onWindowResize);
+        window.addEventListener('resize', this.onWindowResize);
     }
 
     onWindowResize() {
