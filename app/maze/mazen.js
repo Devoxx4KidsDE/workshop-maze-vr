@@ -54,11 +54,13 @@ class MazeTemplate {
         });
     }
 
+    addWall (wall) {
+        this.scene.add  (wall);
+        this.walls.push (wall);
+    }
+
     addWalls(walls) {
-        walls.forEach(w => {
-            this.scene.add(w);
-            this.walls.push(w);
-        });
+        walls.forEach(w => this.addWall (w));
     }
 
     addPlayer(playerConfiguration) {
