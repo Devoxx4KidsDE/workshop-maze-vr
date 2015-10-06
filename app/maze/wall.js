@@ -1,6 +1,6 @@
 import * as THREE from '../libs/three';
 
-function create({x,z,orientation,texture}, cellSize) {
+function create({x,z,orientation,texture = 'wall'}, cellSize = 500) {
 
     var offSizeX = 0;
     var offSizeZ = 0;
