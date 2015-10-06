@@ -1,33 +1,65 @@
 import * as THREE from '../libs/three';
 
-function create({x,z,orientation,texture = 'wall'}, cellSize = 500) {
+function calculateOffsize (orientation, cellSize) {
 
-    var offSizeX = 0;
-    var offSizeZ = 0;
+    var x = 0;
+    var z = 0;
 
     switch (orientation) {
         case 'front':
-            offSizeX = cellSize / 2;
+            x = cellSize / 2;
             break;
         case 'back':
-            offSizeX = -cellSize / 2;
+            x = -cellSize / 2;
             break;
         case 'left':
-            offSizeZ = -cellSize / 2;
+            z = -cellSize / 2;
             break;
         case 'right':
-            offSizeZ = cellSize / 2;
+            z = cellSize / 2;
     }
 
-    var material = new THREE.MeshBasicMaterial({
-        map: THREE.ImageUtils.loadTexture(`../textures/${texture}.png`),
-        side: THREE.DoubleSide
-    });
+    return {x, z};
+}
 
-    var wall = new THREE.Mesh(new THREE.PlaneBufferGeometry(cellSize, cellSize, 1, 1), material);
-    wall.rotation.y = (orientation === 'left' || orientation === 'right') ? 0 : Math.PI / 2;
-    wall.position.x = (x * cellSize) + (cellSize / 2) + offSizeX;
-    wall.position.z = (z * cellSize) + (cellSize / 2) + offSizeZ;
+class WallPrototype {
+
+    constructor ({x, z, orientation}, cellSize) {
+
+        this.x           = x;
+        this.z           = z;
+        this.orientation = orientation;
+        this.cellSize    = cellSize;
+    }
+
+    setTexture (textureName) {
+        if    (!textureName) throw new TypeError ('textureName must be defined.');
+
+        const cellSize    = this.cellSize;
+        const orientation = this.orientation;
+        const offsize     = calculateOffsize (orientation, cellSize);
+
+        const material = new THREE.MeshBasicMaterial ({
+            map: THREE.ImageUtils.loadTexture (`../textures/${textureName}.png`),
+            side: THREE.DoubleSide
+        });
+
+        this.mesh = new THREE.Mesh (new THREE.PlaneBufferGeometry (cellSize, cellSize, 1, 1), material);
+        this.mesh.rotation.y = (orientation === 'left' || orientation === 'right') ? 0 : Math.PI / 2;
+        this.mesh.position.x = (this.x * cellSize) + (cellSize / 2) + offsize.x;
+        this.mesh.position.z = (this.z * cellSize) + (cellSize / 2) + offsize.z;
+    }
+
+    getMesh () {
+        return this.mesh;
+    }
+}
+
+function create ({x, z, orientation, texture = 'wall'}, cellSize = 500) {
+
+    const wall = new WallPrototype ({x, z, orientation}, cellSize);
+
+    wall.setTexture (texture);
 
     return wall;
 }

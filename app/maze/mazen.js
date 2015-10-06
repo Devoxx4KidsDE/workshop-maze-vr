@@ -55,8 +55,11 @@ class MazeTemplate {
     }
 
     addWall (wall) {
-        this.scene.add  (wall);
-        this.walls.push (wall);
+
+        const wallMesh = wall.getMesh ();
+
+        this.scene.add  (wallMesh);
+        this.walls.push (wallMesh);
     }
 
     addWalls(walls) {
