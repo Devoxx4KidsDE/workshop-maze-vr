@@ -32,4 +32,4 @@ function create({x,z,orientation,texture}, cellSize) {
     return wall;
 }
 
-export {create};
+export default {create};

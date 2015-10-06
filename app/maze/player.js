@@ -28,4 +28,4 @@ function create(name, {x,y,z}, {width = 200, height = 500, depth = 200}) {
     return player;
 }
 
-export {create}
+export default {create}

@@ -1,6 +1,6 @@
-import * as Wall from './../maze/wall';
-import * as Maze from './../maze/mazen';
-import * as Player from './../maze/player';
+import Wall from './../maze/wall';
+import Maze from './../maze/mazen';
+import Player from './../maze/player';
 
 function load(name) {
     return fetch('configuration/' + name + '.json').then(configurationResponse => {
@@ -27,4 +27,4 @@ function load(name) {
     });
 }
 
-export {load}
+export default {load}

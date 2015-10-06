@@ -1,5 +1,5 @@
 import * as THREE from './../libs/three';
-import * as wall from './../maze/wall';
+import Wall from './../maze/wall';
 
 var camera;
 var renderer;
@@ -52,7 +52,7 @@ function create(options) {
 
     // East and Wests walls
     for (var actualMazeLength = 0; actualMazeLength < options.length; actualMazeLength++) {
-        var borderWallWest = wall.create({
+        var borderWallWest = Wall.create({
             z: 0,
             x: actualMazeLength,
             orientation: 'left',
@@ -61,7 +61,7 @@ function create(options) {
         scene.add(borderWallWest);
         wallGeometries.push(borderWallWest);
 
-        var borderWallEast = wall.create({
+        var borderWallEast = Wall.create({
             z: options.width - 1,
             x: actualMazeLength,
             orientation: 'right',
@@ -73,7 +73,7 @@ function create(options) {
 
     // North and South walls
     for (var actualMazeWidth = 0; actualMazeWidth < options.width; actualMazeWidth++) {
-        var borderWallNorth = wall.create({
+        var borderWallNorth = Wall.create({
             z: actualMazeWidth,
             x: options.length - 1,
             orientation: 'front',
@@ -82,7 +82,7 @@ function create(options) {
         scene.add(borderWallNorth);
         wallGeometries.push(borderWallNorth);
 
-        var borderWallSouth = wall.create({
+        var borderWallSouth = Wall.create({
             z: actualMazeWidth,
             x: 0,
             orientation: 'back',

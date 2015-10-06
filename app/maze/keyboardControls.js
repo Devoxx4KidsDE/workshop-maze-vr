@@ -103,4 +103,4 @@ function create() {
     return new KeyboardControls();
 }
 
-export {create}
+export default {create}

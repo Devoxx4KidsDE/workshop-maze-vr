@@ -52,4 +52,4 @@ function create(camera){
     return new MouseControls(camera);
 }
 
-export {create}
+export default {create}

@@ -1,8 +1,8 @@
 import * as THREE from './../libs/three';
-import * as wall from './../maze/wall';
-import * as UI from './../maze/ui';
-import * as KeyboardControls from './../maze/keyboardControls';
-import * as MouseControls from './../maze/mouseControls';
+import Wall from './../maze/wall';
+import UI from './../maze/ui';
+import KeyboardControls from './../maze/keyboardControls';
+import MouseControls from './../maze/mouseControls';
 import DeviceOrientationController from './../maze/deviceOrientationController';
 import VREffect from './../libs/VREffect';
 import './../libs/webvr-manager';
@@ -161,7 +161,7 @@ function create({length, width, cellSize}) {
 
     // East and Wests walls
     for (let actualMazeLength = 0; actualMazeLength < length; actualMazeLength++) {
-        let borderWallBack = wall.create({
+        let borderWallBack = Wall.create({
             z: 0,
             x: actualMazeLength,
             orientation: 'left',
@@ -169,7 +169,7 @@ function create({length, width, cellSize}) {
         }, cellSize);
         maze.addWalls([borderWallBack]);
 
-        let borderWallFront = wall.create({
+        let borderWallFront = Wall.create({
             z: width - 1,
             x: actualMazeLength,
             orientation: 'right',
@@ -180,7 +180,7 @@ function create({length, width, cellSize}) {
 
     // North and South walls
     for (let actualMazeWidth = 0; actualMazeWidth < width; actualMazeWidth++) {
-        let borderWallRight = wall.create({
+        let borderWallRight = Wall.create({
             z: actualMazeWidth,
             x: length - 1,
             orientation: 'front',
@@ -188,7 +188,7 @@ function create({length, width, cellSize}) {
         }, cellSize);
         maze.addWalls([borderWallRight]);
 
-        let borderWallLeft = wall.create({
+        let borderWallLeft = Wall.create({
             z: actualMazeWidth,
             x: 0,
             orientation: 'back',
@@ -200,4 +200,4 @@ function create({length, width, cellSize}) {
     return maze;
 }
 
-export {create}
+export default {create}
