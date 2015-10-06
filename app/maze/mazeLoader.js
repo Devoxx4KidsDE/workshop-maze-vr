@@ -1,6 +1,7 @@
 import Wall from './../maze/wall';
 import Maze from './../maze/mazen';
 import Player from './../maze/player';
+import * as WallTexture from './wallTexture';
 
 function load(name) {
     return fetch('configuration/' + name + '.json').then(configurationResponse => {
@@ -14,7 +15,7 @@ function load(name) {
 
             let walls = configuration.walls.map((w, i) => {
                 w = Object.assign(w);
-                w.texture = i % 2 ? 'wall' : 'wall_d4k';
+                w.texture = i % 2 ? WallTexture.SIMPLE : WallTexture.DEVOXX_4_KIDS;
                 return Wall.create(w, configuration.cellSize);
             });
             maze.addWalls(walls);

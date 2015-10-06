@@ -1,4 +1,5 @@
 import * as THREE from '../libs/three';
+import {SIMPLE as DefaultTexture} from './wallTexture';
 
 function calculateOffsize (orientation, cellSize) {
 
@@ -55,7 +56,7 @@ class WallPrototype {
     }
 }
 
-function create ({x, z, orientation, texture = 'wall'}, cellSize = 500) {
+function create ({x, z, orientation, texture = DefaultTexture}, cellSize = 500) {
 
     const wall = new WallPrototype ({x, z, orientation}, cellSize);
 
