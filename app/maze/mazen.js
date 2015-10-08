@@ -1,8 +1,6 @@
 import * as THREE from './../libs/three';
 import Wall from './../maze/wall';
 import UI from './../maze/ui';
-import KeyboardControls from './../maze/keyboardControls';
-import MouseControls from './../maze/mouseControls';
 import DeviceOrientationController from './../maze/deviceOrientationController';
 import VREffect from './../libs/VREffect';
 import './../libs/webvr-manager';
@@ -22,7 +20,6 @@ class MazeTemplate {
             geometry: undefined,
             configuration: undefined,
             camera: undefined,
-            keyboardControls: undefined,
             controls: undefined
         };
 
