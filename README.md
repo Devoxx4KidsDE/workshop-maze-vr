@@ -4,6 +4,8 @@
 
 Designed for a devoxx4kids workshop to show children how to do objective programming and see what their maze in virtual reality look like
 
+![stereoscopic view](https://raw.githubusercontent.com/Devoxx4KidsDE/workshop-maze-vr/master/presentation/screenshot-splitscreen.png)
+
 ## Start
 
 Just clone this repository and type ``npm install`` in the workshop-maze-vr directory (be shure you have a latest version of node.js). After the dependencies are installed start the server with ``npm start``.
