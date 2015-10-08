@@ -436,9 +436,6 @@ var DeviceOrientationController = function ( object, skills, domElement ) {
         if ( appState !== CONTROLLER_STATE.AUTO ) {
             this.updateManualMove();
         }
-
-        this.object.position.setY(0); //no movement up and down
-        this.object.translateZ(-this.skills.speed);
     };
 
     this.connect = function () {

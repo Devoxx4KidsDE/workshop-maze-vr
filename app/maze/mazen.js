@@ -1,6 +1,7 @@
 import * as THREE from './../libs/three';
 import Wall from './../maze/wall';
 import UI from './../maze/ui';
+import CollisionDetector from './../maze/collisionDetector';
 import DeviceOrientationController from './../maze/deviceOrientationController';
 import VREffect from './../libs/VREffect';
 import './../libs/webvr-manager';
@@ -17,7 +18,7 @@ class MazeTemplate {
         this.scene = undefined;
 
         this.player = {
-            geometry: undefined,
+            collisionDetector: undefined,
             configuration: undefined,
             camera: undefined,
             controls: undefined
@@ -33,6 +34,11 @@ class MazeTemplate {
         this[animate] = (timestamp) => {
             requestAnimationFrame(this[animate]);
             this.player.controls.update();
+
+            if (!this.player.collisionDetector.hasCollision( this.player.camera, this.walls )) {
+                this.player.camera.translateZ(-this.player.configuration.skills.speed);
+            }
+            this.player.camera.position.setY(0); //no movement up and down
             this.manager.render(this.scene, this.player.camera, timestamp);
         };
     }
@@ -66,23 +72,11 @@ class MazeTemplate {
     addPlayer(playerConfiguration) {
 
         this.player.configuration = playerConfiguration;
-
-        let playerGeometry = new THREE.Mesh(
-            new THREE.BoxGeometry(playerConfiguration.body.width, playerConfiguration.body.height, playerConfiguration.body.depth),
-            new THREE.MeshBasicMaterial({
-                map: THREE.ImageUtils.loadTexture('textures/player.png'),
-                side: THREE.FrontSide
-            })
-        );
-        playerGeometry.position.x = (playerConfiguration.position.x * this.cellSize) + (this.cellSize / 2);
-        playerGeometry.position.z = (playerConfiguration.position.z * this.cellSize) + (this.cellSize / 2);
-        this.player.geometry = playerGeometry;
-        this.scene.add(playerGeometry);
-
+        this.player.collisionDetector = CollisionDetector.create();
         let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 10000);
-        camera.position.x = playerGeometry.position.x;
-        camera.position.z = playerGeometry.position.z;
-        camera.position.y = playerGeometry.position.y;
+        camera.position.x = (this.player.configuration.position.x * this.cellSize) + (this.cellSize / 2);
+        camera.position.z = (this.player.configuration.position.z * this.cellSize) + (this.cellSize / 2);
+
         this.player.camera = camera;
     }
 
@@ -117,7 +111,7 @@ class MazeTemplate {
         this.player.camera.updateProjectionMatrix();
 
         this.effect.setSize( window.innerWidth, window.innerHeight );
-    };
+    }
 
 }
 
