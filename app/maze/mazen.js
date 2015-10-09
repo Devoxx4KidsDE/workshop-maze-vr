@@ -79,6 +79,10 @@ class MazeTemplate {
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 10000);
         camera.position.x = (this.player.configuration.position.x * this.cellSize) + (this.cellSize / 2);
         camera.position.z = (this.player.configuration.position.z * this.cellSize) + (this.cellSize / 2);
+        // looking into the maze
+        let lookAtPoint = new THREE.Vector3(this.cellSize / 2, 0, this.cellSize);
+        camera.lookAt(lookAtPoint);
+    }
 
     addItem(item) {
         item.geometery.position.x = (item.geometery.position.x * this.cellSize) + (this.cellSize / 2);
