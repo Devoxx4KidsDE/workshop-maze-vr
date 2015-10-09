@@ -60,7 +60,7 @@ class MazeTemplate {
         });
     }
 
-    addWall (wall) {
+    addWall(wall) {
 
         const wallMesh = wall.getMesh ();
 
