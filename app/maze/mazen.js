@@ -10,6 +10,10 @@ import './../libs/webvr-polyfill';
 const animate = Symbol();
 const mouseMove = Symbol();
 
+/* gobal definition of camera and effect for onWindowResize() see #2 */
+var camera;
+var effect;
+
 class MazeTemplate {
     constructor() {
         this.length = undefined;
@@ -20,7 +24,6 @@ class MazeTemplate {
         this.player = {
             collisionDetector: undefined,
             configuration: undefined,
-            camera: undefined,
             controls: undefined
         };
 
@@ -35,11 +38,11 @@ class MazeTemplate {
             requestAnimationFrame(this[animate]);
             this.player.controls.update();
 
-            if (!this.player.collisionDetector.hasCollision( this.player.camera, this.walls )) {
-                this.player.camera.translateZ(-this.player.configuration.skills.speed);
+            if (!this.player.collisionDetector.hasCollision( camera, this.walls )) {
+                camera.translateZ(-this.player.configuration.skills.speed);
             }
-            this.player.camera.position.setY(0); //no movement up and down
-            this.manager.render(this.scene, this.player.camera, timestamp);
+            camera.position.setY(0); //no movement up and down
+            this.manager.render(this.scene, camera, timestamp);
         };
     }
 
@@ -73,11 +76,9 @@ class MazeTemplate {
 
         this.player.configuration = playerConfiguration;
         this.player.collisionDetector = CollisionDetector.create();
-        let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 10000);
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 10000);
         camera.position.x = (this.player.configuration.position.x * this.cellSize) + (this.cellSize / 2);
         camera.position.z = (this.player.configuration.position.z * this.cellSize) + (this.cellSize / 2);
-
-        this.player.camera = camera;
     }
 
     start() {
@@ -88,13 +89,13 @@ class MazeTemplate {
         this.renderer = renderer;
 
         // Apply VR stereo rendering to renderer.
-        this.effect = new VREffect(renderer);
-        this.effect.setSize(window.innerWidth, window.innerHeight);
+        effect = new VREffect(renderer);
+        effect.setSize(window.innerWidth, window.innerHeight);
 
         // Create a VR manager helper to enter and exit VR mode.
-        this.manager = new WebVRManager(renderer, this.effect, {hideButton: false});
+        this.manager = new WebVRManager(renderer, effect, {hideButton: false});
 
-        this.player.controls = new DeviceOrientationController( this.player.camera, this.player.configuration.skills, this.renderer.domElement );
+        this.player.controls = new DeviceOrientationController( camera, this.player.configuration.skills, this.renderer.domElement );
         this.player.controls.connect();
 
         UI.draw({
@@ -107,10 +108,10 @@ class MazeTemplate {
     }
 
     onWindowResize() {
-        this.player.camera.aspect = window.innerWidth / window.innerHeight;
-        this.player.camera.updateProjectionMatrix();
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
 
-        this.effect.setSize( window.innerWidth, window.innerHeight );
+        effect.setSize( window.innerWidth, window.innerHeight );
     }
 
 }
