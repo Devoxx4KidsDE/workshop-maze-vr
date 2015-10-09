@@ -14,22 +14,8 @@ ul {
     list-style: none;
 }
 
-#cube {
-    color: #009900;
-}
-
-#cube.found {
+.found {
     text-decoration: line-through;
-    color: #007700;
-}
-
-#ball {
-    color: #FF9722;
-}
-
-#ball.found {
-    text-decoration: line-through;
-    color: #EE8712;
 }
 
 .player-information {
@@ -37,6 +23,15 @@ ul {
     font-weight: bold;
     position: absolute;
     left: 0;
+    top: 0;
+    padding: 1em;
+}
+
+.items {
+    font-size: 1.2em;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
     top: 0;
     padding: 1em;
 }

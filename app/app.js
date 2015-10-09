@@ -1,6 +1,7 @@
 import Maze from './maze/mazen';
 import Player from './maze/player';
 import Wall from './maze/wall';
+import Item from './maze/item';
 import * as WallTexture from './maze/wallTexture';
 
 let options = {length: 20, width: 10, cellSize: 500};
@@ -13,6 +14,12 @@ let player = Player.create('HoBeTo', {x: 0, y: 0, z: 0}, {
 });
 maze.addPlayer(player);
 
+//let cube = Item.createCube();
+//maze.addItem(cube);
+//
+//let fireball = Item.createFireball();
+//maze.addItem(fireball);
+//
 //const simple_wall_front = Wall.create ({x: 1, z: 2, orientation: 'front'});
 //const simple_wall_right = Wall.create ({x: 1, z: 2, orientation: 'right'});
 //const simple_wall_back  = Wall.create ({x: 1, z: 2, orientation: 'back' });

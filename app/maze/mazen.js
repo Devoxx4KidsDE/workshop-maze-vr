@@ -79,6 +79,13 @@ class MazeTemplate {
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 10000);
         camera.position.x = (this.player.configuration.position.x * this.cellSize) + (this.cellSize / 2);
         camera.position.z = (this.player.configuration.position.z * this.cellSize) + (this.cellSize / 2);
+
+    addItem(item) {
+        item.geometery.position.x = (item.geometery.position.x * this.cellSize) + (this.cellSize / 2);
+        item.geometery.position.y = (item.geometery.position.y * this.cellSize);
+        item.geometery.position.z = (item.geometery.position.z * this.cellSize) + (this.cellSize / 2);
+        this.items.push(item);
+        this.scene.add(item.geometery);
     }
 
     start() {
@@ -105,6 +112,13 @@ class MazeTemplate {
 
         this[animate]();
         window.addEventListener('resize', this.onWindowResize);
+
+        this.items.forEach(item => {
+            UI.add({
+                id: item.name,
+                text: item.name
+            }, 'items');
+        });
     }
 
     onWindowResize() {
