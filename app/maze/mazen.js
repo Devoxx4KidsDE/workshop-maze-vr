@@ -41,6 +41,25 @@ class MazeTemplate {
             if (!this.player.collisionDetector.hasCollision( camera, this.walls )) {
                 camera.translateZ(-this.player.configuration.skills.speed);
             }
+
+            this.items.forEach(item => {
+                if (!item.isCollected) {
+                    if (this.player.collisionDetector.hasCollision(camera, [item.geometry])) {
+                        console.log(item.name + " collected");
+                        item.isCollected = true;
+                        UI.update(item.name, "found") ;
+
+                        for (let i = this.scene.children.length - 1; i >= 0 ; i -- ) {
+                            let obj = this.scene.children[ i ];
+                            if ( obj == item.geometry ) {
+                                this.scene.remove(obj);
+                            }
+                        }
+
+                    }
+                }
+            });
+
             camera.position.setY(0); //no movement up and down
             this.manager.render(this.scene, camera, timestamp);
         };
@@ -85,11 +104,11 @@ class MazeTemplate {
     }
 
     addItem(item) {
-        item.geometery.position.x = (item.geometery.position.x * this.cellSize) + (this.cellSize / 2);
-        item.geometery.position.y = (item.geometery.position.y * this.cellSize);
-        item.geometery.position.z = (item.geometery.position.z * this.cellSize) + (this.cellSize / 2);
+        item.geometry.position.x = (item.geometry.position.x * this.cellSize) + (this.cellSize / 2);
+        item.geometry.position.y = (item.geometry.position.y * this.cellSize);
+        item.geometry.position.z = (item.geometry.position.z * this.cellSize) + (this.cellSize / 2);
         this.items.push(item);
-        this.scene.add(item.geometery);
+        this.scene.add(item.geometry);
     }
 
     start() {

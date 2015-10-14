@@ -9,4 +9,9 @@ function add({id, text}, parentId) {
     document.getElementById(parentId).appendChild(div);
 }
 
-export default {draw,add}
+function update(id, classId) {
+    let element = document.getElementById(id);
+    element.className = element.className + classId;
+}
+
+export default {draw,add, update}
