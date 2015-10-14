@@ -13,6 +13,7 @@ const mouseMove = Symbol();
 /* gobal definition of camera and effect for onWindowResize() see #2 */
 var camera;
 var effect;
+var renderer;
 
 class MazeTemplate {
     constructor() {
@@ -31,8 +32,6 @@ class MazeTemplate {
         this.floor = [];
         this.items = [];
         this.ceiling = [];
-
-        this.renderer = undefined;
 
         this[animate] = (timestamp) => {
             requestAnimationFrame(this[animate]);
@@ -112,11 +111,11 @@ class MazeTemplate {
     }
 
     start() {
-        let renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('maze').appendChild(renderer.domElement);
 
-        this.renderer = renderer;
+        renderer = renderer;
 
         // Apply VR stereo rendering to renderer.
         effect = new VREffect(renderer);
@@ -125,7 +124,7 @@ class MazeTemplate {
         // Create a VR manager helper to enter and exit VR mode.
         this.manager = new WebVRManager(renderer, effect, {hideButton: false});
 
-        this.player.controls = new DeviceOrientationController( camera, this.player.configuration.skills, this.renderer.domElement );
+        this.player.controls = new DeviceOrientationController( camera, this.player.configuration.skills, renderer.domElement );
         this.player.controls.connect();
 
         UI.draw({
@@ -147,7 +146,7 @@ class MazeTemplate {
     onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-
+        renderer.setSize(window.innerWidth, window.innerHeight);
         effect.setSize( window.innerWidth, window.innerHeight );
     }
 
