@@ -45,7 +45,7 @@ class MazeTemplate {
             this.items.forEach(item => {
                 if (!item.isCollected) {
                     if (this.player.collisionDetector.hasCollision(camera, [item.geometry])) {
-                        console.log(item.name + " collected");
+                        console.log(item.name + " collected!");
                         item.isCollected = true;
                         UI.update(item.name, "found") ;
 
