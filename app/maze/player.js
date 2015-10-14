@@ -1,11 +1,7 @@
 class Player {
     constructor() {
         this.name = undefined;
-        this.skills = {
-            speed: 1,
-            jump: 1
-        };
-        this.body = undefined;
+        this.speed = undefined;
         this.position = {
             x: undefined,
             y: undefined,
@@ -14,16 +10,14 @@ class Player {
     }
 }
 
-function create(name, {x,y,z}, {width = 200, height = 500, depth = 200}) {
+function create(name = "HoBeTo", speed=1, {x=0,y=0,z=0}) {
     let player = new Player();
 
     player.name = name;
-
+    player.speed = speed;
     player.position.x = x;
     player.position.y = y;
     player.position.z = z;
-
-    player.body = {width: width, height: height, depth: depth};
 
     return player;
 }

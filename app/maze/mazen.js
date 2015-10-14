@@ -38,7 +38,7 @@ class MazeTemplate {
             this.player.controls.update();
 
             if (!this.player.collisionDetector.hasCollision( camera, this.walls )) {
-                camera.translateZ(-this.player.configuration.skills.speed);
+                camera.translateZ(-this.player.configuration.speed);
             }
 
             this.items.forEach(item => {

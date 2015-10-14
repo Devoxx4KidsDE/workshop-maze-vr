@@ -4,20 +4,16 @@ import Wall from './maze/wall';
 import Item from './maze/item';
 import * as WallTexture from './maze/wallTexture';
 
-let options = {length: 20, width: 10, cellSize: 500};
-
-let maze = Maze.create(options);
-let player = Player.create('HoBeTo', {x: 0, y: 0, z: 0}, {
-    width: options.cellSize / 3,
-    height: options.cellSize / 3,
-    depth: options.cellSize / 3
-});
-maze.addPlayer(player);
-
-//let cube = Item.createCube();
+//let options = {length: 20, width: 10, cellSize: 500};
+//
+//let maze = Maze.create(options);
+//let player = Player.create('Your Name', 1, {x: 0, y: 0, z: 0});
+//maze.addPlayer(player);
+//
+//const cube = Item.createCube();
 //maze.addItem(cube);
 //
-//let fireball = Item.createFireball();
+//const fireball = Item.createFireball();
 //maze.addItem(fireball);
 //
 //const simple_wall_front = Wall.create ({x: 1, z: 2, orientation: 'front'});
