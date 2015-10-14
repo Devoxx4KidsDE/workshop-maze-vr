@@ -25,6 +25,7 @@ ul {
     left: 0;
     top: 0;
     padding: 1em;
+    z-index: 2147483647;
 }
 
 .items {
@@ -34,4 +35,5 @@ ul {
     right: 0;
     top: 0;
     padding: 1em;
+    z-index: 2147483647;
 }
