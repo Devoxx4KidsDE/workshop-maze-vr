@@ -115,8 +115,6 @@ class MazeTemplate {
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('maze').appendChild(renderer.domElement);
 
-        renderer = renderer;
-
         // Apply VR stereo rendering to renderer.
         effect = new VREffect(renderer);
         effect.setSize(window.innerWidth, window.innerHeight);

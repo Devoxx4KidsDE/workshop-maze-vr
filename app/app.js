@@ -7,7 +7,7 @@ import * as WallTexture from './maze/wallTexture';
 let options = {length: 10, width: 10, cellSize: 500};
 
 let maze = Maze.create(options);
-let player = Player.create('honnel', 5, {x: 0, y: 0, z: 0});
+let player = Player.create('Your Name', 5, {x: 0, y: 0, z: 0});
 maze.addPlayer(player);
 
 const cube = Item.createCube({width : 100, height: 100, depth: 100},
