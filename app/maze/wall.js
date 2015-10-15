@@ -40,8 +40,11 @@ class WallPrototype {
         const orientation = this.orientation;
         const offsize     = calculateOffsize (orientation, cellSize);
 
+        const texture = THREE.ImageUtils.loadTexture (`../textures/${textureName}`);
+        texture.minFilter = THREE.LinearFilter;
+
         const material = new THREE.MeshBasicMaterial ({
-            map: THREE.ImageUtils.loadTexture (`../textures/${textureName}`),
+            map: texture,
             side: THREE.DoubleSide
         });
 
