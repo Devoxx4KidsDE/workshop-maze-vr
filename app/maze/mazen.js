@@ -98,7 +98,7 @@ class MazeTemplate {
         camera.position.x = (this.player.configuration.position.x * this.cellSize) + (this.cellSize / 2);
         camera.position.z = (this.player.configuration.position.z * this.cellSize) + (this.cellSize / 2);
         // looking into the maze
-        let lookAtPoint = new THREE.Vector3(this.cellSize / 2, 0, this.cellSize);
+        let lookAtPoint = new THREE.Vector3(this.cellSize, 0, this.cellSize / 2);
         camera.lookAt(lookAtPoint);
     }
 
