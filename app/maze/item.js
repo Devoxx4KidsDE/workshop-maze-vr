@@ -38,28 +38,28 @@ function create(name,
 
 function createCube(dimension = {width : 100, height: 100, depth: 100},
                     color = 0x00ff00,
-                    position = {x: 0, y: 0, z: 1},
+                    position = {x: 0, z: 1},
                     name = "cube") {
 
     let cubeGeometry = new THREE.BoxGeometry( dimension.width, dimension.height, dimension.depth );
     let cubeMaterial = new THREE.MeshBasicMaterial( { color: color } );
     let cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
     cube.position.x = position.x;
-    cube.position.y = position.y;
+    cube.position.y = 0;
     cube.position.z = position.z;
 
     return create(name, cube);
 }
 
-function createFireball(radius,
-                        position = {x: 1, y: 0, z: 1},
+function createFireball(radius = 100,
+                        position = {x: 1, z: 1},
                         name = "fireball") {
     let fireballGeometry = new THREE.SphereGeometry(radius);
     let fireballMaterial = new THREE.MeshBasicMaterial({map: new THREE.ImageUtils.loadTexture('textures/fire_texture.jpg')});
     let fireball = new THREE.Mesh(fireballGeometry, fireballMaterial);
 
     fireball.position.x = position.x;
-    fireball.position.y = position.y;
+    fireball.position.y = 0;
     fireball.position.z = position.z;
 
     return create(name, fireball);
