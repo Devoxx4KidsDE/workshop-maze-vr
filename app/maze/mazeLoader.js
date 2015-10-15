@@ -15,7 +15,7 @@ function load(name) {
 
             let walls = configuration.walls.map((w, i) => {
                 w = Object.assign(w);
-                w.texture = i % 2 ? WallTexture.SIMPLE : WallTexture.DEVOXX_4_KIDS;
+                w.texture = i % 2 ? WallTexture.STONE : WallTexture.STONE_LAMP;
                 return Wall.create(w, configuration.cellSize);
             });
             maze.addWalls(walls);
