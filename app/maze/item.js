@@ -5,6 +5,22 @@ class Item {
         this.name = undefined;
         this.geometry = undefined;
         this.collected = undefined;
+
+        var isCollected = false;
+
+        Object.defineProperty (this, 'isCollected', {
+            set (value) {
+                isCollected = value;
+                if (value && this.onCollectListener) {
+                    this.onCollectListener ();
+                }
+            },
+            get () { return isCollected; }
+        });
+    }
+
+    onCollect (listener) {
+        this.onCollectListener = listener;
     }
 }
 
