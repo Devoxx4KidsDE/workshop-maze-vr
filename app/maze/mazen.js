@@ -199,16 +199,14 @@ function create({length, width, cellSize}) {
         let borderWallBack = Wall.create({
             z: 0,
             x: actualMazeLength,
-            orientation: 'left',
-            texture: 'wall'
+            orientation: 'left'
         }, cellSize);
         maze.addWalls([borderWallBack]);
 
         let borderWallFront = Wall.create({
             z: width - 1,
             x: actualMazeLength,
-            orientation: 'right',
-            texture: 'wall'
+            orientation: 'right'
         }, cellSize);
         maze.addWalls([borderWallFront]);
     }
@@ -218,16 +216,14 @@ function create({length, width, cellSize}) {
         let borderWallRight = Wall.create({
             z: actualMazeWidth,
             x: length - 1,
-            orientation: 'front',
-            texture: 'wall'
+            orientation: 'front'
         }, cellSize);
         maze.addWalls([borderWallRight]);
 
         let borderWallLeft = Wall.create({
             z: actualMazeWidth,
             x: 0,
-            orientation: 'back',
-            texture: 'wall'
+            orientation: 'back'
         }, cellSize);
         maze.addWalls([borderWallLeft]);
     }
