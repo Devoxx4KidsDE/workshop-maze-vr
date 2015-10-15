@@ -16,6 +16,7 @@ ul {
 
 .found {
     text-decoration: line-through;
+    color: #00ff00;
 }
 
 .player-information {
