@@ -131,6 +131,8 @@ class MazeTemplate {
             id: 'player-name',
             text: this.player.configuration.name
         });
+        UI.pageTitle();
+
 
         this[animate]();
         window.addEventListener('resize', this.onWindowResize);

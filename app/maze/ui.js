@@ -14,4 +14,8 @@ function update(id, classId) {
     element.className = element.className + classId;
 }
 
-export default {draw,add, update}
+function pageTitle() {
+    document.title = "D4K-" + location.host.slice(11,13) + " - MazeVR" ;
+}
+
+export default {draw,add, update, pageTitle}
