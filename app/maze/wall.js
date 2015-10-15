@@ -1,5 +1,5 @@
 import * as THREE from '../libs/three';
-import {SIMPLE as DefaultTexture} from './wallTexture';
+import {STONE as DefaultTexture} from './wallTexture';
 
 function calculateOffsize (orientation, cellSize) {
 
@@ -41,7 +41,7 @@ class WallPrototype {
         const offsize     = calculateOffsize (orientation, cellSize);
 
         const material = new THREE.MeshBasicMaterial ({
-            map: THREE.ImageUtils.loadTexture (`../textures/${textureName}.png`),
+            map: THREE.ImageUtils.loadTexture (`../textures/${textureName}`),
             side: THREE.DoubleSide
         });
 
