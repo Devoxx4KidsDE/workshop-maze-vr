@@ -3,7 +3,8 @@
   "width": 10,
   "cellSize": 500,
   "player": {
-    "name": "Tim",
+    "name" : "Tim",
+    "speed" : "1",
     "position": {
       "x": 0,
       "y": 0,
