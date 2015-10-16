@@ -9,7 +9,11 @@ const maze = Maze.create({
     width : 10
 });
 
-const player = Player.create('Your Name', 5, {x: 0, y: 0, z: 0});
+const player = Player.create ({
+    name      : 'Bruce Wayne',
+    speed     : 5,
+    startPoint: {x: 0, z: 0}
+});
 maze.addPlayer(player);
 
 const cube = Item.createCube({width : 100, height: 100, depth: 100}, 'green', {x: 0, z: 1}, 'cube');

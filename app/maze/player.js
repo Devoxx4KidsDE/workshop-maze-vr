@@ -10,14 +10,14 @@ class Player {
     }
 }
 
-function create(name = "HoBeTo", speed=1, {x=0,y=0,z=0}) {
+function create ({name = 'Anonymous', speed = 5, startPoint = {x:0, z:0}}) {
     let player = new Player();
 
     player.name = name;
     player.speed = speed;
-    player.position.x = x;
-    player.position.y = y;
-    player.position.z = z;
+    player.position.x = startPoint.x;
+    player.position.z = startPoint.z;
+    player.position.y = 0;
 
     return player;
 }
