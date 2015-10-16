@@ -37,12 +37,14 @@ class MazeTemplate {
             requestAnimationFrame(this[animate]);
             this.player.controls.update();
 
+            const center = x => (x * this.cellSize) + (this.cellSize / 2);
+
             var collisionWall = this.player.collisionDetector.hasCollision(camera, this.walls);
             if (collisionWall) {
                 // portale
                 const {x, z} = collisionWall.triggerCollision();
                 if (x !== undefined && z !== undefined) {
-                    camera.position.set(x * this.cellSize, 0, z * this.cellSize);
+                    camera.position.set(center (x), 0, center (z));
                 }
             } else {
                 //walk on

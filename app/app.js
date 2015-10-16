@@ -40,16 +40,16 @@ maze.addWall (simple_wall_front);
 maze.addWall (simple_wall_right);
 maze.addWall (simple_wall_back );
 
-const portal = Wall.create ({x: 3, z: 0, orientation: 'front'});
+const portal = Wall.create ({x: 3, z: 0, orientation: 'back'});
       portal.setTexture (WallTexture.GATE);
-      portal.isPortalTo ({x: 5, z: 5});
+      portal.isPortalTo ({x: 2, z: 0});
 maze.addWall(portal);
 
 const hedge = Wall.create ({x: 3, z: 0, orientation: 'right'});
       hedge.setTexture (WallTexture.HEDGE);
 maze.addWall(hedge);
 
-const lamp = Wall.create ({x: 3, z: 0, orientation: 'back' });
+const lamp = Wall.create ({x: 3, z: 0, orientation: 'front' });
       lamp .setTexture (WallTexture.LAMP);
 maze.addWall(lamp);
 
