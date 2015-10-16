@@ -34,15 +34,12 @@ class WallPrototype {
 
     }
 
-    triggerCollision() {
-        if (this.collisionListener) {
-            return this.collisionListener();
-        }
-        return {};
+    triggerCollision () {
+        return this._portalTo ? this._portalTo : {};
     }
 
-    onCollision(listener) {
-      this.collisionListener = listener;
+    isPortalTo (point) {
+        this._portalTo = point;
     }
 
     setTexture (textureName) {

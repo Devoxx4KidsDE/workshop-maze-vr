@@ -39,9 +39,7 @@ const d4k_wall_right = Wall.create ({x: 3, z: 0, orientation: 'right'});
 const d4k_wall_back  = Wall.create ({x: 3, z: 0, orientation: 'back' });
 
 portal.setTexture (WallTexture.GATE);
-portal.onCollision (function () {
-    return {x: 5, z: 5};
-})
+portal.isPortalTo ({x: 5, z: 5});
 
 d4k_wall_right.setTexture (WallTexture.HEDGE);
 d4k_wall_back .setTexture (WallTexture.LAMP);
