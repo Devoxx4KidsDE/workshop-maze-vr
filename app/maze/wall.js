@@ -31,6 +31,18 @@ class WallPrototype {
         this.z           = z;
         this.orientation = orientation;
         this.cellSize    = cellSize;
+
+    }
+
+    triggerCollision() {
+        if (this.collisionListener) {
+            return this.collisionListener();
+        }
+        return {};
+    }
+
+    onCollision(listener) {
+      this.collisionListener = listener;
     }
 
     setTexture (textureName) {

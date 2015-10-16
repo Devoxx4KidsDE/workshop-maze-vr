@@ -37,7 +37,15 @@ class MazeTemplate {
             requestAnimationFrame(this[animate]);
             this.player.controls.update();
 
-            if (!this.player.collisionDetector.hasCollision( camera, this.walls )) {
+            var collisionWall = this.player.collisionDetector.hasCollision(camera, this.walls);
+            if (collisionWall) {
+                // portale
+                const {x, z} = collisionWall.triggerCollision();
+                if (x !== undefined && z !== undefined) {
+                    camera.position.set(x * this.cellSize, 0, z * this.cellSize);
+                }
+            } else {
+                //walk on
                 camera.translateZ(-this.player.configuration.speed);
             }
 
@@ -83,7 +91,7 @@ class MazeTemplate {
         const wallMesh = wall.getMesh ();
 
         this.scene.add  (wallMesh);
-        this.walls.push (wallMesh);
+        this.walls.push (wall);
     }
 
     addWalls(walls) {
