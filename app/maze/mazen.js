@@ -1,8 +1,8 @@
 import * as THREE from './../libs/three';
-import Wall from './../maze/wall';
-import UI from './../maze/ui';
-import CollisionDetector from './../maze/collisionDetector';
-import DeviceOrientationController from './../maze/deviceOrientationController';
+import Wall from './wall';
+import UI from './ui';
+import CollisionDetector from './collisionDetector';
+import DeviceOrientationController from './deviceOrientationController';
 import VREffect from './../libs/VREffect';
 import './../libs/webvr-manager';
 import './../libs/webvr-polyfill';

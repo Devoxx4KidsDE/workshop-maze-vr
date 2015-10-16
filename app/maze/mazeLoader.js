@@ -1,6 +1,6 @@
-import Wall from './../maze/wall';
-import Maze from './../maze/mazen';
-import Player from './../maze/player';
+import Wall from './wall';
+import Maze from './mazen';
+import Player from './player';
 import * as WallTexture from './wallTexture';
 
 function load(name) {
