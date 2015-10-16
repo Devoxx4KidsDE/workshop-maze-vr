@@ -61,6 +61,21 @@ class WallPrototype {
         this.mesh.rotation.y = (orientation === 'left' || orientation === 'right') ? 0 : Math.PI / 2;
         this.mesh.position.x = (this.x * cellSize) + (cellSize / 2) + offsize.x;
         this.mesh.position.z = (this.z * cellSize) + (cellSize / 2) + offsize.z;
+
+        switch (orientation) {
+            case 'right':
+                this.mesh.position.z -= 1;
+                break;
+            case 'left':
+                this.mesh.position.z += 1;
+                break;
+            case 'front':
+                this.mesh.position.x -= 1;
+                break;
+            case 'back':
+                this.mesh.position.x += 1;
+                break;
+        }
     }
 
     getMesh () {
