@@ -23,7 +23,13 @@ const fireball = Item.createFireball(100,
                                      {x: 1, z: 1},
                                      "fireball");
 fireball.onCollect (function () {
-    player.speed = player.speed * 0.25;
+    const oldSpeed = player.speed;
+
+    // player is burning and runs away in panic
+    player.speed = player.speed * 3;
+
+    // but calms down after 5 seconds
+    setTimeout (() => player.speed = oldSpeed, 5 * 1000);
 });
 maze.addItem(fireball);
 
