@@ -1,3 +1,19 @@
+/*
+
+ o   Bruce
+ x   item
+ >|  portal
+
+ +---+---+---+---+---+---+
+ |        ___|    ___    |
+ |   |   |  >|   | x |   |
+ |_x_    |___    |___|   |
+ |           |    ___|   |
+ |   |   |___|___|       |
+ | o |               |   |
+ +---+---+---+---+---+---+
+
+*/
 
 import Maze             from './../maze/mazen';
 import Player           from './../maze/player';
