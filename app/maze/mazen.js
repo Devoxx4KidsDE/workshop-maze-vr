@@ -160,7 +160,7 @@ class MazeTemplate {
 
 }
 
-function create({length, width, cellSize}) {
+function create({length = 10, width = 10, cellSize = 500}) {
     let maze = new MazeTemplate();
 
     maze.length = length;
