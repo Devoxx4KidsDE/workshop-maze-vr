@@ -19,6 +19,7 @@
     "webpack-dev-server": "^1.10.1"
   },
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "lint": "node_modules/eslint/bin/eslint.js app/"
   }
 }
