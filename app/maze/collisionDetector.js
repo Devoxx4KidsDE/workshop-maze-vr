@@ -1,10 +1,10 @@
 import * as THREE from './../libs/three.js';
 
 /*
-* Based on http://webmaestro.fr/collisions-detection-three-js-raycasting/
-* Uses camera lookat direction as ray for ray caster which checks collision with all obstacles
-* Note: can only be used because of fixed movment in camera direction (0,0,-1)!
-*/
+ * Based on http://webmaestro.fr/collisions-detection-three-js-raycasting/
+ * Uses camera lookat direction as ray for ray caster which checks collision with all obstacles
+ * Note: can only be used because of fixed movment in camera direction (0,0,-1)!
+ */
 class CollisionDetector {
 
     constructor(minimalDistance = 32) {
@@ -12,9 +12,7 @@ class CollisionDetector {
         this.raycaster = undefined;
     }
 
-
-
-    hasCollision ( camera, obstacles ) {
+    hasCollision(camera, obstacles) {
 
         let collisionObject;
         obstacles.some(obstacle => {
@@ -31,7 +29,7 @@ class CollisionDetector {
                 return true;
             }
             return false;
-        })
+        });
         return collisionObject;
     }
 }
@@ -44,7 +42,7 @@ function create() {
     return detector;
 }
 
-function getMesh( wall ) {
+function getMesh(wall) {
     return wall.getMesh ? wall.getMesh() : wall;
 }
 

@@ -44,7 +44,7 @@ class MazeTemplate {
                 // portale
                 const {x, z} = collisionWall.triggerCollision();
                 if (x !== undefined && z !== undefined) {
-                    camera.position.set(center (x), 0, center (z));
+                    camera.position.set(center(x), 0, center(z));
                 }
             } else {
                 //walk on
@@ -54,13 +54,13 @@ class MazeTemplate {
             this.items.forEach(item => {
                 if (!item.isCollected) {
                     if (this.player.collisionDetector.hasCollision(camera, [item.geometry])) {
-                        console.log(item.name + " collected!");
+                        console.log(item.name + ' collected!');
                         item.isCollected = true;
-                        UI.update(item.name, "found") ;
+                        UI.update(item.name, 'found');
 
-                        for (let i = this.scene.children.length - 1; i >= 0 ; i -- ) {
-                            let obj = this.scene.children[ i ];
-                            if ( obj == item.geometry ) {
+                        for (let i = this.scene.children.length - 1; i >= 0; i--) {
+                            let obj = this.scene.children[i];
+                            if (obj === item.geometry) {
                                 this.scene.remove(obj);
                             }
                         }
@@ -90,14 +90,14 @@ class MazeTemplate {
 
     addWall(wall) {
 
-        const wallMesh = wall.getMesh ();
+        const wallMesh = wall.getMesh();
 
-        this.scene.add  (wallMesh);
-        this.walls.push (wall);
+        this.scene.add(wallMesh);
+        this.walls.push(wall);
     }
 
     addWalls(walls) {
-        walls.forEach(w => this.addWall (w));
+        walls.forEach(w => this.addWall(w));
     }
 
     addPlayer(playerConfiguration) {
@@ -121,7 +121,7 @@ class MazeTemplate {
     }
 
     start() {
-        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('maze').appendChild(renderer.domElement);
 
@@ -132,7 +132,7 @@ class MazeTemplate {
         // Create a VR manager helper to enter and exit VR mode.
         this.manager = new WebVRManager(renderer, effect, {hideButton: false});
 
-        this.player.controls = new DeviceOrientationController( camera, this.player.configuration.skills, renderer.domElement );
+        this.player.controls = new DeviceOrientationController(camera, this.player.configuration.skills, renderer.domElement);
         this.player.controls.connect();
 
         UI.draw({
@@ -141,9 +141,8 @@ class MazeTemplate {
         });
         UI.pageTitle();
 
-
         this[animate]();
-        window.addEventListener('resize', this.onWindowResize);
+        window.addEventListener('resize', MazeTemplate.onWindowResize);
 
         this.items.forEach(item => {
             UI.add({
@@ -153,11 +152,11 @@ class MazeTemplate {
         });
     }
 
-    onWindowResize() {
+    static onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        effect.setSize( window.innerWidth, window.innerHeight );
+        effect.setSize(window.innerWidth, window.innerHeight);
     }
 
 }
