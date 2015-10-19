@@ -4,7 +4,7 @@ import Wall from './../maze/wall';
 import Item from './../maze/item';
 import * as WallTexture from './../maze/wallTexture';
 
-function start () {
+function start() {
 
     const maze = Maze.create({
         length: 10,
@@ -58,4 +58,4 @@ function start () {
 
 }
 
-export default {start}
+export default {start};
