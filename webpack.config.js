@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 var config = {
     port: 8080,
-	  host: '0.0.0.0'
+    host: '0.0.0.0'
 };
 
 module.exports = {
