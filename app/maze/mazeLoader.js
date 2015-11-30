@@ -28,4 +28,4 @@ function load(name) {
     });
 }
 
-export default {load}
+export default {load};

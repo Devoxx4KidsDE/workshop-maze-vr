@@ -238,4 +238,4 @@ function create({length = 10, width = 10, cellSize = 500}) {
     return maze;
 }
 
-export default {create}
+export default {create};

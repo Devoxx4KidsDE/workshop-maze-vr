@@ -265,7 +265,7 @@ var DeviceOrientationController = function ( object, skills, domElement ) {
 
             return finalQuaternion;
 
-        }
+        };
 
     }();
 
@@ -284,26 +284,25 @@ var DeviceOrientationController = function ( object, skills, domElement ) {
 
         return function (alpha, beta, gamma, screenOrientation) {
 
-            deviceEuler.set( beta, alpha, - gamma, 'YXZ' );
+            deviceEuler.set(beta, alpha, -gamma, 'YXZ');
 
             finalMatrix.identity();
 
-            finalMatrix.makeRotationFromEuler( deviceEuler );
+            finalMatrix.makeRotationFromEuler(deviceEuler);
 
-            screenEuler.set( 0, - screenOrientation, 0, 'YXZ' );
+            screenEuler.set(0, -screenOrientation, 0, 'YXZ');
 
             screenTransform.identity();
 
-            screenTransform.makeRotationFromEuler( screenEuler );
+            screenTransform.makeRotationFromEuler(screenEuler);
 
-            finalMatrix.multiply( screenTransform );
+            finalMatrix.multiply(screenTransform);
 
-            finalMatrix.multiply( worldTransform );
+            finalMatrix.multiply(worldTransform);
 
             return finalMatrix;
 
-        }
-
+        };
     }();
 
     this.updateManualMove = function () {
@@ -384,11 +383,8 @@ var DeviceOrientationController = function ( object, skills, domElement ) {
                     this.object.quaternion.copy( tmpQuat );
 
                 }
-
             }
-
         };
-
     }();
 
     this.updateDeviceMove = function () {
@@ -468,10 +464,10 @@ var DeviceOrientationController = function ( object, skills, domElement ) {
 
     this.getObject = function () {
         return this.object;
-    }
+    };
 
 };
 
 DeviceOrientationController.prototype = Object.create( THREE.EventDispatcher.prototype );
 
-export default DeviceOrientationController
+export default DeviceOrientationController;

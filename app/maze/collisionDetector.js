@@ -46,4 +46,4 @@ function getMesh(wall) {
     return wall.getMesh ? wall.getMesh() : wall;
 }
 
-export default {create}
+export default {create};

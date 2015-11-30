@@ -59,4 +59,4 @@ function createFireball({x, z, displayName}) {
     return create(displayName, fireball);
 }
 
-export default {createCube, createFireball}
+export default {createCube, createFireball};

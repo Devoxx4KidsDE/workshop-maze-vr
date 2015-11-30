@@ -70,4 +70,4 @@ function start () {
 
 }
 
-export default {start}
+export default {start};

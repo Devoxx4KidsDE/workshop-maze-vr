@@ -22,4 +22,4 @@ function create ({name = 'Anonymous', speed = 5, startPoint = {x:0, z:0}}) {
     return player;
 }
 
-export default {create}
+export default {create};
