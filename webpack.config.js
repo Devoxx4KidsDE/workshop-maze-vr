@@ -22,7 +22,14 @@ module.exports = {
 
     module: {
         loaders: [
-            {test: /\.js$/, include: path.join(__dirname, 'app'), loader: 'babel-loader'}
+            {
+                test: /\.js$/,
+                include: path.join(__dirname, 'app'),
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015']
+                }
+            }
         ]
     },
 
