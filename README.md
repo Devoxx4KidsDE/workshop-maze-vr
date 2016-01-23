@@ -15,6 +15,7 @@ and see what their maze in virtual reality look like
 
 Just clone this repository and type ``npm install`` in the _workshop-maze-vr/_ directory
 (be sure you have a latest version of node.js).
+
 After the dependencies are installed start the server with ``npm start``.
 The server is now available at http://localhost:4000
 
