@@ -577,21 +577,20 @@ WebVRButton.prototype.createButton = function() {
   var button = document.createElement('img');
   var s = button.style;
   s.position = 'absolute';
-  s.bottom = '5px';
   s.left = 0;
-  s.right = 0;
-  s.marginLeft = 'auto';
-  s.marginRight = 'auto';
-  s.width = '56px'
-  s.height = '56px';
+  s.top = '3em';
+  s.width = '3em';
+  s.height = '3em';
   s.backgroundSize = 'cover';
-  s.backgroundColor = 'transparent';
   s.border = 0;
+  s.marginLeft = '10px';
   s.userSelect = 'none';
   s.webkitUserSelect = 'none';
   s.MozUserSelect = 'none';
   s.cursor = 'pointer';
+  s.backgroundColor = 'teal';
   s.zIndex = 2147483647;
+  s.borderRadius = '1em';
   // Prevent button from being dragged.
   button.draggable = false;
   button.addEventListener('dragstart', function(e) {

@@ -23,7 +23,6 @@ function refreshButton() {
     let refreshButton = document.createElement('a');
     refreshButton.setAttribute('class', 'refreshButton');
     refreshButton.setAttribute('href', 'javascript:location.reload(false)');
-    refreshButton.appendChild(document.createTextNode('Refresh'));
 
     document.getElementById('controls').appendChild(refreshButton);
 }
