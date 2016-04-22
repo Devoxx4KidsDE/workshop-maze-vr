@@ -50,7 +50,8 @@ class WallPrototype {
         const offsize     = calculateOffsize (orientation, cellSize);
 
         const texture = THREE.ImageUtils.loadTexture (`../textures/${textureName}`);
-        texture.minFilter = THREE.LinearFilter;
+        texture.anisotropy = 1;
+        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
         const material = new THREE.MeshBasicMaterial ({
             map: texture,

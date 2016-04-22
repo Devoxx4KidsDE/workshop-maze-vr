@@ -188,6 +188,7 @@ function create({length = 10, width = 10, cellSize = 500}) {
 
     // floor
     let floorTexture = THREE.ImageUtils.loadTexture('textures/floor.png');
+    floorTexture.anisotropy = 1;
     floorTexture.wrapS = THREE.RepeatWrapping;
     floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(length, width);
