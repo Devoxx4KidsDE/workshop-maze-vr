@@ -35,6 +35,26 @@ ul {
     position: absolute;
     right: 0;
     top: 0;
-    padding: 1em;
+    padding-right: 1em;
     z-index: 2147483647;
 }
+
+.refreshButton {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin: 1em;
+    padding: 1em;
+    color: white;
+    font-size: larger;
+    text-decoration: none;
+    border-radius: 1em;
+    background-position: 0.2em;
+    background-repeat: no-repeat;
+    background-image: url('./../ui/refresh.svg');
+    background-size: contain;
+    background-color: teal;
+    padding-left: 3.4em;
+    z-index: 2147483647;
+}
+

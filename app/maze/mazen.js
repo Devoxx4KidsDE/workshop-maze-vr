@@ -113,6 +113,7 @@ class MazeTemplate {
     }
 
     addItem(item) {
+
         item.geometry.position.x = (item.geometry.position.x * this.cellSize) + (this.cellSize / 2);
         item.geometry.position.y = (item.geometry.position.y * this.cellSize);
         item.geometry.position.z = (item.geometry.position.z * this.cellSize) + (this.cellSize / 2);
@@ -121,6 +122,7 @@ class MazeTemplate {
     }
 
     start() {
+
         renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('maze').appendChild(renderer.domElement);
@@ -140,6 +142,7 @@ class MazeTemplate {
             text: this.player.configuration.name
         });
         UI.pageTitle();
+        UI.refreshButton();
 
         this[animate]();
         window.addEventListener('resize', MazeTemplate.onWindowResize);

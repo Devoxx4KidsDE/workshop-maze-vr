@@ -18,4 +18,14 @@ function pageTitle() {
     document.title = 'D4K-' + location.host.slice(11, 13) + ' - MazeVR';
 }
 
-export default {draw, add, update, pageTitle};
+function refreshButton() {
+
+    let refreshButton = document.createElement('a');
+    refreshButton.setAttribute('class', 'refreshButton');
+    refreshButton.setAttribute('href', 'javascript:location.reload(false)');
+    refreshButton.appendChild(document.createTextNode('Refresh'));
+
+    document.getElementById('controls').appendChild(refreshButton);
+}
+
+export default {draw, add, update, pageTitle, refreshButton};
