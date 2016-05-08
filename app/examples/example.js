@@ -34,25 +34,16 @@ function start() {
     maze.addItem(cube);
     maze.addItem(fireball);
 
-    const simple_wall_front = Wall.create({x: 1, z: 2, orientation: 'front'});
-    const simple_wall_right = Wall.create({x: 1, z: 2, orientation: 'right'});
-    const simple_wall_back = Wall.create({x: 1, z: 2, orientation: 'back'});
-    maze.addWall(simple_wall_front);
-    maze.addWall(simple_wall_right);
-    maze.addWall(simple_wall_back);
+    maze.addWall({x: 1, z: 2, orientation: 'front'});
+    maze.addWall({x: 1, z: 2, orientation: 'right'});
+    maze.addWall({x: 1, z: 2, orientation: 'back' });
+    maze.addWall({x: 3, z: 0, orientation: 'right', texture: WallTexture.HEDGE});
+    maze.addWall({x: 3, z: 0, orientation: 'front', texture: WallTexture.LAMP});
 
     const portal = Wall.create({x: 3, z: 0, orientation: 'back'});
     portal.setTexture(WallTexture.GATE);
     portal.isPortalTo({x: 2, z: 0});
     maze.addWall(portal);
-
-    const hedge = Wall.create({x: 3, z: 0, orientation: 'right'});
-    hedge.setTexture(WallTexture.HEDGE);
-    maze.addWall(hedge);
-
-    const lamp = Wall.create({x: 3, z: 0, orientation: 'front'});
-    lamp.setTexture(WallTexture.LAMP);
-    maze.addWall(lamp);
 
     maze.start();
 
