@@ -1,8 +1,4 @@
-import Maze from './maze/mazen';
-import Player from './maze/player';
-import Wall from './maze/wall';
-import Item from './maze/item';
-import * as WallTexture from './maze/wallTexture';
+
 import example from './examples/example';
 
 example.start();
