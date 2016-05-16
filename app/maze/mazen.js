@@ -1,11 +1,12 @@
-import * as THREE from './../libs/three';
+
+import THREE from 'three';
 import Wall from './wall';
 import UI from './ui';
 import CollisionDetector from './collisionDetector';
 import DeviceOrientationController from './deviceOrientationController';
-import VREffect from './../libs/VREffect';
-import './../libs/webvr-manager';
-import './../libs/webvr-polyfill';
+import 'three/examples/js/effects/VREffect';
+import 'webvr-boilerplate';
+import 'webvr-polyfill';
 
 const animate = Symbol();
 const mouseMove = Symbol();
@@ -128,7 +129,7 @@ class MazeTemplate {
         document.getElementById('maze').appendChild(renderer.domElement);
 
         // Apply VR stereo rendering to renderer.
-        effect = new VREffect(renderer);
+        effect = new THREE.VREffect(renderer);
         effect.setSize(window.innerWidth, window.innerHeight);
 
         // Create a VR manager helper to enter and exit VR mode.

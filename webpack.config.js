@@ -20,6 +20,12 @@ module.exports = {
 
     devtool: 'source-map',
 
+    plugins: [
+        new webpack.ProvidePlugin ({
+            THREE: 'three'
+        })
+    ],
+
     module: {
         loaders: [
             {

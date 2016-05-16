@@ -1,4 +1,5 @@
-import * as THREE from '../libs/three';
+
+import THREE from 'three';
 import {STONE as DefaultTexture} from './wallTexture';
 
 function calculateOffsize (orientation, cellSize) {

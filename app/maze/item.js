@@ -1,4 +1,5 @@
-import * as THREE from './../libs/three';
+
+import THREE from 'three';
 
 class Item {
     constructor() {

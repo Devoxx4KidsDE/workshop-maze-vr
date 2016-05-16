@@ -1,4 +1,5 @@
-import * as THREE from './../libs/three.js';
+
+import THREE from 'three';
 
 /*
  * Based on http://webmaestro.fr/collisions-detection-three-js-raycasting/
