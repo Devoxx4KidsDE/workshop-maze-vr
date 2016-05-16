@@ -10,19 +10,36 @@ and see what their maze in virtual reality look like
 
 ![stereoscopic view](https://raw.githubusercontent.com/Devoxx4KidsDE/workshop-maze-vr/master/presentation/screenshot-splitscreen.png)
 
+# How To
+
+## Requirements
+
+* installed NodeJS version >= 0.12.xx
 
 ## Start
 
-Just clone this repository and type ``npm install`` in the _workshop-maze-vr/_ directory
-(be sure you have a latest version of node.js).
+Just clone this repository
 
-After the dependencies are installed start the server with ``npm start``.
-The server is now available at http://localhost:4000
+```
+git clone https://github.com/Devoxx4KidsDE/workshop-maze-vr.git
+```
 
+and install all required dependencies
 
-## Configuration
+```
+cd workshop-maze-vr
+npm install
+```
 
-For setting up a local network based server edit ``webpack.config.js``:
+Once the dependencies are installed simply start the app with
+
+```
+npm start
+```
+
+The server is now available at http://localhost:8080
+
+Port 8080 is the default. However, you can edit ``webpack.config.js`` to set a custom port if required:
 
 ```
 var config = {
