@@ -38,15 +38,13 @@ and once the dependencies are installed simply start the app with
 npm start
 ```
 
-The server is now available at http://localhost:8080
+The example maze now available at http://localhost:8080/app
 
-Port 8080 is the default. However, you can edit ``webpack.config.js`` to set a custom port if required:
+This project uses [http-server](https://github.com/indexzero/http-server) to serve all required files.
+Port 8080 is the default. However, you can set a custom port with the ``-p`` option.
 
 ```
-var config = {
-   port: 8080,
-   host: '0.0.0.0'
-};
+npm start -- -p 8081
 ```
 
 
