@@ -2,6 +2,7 @@
   "name": "devoxx4kids-workshop-maze-vr",
   "version": "1.0.0",
   "description": "Designed for a devoxx4kids workshop to show children how to do objective programming and see what their maze in virtual reality look like",
+  "license": "MIT",
   "private": true,
   "repository": {
     "type": "git",
