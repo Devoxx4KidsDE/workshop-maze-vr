@@ -55,7 +55,7 @@ var DeviceOrientationController = function ( object, skills, domElement ) {
         SCREEN_ORIENTATION: 'orientationchange',
         MANUAL_CONTROL:     'userinteraction', // userinteractionstart, userinteractionend
         ZOOM_CONTROL:       'zoom',            // zoomstart, zoomend
-        ROTATE_CONTROL:     'rotate',          // rotatestart, rotateend
+        ROTATE_CONTROL:     'rotate'           // rotatestart, rotateend
     };
 
     // Consistent Object Field-Of-View fix components
@@ -127,12 +127,12 @@ var DeviceOrientationController = function ( object, skills, domElement ) {
         fireEvent( CONTROLLER_EVENT.ROTATE_CONTROL + 'start' );
     }.bind( this );
 
-    this.onDocumentMouseMove = function ( event ) {
+    this.onDocumentMouseMove = function () {
         currentX = event.pageX;
         currentY = event.pageY;
     }.bind( this );
 
-    this.onDocumentMouseUp = function ( event ) {
+    this.onDocumentMouseUp = function () {
         this.element.removeEventListener( 'mousemove', this.onDocumentMouseMove, false );
         this.element.removeEventListener( 'mouseup', this.onDocumentMouseUp, false );
 
@@ -211,7 +211,7 @@ var DeviceOrientationController = function ( object, skills, domElement ) {
         }
     }.bind( this );
 
-    this.onDocumentTouchEnd = function ( event ) {
+    this.onDocumentTouchEnd = function () {
         this.element.removeEventListener( 'touchmove', this.onDocumentTouchMove, false );
         this.element.removeEventListener( 'touchend', this.onDocumentTouchEnd, false );
 

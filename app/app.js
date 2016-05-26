@@ -22,7 +22,6 @@ function render () {
           items.classList.add ('items');
           items.innerHTML = '<h1>Items</h1>';
 
-
     const body = document.body;
           body.appendChild (mazeContainer);
           body.appendChild (controls);

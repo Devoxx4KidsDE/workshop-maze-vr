@@ -5,11 +5,10 @@ import UI from './ui';
 import CollisionDetector from './collisionDetector';
 import DeviceOrientationController from './deviceOrientationController';
 import 'three/examples/js/effects/VREffect';
-import 'webvr-boilerplate';
+import 'webvr-boilerplate'; /* global WebVRManager: true */
 import 'webvr-polyfill';
 
 const animate = Symbol();
-const mouseMove = Symbol();
 
 /* gobal definition of camera and effect for onWindowResize() see #2 */
 var camera;
@@ -55,7 +54,6 @@ class MazeTemplate {
             this.items.forEach(item => {
                 if (!item.isCollected) {
                     if (this.player.collisionDetector.hasCollision(camera, [item.geometry])) {
-                        console.log(item.name + ' collected!');
                         item.isCollected = true;
                         UI.update(item.name, 'found');
 
