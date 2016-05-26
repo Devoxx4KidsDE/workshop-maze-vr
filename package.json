@@ -18,9 +18,9 @@
     "http-server": "0.9.0",
     "systemjs": "0.19.29",
     "systemjs-plugin-babel": "0.0.11",
-    "three": "0.76.1",
+    "three": "0.77.1",
     "webvr-boilerplate": "0.4.3",
-    "webvr-polyfill": "0.9.7"
+    "webvr-polyfill": "0.9.10"
   },
   "scripts": {
     "start": "http-server",
