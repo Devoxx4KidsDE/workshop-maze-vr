@@ -178,7 +178,7 @@ function create({length = 10, width = 10, cellSize = 500}) {
     let ceiling = new THREE.Mesh(
         new THREE.PlaneBufferGeometry(2 * length * cellSize, 2 * width * cellSize),
         new THREE.MeshBasicMaterial({
-            map: THREE.ImageUtils.loadTexture('textures/ceiling.jpg')
+            map: new THREE.TextureLoader ().load ('textures/ceiling.jpg')
         })
     );
     ceiling.rotation.x = Math.PI / 2;
@@ -188,7 +188,7 @@ function create({length = 10, width = 10, cellSize = 500}) {
     maze.addCeilings([ceiling]);
 
     // floor
-    let floorTexture = THREE.ImageUtils.loadTexture('textures/floor.png');
+    let floorTexture = new THREE.TextureLoader ().load ('textures/floor.png');
     floorTexture.anisotropy = 1;
     floorTexture.wrapS = THREE.RepeatWrapping;
     floorTexture.wrapT = THREE.RepeatWrapping;
