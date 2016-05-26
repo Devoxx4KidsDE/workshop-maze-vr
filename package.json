@@ -16,6 +16,7 @@
   "devDependencies": {
     "eslint": "2.10.2",
     "http-server": "0.9.0",
+    "nodemon": "1.9.2",
     "systemjs": "0.19.29",
     "systemjs-plugin-babel": "0.0.11",
     "three": "0.77.1",
@@ -24,6 +25,7 @@
   },
   "scripts": {
     "start": "http-server",
-    "lint": "./node_modules/eslint/bin/eslint.js ./app"
+    "lint": "eslint ./app",
+    "lint:watch": "nodemon --watch ./app --exec 'npm run lint'"
   }
 }
