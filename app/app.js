@@ -1,25 +1,20 @@
 
+Promise.all ([
+    load ('./maze/mazeEvaluator'),
+    load ('./examples/example.js')
+]).then (function start ([ mazeEvaluator, mazeBuilder ]) {
+    render ();
+    const maze = mazeEvaluator.evaluate (getFunctionBodyString (mazeBuilder.build));
+          maze.start ();
+});
+
 function load (name) {
     return System.import (name);
 }
 
-function loadDefault (name) {
-    return load (name).then (module => module.default);
+function getFunctionBodyString (fn) {
+    return fn.toString ().match(/function[^{]+\{([\s\S]*)\}$/) [1];
 }
-
-Promise.all ([
-    loadDefault ('./maze/mazen'),
-    loadDefault ('./maze/player'),
-    loadDefault ('./maze/wall'),
-    loadDefault ('./maze/item'),
-    load        ('./maze/wallTexture'),
-    load        ('./examples/example.js')
-]).then (function start ([ Maze, Player, Wall, Item, WallTexture, mazeBuilder ]) {
-    render ();
-    const maze = mazeBuilder.build (Maze, Player, Wall, Item, WallTexture);
-          maze.start ();
-});
-
 
 function render () {
     const div = document.createElement.bind (document, 'div');
