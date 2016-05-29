@@ -1,12 +1,6 @@
 /* eslint no-unused-vars: "off" */
 
-import Maze from './../maze/mazen';
-import Player from './../maze/player';
-import Wall from './../maze/wall';
-import Item from './../maze/item';
-import * as WallTexture from './../maze/wallTexture';
-
-function start() {
+export function build (Maze, Player, Wall, Item, WallTexture) {
 
     const maze = Maze.create({
         length: 10,
@@ -56,8 +50,5 @@ function start() {
     lamp.setTexture(WallTexture.LAMP);
     maze.addWall(lamp);
 
-    maze.start();
-
+    return maze;
 }
-
-export default {start};

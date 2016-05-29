@@ -1,8 +1,25 @@
 
-System.import ('./examples/example.js').then (function (maze) {
+function load (name) {
+    return System.import (name);
+}
+
+function loadDefault (name) {
+    return load (name).then (module => module.default);
+}
+
+Promise.all ([
+    loadDefault ('./maze/mazen'),
+    loadDefault ('./maze/player'),
+    loadDefault ('./maze/wall'),
+    loadDefault ('./maze/item'),
+    load        ('./maze/wallTexture'),
+    load        ('./examples/example.js')
+]).then (function start ([ Maze, Player, Wall, Item, WallTexture, mazeBuilder ]) {
     render ();
-    maze.default.start ();
+    const maze = mazeBuilder.build (Maze, Player, Wall, Item, WallTexture);
+          maze.start ();
 });
+
 
 function render () {
     const div = document.createElement.bind (document, 'div');

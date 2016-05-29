@@ -15,13 +15,7 @@
 
  */
 
-import Maze             from './../maze/mazen';
-import Player           from './../maze/player';
-import Wall             from './../maze/wall';
-import Item             from './../maze/item';
-import * as WallTexture from './../maze/wallTexture';
-
-function start() {
+export function build (Maze, Player, Wall, Item, WallTexture) {
 
     const maze = Maze.create({
         length: 6,
@@ -32,6 +26,7 @@ function start() {
         name: 'Bruce Wayne',
         startPoint: {x: 0, z: 0}
     });
+    maze.addPlayer(player);
 
     const explosive = Item.createFireball({x: 3, z: 0, displayName: 'explosive'});
     explosive.onCollect(function () {
@@ -71,7 +66,7 @@ function start() {
     maze.addWall(Wall.create({x: 1, z: 3, orientation: 'right'}));
     maze.addWall(Wall.create({x: 3, z: 3, orientation: 'right'}));
     maze.addWall(Wall.create({x: 4, z: 3, orientation: 'right'}));
-    maze.addWall(Wall.create({x: 4, z: 3, orientation: 'left'}));
+    maze.addWall(Wall.create({x: 4, z: 3, orientation: 'left' }));
     maze.addWall(Wall.create({x: 0, z: 4, orientation: 'right'}));
     maze.addWall(Wall.create({x: 1, z: 4, orientation: 'front'}));
     maze.addWall(Wall.create({x: 2, z: 4, orientation: 'right'}));
@@ -88,8 +83,5 @@ function start() {
     maze.addWall(Wall.create({x: 5, z: 4, orientation: 'front', texture: WallTexture.HEDGE}));
     maze.addWall(Wall.create({x: 5, z: 3, orientation: 'front', texture: WallTexture.HEDGE}));
 
-    maze.addPlayer(player);
-    maze.start();
+    return maze;
 }
-
-export default {start};

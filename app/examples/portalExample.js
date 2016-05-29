@@ -1,10 +1,5 @@
-import Maze from './../maze/mazen';
-import Player from './../maze/player';
-import Wall from './../maze/wall';
-import Item from './../maze/item';
-import * as WallTexture from './../maze/wallTexture';
 
-function start () {
+export function build (Maze, Player, Wall, Item, WallTexture) {
 
     const maze = Maze.create({
         length: 5,
@@ -66,8 +61,5 @@ function start () {
     portal3.isPortalTo({x: 0, z: 0});
     maze.addWall(portal3);
 
-    maze.start();
-
+    return maze;
 }
-
-export default {start};
