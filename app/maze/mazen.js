@@ -129,12 +129,13 @@ class MazeTemplate {
     start() {
 
         renderer = new THREE.WebGLRenderer({antialias: true});
-        renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById('maze').appendChild(renderer.domElement);
 
         // Apply VR stereo rendering to renderer.
         effect = new THREE.VREffect(renderer);
-        effect.setSize(window.innerWidth, window.innerHeight);
+
+        // sets the size of the scene
+        MazeTemplate.onWindowResize ();
 
         // Create a VR manager helper to enter and exit VR mode.
         this.manager = new WebVRManager(renderer, effect, {hideButton: false});
