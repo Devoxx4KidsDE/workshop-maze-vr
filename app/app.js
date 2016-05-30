@@ -19,11 +19,22 @@ Promise.all ([
         activeMaze = maze;
     }
 
+    function updateMaze (editor) {
+        const code = editor.getValue ();
+        evalMaze (getFunctionBodyString (code));
+    }
+
     const editor = ace.edit ('editor');
           // editor.setOption  ('showInvisibles', true);
           editor.getSession ().setTabSize (2);
           editor.getSession ().setUseSoftTabs (true);
           editor.getSession ().setMode ('ace/mode/javascript');
+
+    editor.commands.addCommand({
+        name: 'save',
+        bindKey: {win: "Ctrl-S", "mac": "Cmd-S"},
+        exec: updateMaze
+    });
 
     // \x20 -> whitespace but NOT line break
     const bodyString = mazeBuilder.build.toString ().replace (/\x20\x20/gm, ' ');
@@ -32,10 +43,7 @@ Promise.all ([
 
     evalMaze (getFunctionBodyString (mazeBuilder.build));
 
-    document.getElementById ('save').addEventListener ('click', () => {
-        const code = editor.getValue ();
-        evalMaze (getFunctionBodyString (code));
-    });
+    document.getElementById ('save').addEventListener ('click', () => updateMaze (editor));
 
     const    editorContainer = document.querySelector ('.editor-container');
 
