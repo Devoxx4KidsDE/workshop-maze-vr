@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 body {
     color: #ffffff;
     font-family: Monospace, sans-serif;
@@ -56,3 +60,32 @@ ul {
     z-index: 2147483647;
 }
 
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 0.5em;
+}
+
+.editor {
+    flex-grow: 1;
+    width: 629px;
+}
+
+.save-button {
+    height: 40px;
+    border: none;
+    background-color: navy;
+    color: white;
+    font-size: 1.1em;
+}
+
+.playground-container {
+    flex-grow: 1;
+    position: relative;
+}

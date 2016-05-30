@@ -2,15 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>D4K - MazeVR</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="/node_modules/systemjs/dist/system.js"></script>
+    <script src="/node_modules/ace-builds/src-min/ace.js"></script>
 </head>
-<body>
+<body class="container">
 
-    <div id="loading">
-        <p>Lade...</p>
+    <aside class="editor-container">
+        <h1>Maze Builder</h1>
+        <div id="editor" class="editor"></div>
+        <button id="save" class="save-button"><span>Speichern</span></button>
+    </aside>
+    <div id="playground" class="playground-container">
+        <div id="loading">
+            <p>Lade...</p>
+        </div>
     </div>
+
 
     <script>
         const nodeModulesPath = './../node_modules';

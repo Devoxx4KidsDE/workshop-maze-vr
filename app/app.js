@@ -10,7 +10,23 @@ Promise.all ([
               maze.start ();
     }
 
+    const editor = ace.edit ('editor');
+          // editor.setOption  ('showInvisibles', true);
+          editor.getSession ().setTabSize (2);
+          editor.getSession ().setUseSoftTabs (true);
+          editor.getSession ().setMode ('ace/mode/javascript');
+
+    // \x20 -> whitespace but NOT line break
+    const bodyString = mazeBuilder.build.toString ().replace (/\x20\x20/gm, ' ');
+    editor.setValue (bodyString, 1);
+
+
     evalMaze (getFunctionBodyString (mazeBuilder.build));
+
+    document.getElementById ('save').addEventListener ('click', () => {
+        const code = editor.getValue ();
+        evalMaze (getFunctionBodyString (code));
+    });
 });
 
 function load (name) {
@@ -38,14 +54,18 @@ function prepareHtml () {
         </div>
     `;
 
-    const body = document.body;
-          body.appendChild (mazeContainer);
-          body.removeChild (document.querySelector ('#loading'));
+    const container = document.getElementById ('playground');
+          container.appendChild (mazeContainer);
+
+    const loadingElement = document.getElementById ('loading');
+    if   (loadingElement) {
+          loadingElement.parentNode.removeChild (loadingElement);
+    }
 }
 
 function clearBody () {
     const mazeContainer = document.getElementById ('maze-container');
     if (  mazeContainer) {
-        document.body.removeChild (mazeContainer);
+          mazeContainer.parentNode.removeChild (mazeContainer);
     }
 }

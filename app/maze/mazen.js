@@ -155,10 +155,16 @@ class MazeTemplate {
     }
 
     static onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
+
+        const container = document.getElementById ('playground');
+        const width  = container.offsetWidth;
+        const height = container.offsetHeight;
+
+        camera.aspect = width / height;
         camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        effect.setSize(window.innerWidth, window.innerHeight);
+
+        renderer.setSize (width, height);
+        effect  .setSize (width, height);
     }
 
 }
