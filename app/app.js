@@ -27,6 +27,18 @@ Promise.all ([
         const code = editor.getValue ();
         evalMaze (getFunctionBodyString (code));
     });
+
+    const    editorContainer = document.querySelector ('.editor-container');
+
+    if      (editorContainer.requestFullscreen   ) var exitFullscreen = 'fullscreenchange';
+    else if (editorContainer.mozRequestFullScreen) var exitFullscreen = 'mozfullscreenchange';
+    else                                           var exitFullscreen = 'webkitfullscreenchange';
+
+    var fullscreen = false;
+    document.addEventListener (exitFullscreen, () => {
+        fullscreen = !fullscreen;
+        editorContainer.style.display = fullscreen ? 'none' : 'flex';
+    }, false);
 });
 
 function load (name) {
