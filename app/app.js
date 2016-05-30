@@ -2,7 +2,7 @@
 Promise.all ([
     load ('./maze/mazeEvaluator'),
     load ('./examples/example.js')
-]).then (function start ([ mazeEvaluator, mazeBuilder ]) {
+]).then (function start ([ mazeEvaluator, initialExampleMaze ]) {
 
     var activeMaze = null;
 
@@ -24,6 +24,15 @@ Promise.all ([
         evalMaze (getFunctionBodyString (code));
     }
 
+    function updateEditor (mazeBuilder) {
+        // \x20 -> whitespace but NOT line break
+        const bodyString = mazeBuilder.build.toString ().replace (/\x20\x20/gm, ' ');
+        editor.setValue (bodyString, 1);
+        editor.selection.moveCursorToPosition({row: 0, column: 0});
+
+        return editor;
+    }
+
     const editor = ace.edit ('editor');
           // editor.setOption  ('showInvisibles', true);
           editor.getSession ().setTabSize (2);
@@ -35,13 +44,6 @@ Promise.all ([
         bindKey: {win: "Ctrl-S", "mac": "Cmd-S"},
         exec: updateMaze
     });
-
-    // \x20 -> whitespace but NOT line break
-    const bodyString = mazeBuilder.build.toString ().replace (/\x20\x20/gm, ' ');
-    editor.setValue (bodyString, 1);
-
-
-    evalMaze (getFunctionBodyString (mazeBuilder.build));
 
     document.getElementById ('save').addEventListener ('click', () => updateMaze (editor));
 
@@ -56,7 +58,27 @@ Promise.all ([
         fullscreen = !fullscreen;
         editorContainer.style.display = fullscreen ? 'none' : 'flex';
     }, false);
+
+
+    document.getElementById ('gotham-city-button').addEventListener ('click',
+        () => loadMaze ('gotham').then (updateEditor).then (updateMaze));
+
+    document.getElementById ('portal-example-button').addEventListener ('click',
+        () => loadMaze ('portal').then (updateEditor).then (updateMaze));
+
+    updateEditor (initialExampleMaze);
+    updateMaze   (editor);
 });
+
+function loadMaze (name) {
+    if (name === 'gotham') {
+        return load ('./examples/gotham_city.js');
+    }
+    if (name === 'portal') {
+        return load ('./examples/portalExample.js');
+    }
+    throw new Error (`${name} is an unknown maze :/`);
+}
 
 function load (name) {
     return System.import (name);
