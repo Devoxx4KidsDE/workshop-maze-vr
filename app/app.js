@@ -3,9 +3,14 @@ Promise.all ([
     load ('./maze/mazeEvaluator'),
     load ('./examples/example.js')
 ]).then (function start ([ mazeEvaluator, mazeBuilder ]) {
-    render ();
-    const maze = mazeEvaluator.evaluate (getFunctionBodyString (mazeBuilder.build));
-          maze.start ();
+
+    function evalMaze (mazeBuilderFunctionBodyString) {
+        prepareHtml ();
+        const maze = mazeEvaluator.evaluate (mazeBuilderFunctionBodyString);
+              maze.start ();
+    }
+
+    evalMaze (getFunctionBodyString (mazeBuilder.build));
 });
 
 function load (name) {
@@ -16,11 +21,11 @@ function getFunctionBodyString (fn) {
     return fn.toString ().match(/function[^{]+\{([\s\S]*)\}$/) [1];
 }
 
-function render () {
-    const div = document.createElement.bind (document, 'div');
+function prepareHtml () {
 
-    const mazeContainer = div();
-          mazeContainer.id = 'maze';
+    clearBody ();
+
+    const div = document.createElement.bind (document, 'div');
 
     const controls = div();
           controls.id = 'controls';
@@ -34,10 +39,24 @@ function render () {
           items.classList.add ('items');
           items.innerHTML = '<h1>Items</h1>';
 
+    const playground = div();
+          playground.id = 'maze';
+          playground.appendChild (controls);
+          playground.appendChild (player);
+          playground.appendChild (items);
+
+    const mazeContainer = div ();
+          mazeContainer.id = 'maze-container';
+          mazeContainer.appendChild (playground);
+
     const body = document.body;
           body.appendChild (mazeContainer);
-          body.appendChild (controls);
-          body.appendChild (player);
-          body.appendChild (items);
           body.removeChild (document.querySelector ('#loading'));
+}
+
+function clearBody () {
+    const mazeContainer = document.getElementById ('maze-container');
+    if (  mazeContainer) {
+        document.body.removeChild (mazeContainer);
+    }
 }
