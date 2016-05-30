@@ -4,10 +4,19 @@ Promise.all ([
     load ('./examples/example.js')
 ]).then (function start ([ mazeEvaluator, mazeBuilder ]) {
 
+    var activeMaze = null;
+
     function evalMaze (mazeBuilderFunctionBodyString) {
         prepareHtml ();
+
+        if (activeMaze) {
+            activeMaze.stop ();
+        }
+
         const maze = mazeEvaluator.evaluate (mazeBuilderFunctionBodyString);
               maze.start ();
+
+        activeMaze = maze;
     }
 
     const editor = ace.edit ('editor');

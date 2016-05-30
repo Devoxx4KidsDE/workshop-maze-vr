@@ -34,7 +34,13 @@ class MazeTemplate {
         this.ceiling = [];
 
         this[animate] = (timestamp) => {
-            requestAnimationFrame(this[animate]);
+
+            if (this._isAlive) {
+                requestAnimationFrame(this[animate]);
+            } else {
+                return;
+            }
+
             this.player.controls.update();
 
             const center = x => (x * this.cellSize) + (this.cellSize / 2);
@@ -143,8 +149,10 @@ class MazeTemplate {
         UI.pageTitle();
         UI.refreshButton();
 
+        this._isAlive = true;
         this[animate]();
-        window.addEventListener('resize', MazeTemplate.onWindowResize);
+
+        this._resizeHandler = window.addEventListener('resize', MazeTemplate.onWindowResize);
 
         this.items.forEach(item => {
             UI.add({
@@ -152,6 +160,12 @@ class MazeTemplate {
                 text: item.name
             }, 'items');
         });
+    }
+
+    stop () {
+        this._isAlive = false;
+        this.player.controls.disconnect ();
+        window.removeEventListener ('resize', this._resizeHandler);
     }
 
     static onWindowResize() {
