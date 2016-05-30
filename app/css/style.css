@@ -11,7 +11,6 @@ body {
     background-color: #000000;
     margin: 0;
     overflow: hidden;
-    cursor: none;
 }
 
 ul {
@@ -91,6 +90,7 @@ ul {
 .playground-container {
     flex-grow: 1;
     position: relative;
+    cursor: none;
 }
 
 .example-list {
