@@ -92435,44 +92435,9 @@
 	    });
 	    maze.addPlayer(player);
 
-	    var cube = Item.createCube({ x: 0, z: 1, displayName: 'cube' });
-	    cube.onCollect(function () {
-	        player.speed = player.speed * 5;
-	    });
-
-	    var fireball = Item.createFireball({ x: 1, z: 1, displayName: 'fireball' });
-	    fireball.onCollect(function () {
-	        var oldSpeed = player.speed;
-	        // player is burning and runs away in panic
-	        player.speed = player.speed * 3;
-	        // but calms down after 5 seconds
-	        setTimeout(function () {
-	            return player.speed = oldSpeed;
-	        }, 3 * 1000);
-	    });
-
-	    maze.addItem(cube);
-	    maze.addItem(fireball);
-
-	    var simple_wall_front = Wall.create({ x: 1, z: 2, orientation: 'front' });
-	    var simple_wall_right = Wall.create({ x: 1, z: 2, orientation: 'right' });
-	    var simple_wall_back = Wall.create({ x: 1, z: 2, orientation: 'back' });
-	    maze.addWall(simple_wall_front);
-	    maze.addWall(simple_wall_right);
-	    maze.addWall(simple_wall_back);
-
-	    var portal = Wall.create({ x: 3, z: 0, orientation: 'back' });
-	    portal.setTexture(WallTexture.GATE);
-	    portal.isPortalTo({ x: 2, z: 0 });
-	    maze.addWall(portal);
-
-	    var hedge = Wall.create({ x: 3, z: 0, orientation: 'right' });
-	    hedge.setTexture(WallTexture.HEDGE);
-	    maze.addWall(hedge);
-
-	    var lamp = Wall.create({ x: 3, z: 0, orientation: 'front' });
-	    lamp.setTexture(WallTexture.LAMP);
-	    maze.addWall(lamp);
+	    // maze.addWall(Wall.create({x: 0, z: 0, orientation: 'right'}));
+	    // maze.addWall(Wall.create({x: 1, z: 0, orientation: 'right'}));
+	    // maze.addWall(Wall.create({x: 2, z: 0, orientation: 'right'}));
 
 	    return maze;
 	}
