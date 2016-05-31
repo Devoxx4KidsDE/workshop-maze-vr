@@ -1,4 +1,5 @@
-import * as THREE from './../libs/three';
+
+import THREE from 'three';
 
 class Item {
     constructor() {
@@ -49,7 +50,7 @@ function createCube({x, z, displayName, color = 0x00ff00}) {
 
 function createFireball({x, z, displayName}) {
     let fireballGeometry = new THREE.SphereGeometry(100);
-    let fireballMaterial = new THREE.MeshBasicMaterial({map: new THREE.ImageUtils.loadTexture('textures/fire_texture.jpg')});
+    let fireballMaterial = new THREE.MeshBasicMaterial({map: new THREE.TextureLoader ().load ('textures/fire_texture.jpg')});
     let fireball = new THREE.Mesh(fireballGeometry, fireballMaterial);
 
     fireball.position.x = x;

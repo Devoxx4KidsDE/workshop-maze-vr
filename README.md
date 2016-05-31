@@ -38,15 +38,13 @@ and once the dependencies are installed simply start the app with
 npm start
 ```
 
-The server is now available at http://localhost:8080
+The example maze now available at http://localhost:8080/app
 
-Port 8080 is the default. However, you can edit ``webpack.config.js`` to set a custom port if required:
+This project uses [http-server](https://github.com/indexzero/http-server) to serve all required files.
+Port 8080 is the default. However, you can set a custom port with the ``-p`` option.
 
 ```
-var config = {
-   port: 8080,
-   host: '0.0.0.0'
-};
+npm start -- -p 8081
 ```
 
 
@@ -59,7 +57,43 @@ So how to create your own maze you may ask?
 
 To learn how to create walls and portals please see the [presentation handout](https://github.com/Devoxx4KidsDE/workshop-maze-vr/blob/master/presentation/workshop-maze-vr_handout_ger.pdf).
 
-## Dependencies
+# Notes
+
+Hacking your maze in a simple text editor can be annoying.
+Syntax errors and friends (e.g. a missing colon creating a new wall properties) are not noticed until the application runs in the browser.
+Therefore you can start a linting tool called [eslint](https://github.com/eslint/eslint).
+This tool does a static code analysis (e.g. finding missing colons) and prints those errors on the terminal.
+
+```
+npm run lint
+```
+
+While hacking the maze you maybe don't want to start this task over and over again.
+Therefore you can start another npm task that triggers the linting automatically after you have saved a file.
+
+```
+npm run lint:watch
+```
+
+Now you should have a look at the terminal after saving the file.
+If you see an error like below you first have to fix it. Otherwise you will only see a black screen in the browser.
+If you don't see any errors printed go on and reload the browser.
+
+_(The following error message says that there is an unexpected colon that has to be removed in the `example.js` file on line 18 column 27)_
+
+```
+> devoxx4kids-workshop-maze-vr@1.0.0 lint /devoxx4kids/workshop-maze-vr
+> eslint ./app
+
+
+/devoxx4kids/workshop-maze-vr/app/examples/example.js
+  18:27  error  Parsing error: Unexpected token ,
+
+✖ 1 problem (1 error, 0 warnings)
+```
+
+# Dependencies
+
 This project is based on:
 * [three.js](http://threejs.org/)
 * [threeVR](https://github.com/richtr/threeVR)

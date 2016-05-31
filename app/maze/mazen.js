@@ -1,14 +1,14 @@
-import * as THREE from './../libs/three';
+
+import THREE from 'three';
 import Wall from './wall';
 import UI from './ui';
 import CollisionDetector from './collisionDetector';
 import DeviceOrientationController from './deviceOrientationController';
-import VREffect from './../libs/VREffect';
-import './../libs/webvr-manager';
-import './../libs/webvr-polyfill';
+import 'three/examples/js/effects/VREffect';
+import 'webvr-boilerplate'; /* global WebVRManager: true */
+import 'webvr-polyfill';
 
 const animate = Symbol();
-const mouseMove = Symbol();
 
 /* gobal definition of camera and effect for onWindowResize() see #2 */
 var camera;
@@ -54,7 +54,6 @@ class MazeTemplate {
             this.items.forEach(item => {
                 if (!item.isCollected) {
                     if (this.player.collisionDetector.hasCollision(camera, [item.geometry])) {
-                        console.log(item.name + ' collected!');
                         item.isCollected = true;
                         UI.update(item.name, 'found');
 
@@ -128,7 +127,7 @@ class MazeTemplate {
         document.getElementById('maze').appendChild(renderer.domElement);
 
         // Apply VR stereo rendering to renderer.
-        effect = new VREffect(renderer);
+        effect = new THREE.VREffect(renderer);
         effect.setSize(window.innerWidth, window.innerHeight);
 
         // Create a VR manager helper to enter and exit VR mode.
@@ -177,7 +176,7 @@ function create({length = 10, width = 10, cellSize = 500}) {
     let ceiling = new THREE.Mesh(
         new THREE.PlaneBufferGeometry(2 * length * cellSize, 2 * width * cellSize),
         new THREE.MeshBasicMaterial({
-            map: THREE.ImageUtils.loadTexture('textures/ceiling.jpg')
+            map: new THREE.TextureLoader ().load ('textures/ceiling.jpg')
         })
     );
     ceiling.rotation.x = Math.PI / 2;
@@ -187,7 +186,7 @@ function create({length = 10, width = 10, cellSize = 500}) {
     maze.addCeilings([ceiling]);
 
     // floor
-    let floorTexture = THREE.ImageUtils.loadTexture('textures/floor.png');
+    let floorTexture = new THREE.TextureLoader ().load ('textures/floor.png');
     floorTexture.anisotropy = 1;
     floorTexture.wrapS = THREE.RepeatWrapping;
     floorTexture.wrapT = THREE.RepeatWrapping;

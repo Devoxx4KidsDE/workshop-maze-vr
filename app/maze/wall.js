@@ -1,4 +1,5 @@
-import * as THREE from '../libs/three';
+
+import THREE from 'three';
 import {STONE as DefaultTexture} from './wallTexture';
 
 function calculateOffsize (orientation, cellSize) {
@@ -49,7 +50,7 @@ class WallPrototype {
         const orientation = this.orientation;
         const offsize     = calculateOffsize (orientation, cellSize);
 
-        const texture = THREE.ImageUtils.loadTexture (`../textures/${textureName}`);
+        const texture = new THREE.TextureLoader ().load (`textures/${textureName}`);
         texture.anisotropy = 1;
         texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 

@@ -1,3 +1,5 @@
+/* eslint no-unused-vars: "off" */
+
 import Maze from './../maze/mazen';
 import Player from './../maze/player';
 import Wall from './../maze/wall';

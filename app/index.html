@@ -4,16 +4,40 @@
     <meta charset="UTF-8">
     <title>D4K - MazeVR</title>
     <link rel="stylesheet" href="css/style.css">
-    <script defer src="app.js"></script>
+    <script src="/node_modules/systemjs/dist/system.js"></script>
 </head>
 <body>
 
-    <section id="maze"></section>
-    <div id="controls"></div>
-    <div id="player-name" class="player-information"></div>
-    <div id="items" class="items">
-        <h3>Items</h3>
+    <div id="loading">
+        <p>Lade...</p>
     </div>
+
+    <script>
+        const nodeModulesPath = './../node_modules';
+        const config = {
+            baseUrl: './app',
+            meta: {
+                'three': {
+                    format: 'global',
+                    exports: 'THREE'
+                }
+            },
+            map: {
+                'plugin-babel'        : nodeModulesPath + '/systemjs-plugin-babel/plugin-babel.js',
+                'systemjs-babel-build': nodeModulesPath + '/systemjs-plugin-babel/systemjs-babel-browser.js',
+                'three'               : nodeModulesPath + '/three/build/three.min.js',
+                'three/examples'      : nodeModulesPath + '/three/examples',
+                'webvr-polyfill'      : nodeModulesPath + '/webvr-polyfill/src/main.js',
+                'webvr-boilerplate'   : nodeModulesPath + '/webvr-boilerplate/src/main.js',
+                'es6-promise'         : nodeModulesPath + '/es6-promise/dist/es6-promise.min.js',
+                'object-assign'       : nodeModulesPath + '/object-assign/index.js'
+            },
+            transpiler: 'plugin-babel'
+        };
+        System.defaultJSExtensions = true;
+        SystemJS.config (config);
+        System.import ('app');
+    </script>
 
 </body>
 </html>
