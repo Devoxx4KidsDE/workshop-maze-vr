@@ -33,6 +33,17 @@ Promise.all ([
         return editor;
     }
 
+    const showEditor = window.location.search.split (/[?&]/).map (p => p.split ('=')).some (function (p) {
+        return p[0] === 'editor' && p[1] === 'true';
+    });
+
+    if (!showEditor) {
+        evalMaze (getFunctionBodyString (initialExampleMaze.build));
+        return;
+    }
+
+    renderEditor ();
+
     const editor = ace.edit ('editor');
           // editor.setOption  ('showInvisibles', true);
           editor.getSession ().setTabSize (2);
@@ -119,4 +130,28 @@ function clearBody () {
     if (  mazeContainer) {
           mazeContainer.parentNode.removeChild (mazeContainer);
     }
+}
+
+function renderEditor () {
+    const container = document.createElement ('aside');
+
+    container.classList.add ('editor-container');
+    container.innerHTML = `
+        <h1>Maze Builder</h1>
+        <div id="editor" class="editor"></div>
+        <button id="save" class="save-button"><span>Speichern (oder Strg + S)</span></button>
+        <div>
+            <h2>für dich bereits vorbereitet:</h2>
+            <ul class="example-list">
+                <li class="example-list-item">
+                    <button id="gotham-city-button">Gotham City</button>
+                </li>
+                <li class="example-list-item">
+                    <button id="portal-example-button">Portals</button>
+                </li>
+            </ul>
+        </div>
+    `;
+
+    document.body.insertBefore (container, document.body.firstChild);
 }
