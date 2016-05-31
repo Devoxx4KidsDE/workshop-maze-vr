@@ -10,6 +10,10 @@ and see what their maze in virtual reality look like
 
 ![stereoscopic view](https://raw.githubusercontent.com/Devoxx4KidsDE/workshop-maze-vr/master/presentation/screenshot-splitscreen.png)
 
+There is even an editor available where you can hack your maze online 🎉 🎉
+
+➡ http://devoxx4kidsde.github.io/workshop-maze-vr/build/?editor=true
+
 # How To
 
 ## Requirements
