@@ -29,7 +29,7 @@ export function run () {
     editor.commands.addCommand({
         name: 'save',
         bindKey: {win: "Ctrl-S", "mac": "Cmd-S"},
-        exec: () => evalMaze (getFunctionBodyString (editor.getValue ()))
+        exec: () => updateMaze (editor)
     });
 
     document.getElementById ('save').addEventListener ('click', () => updateMaze (editor));
@@ -51,6 +51,10 @@ export function run () {
     document.getElementById ('portal-example-button').addEventListener ('click', () => updateEditor (editor, portals));
 
     updateEditor (editor, example);
+}
+
+function updateMaze (editor) {
+    evalMaze (getFunctionBodyString (editor.getValue ()))
 }
 
 function evalMaze (mazeBuilderFunctionBodyString) {

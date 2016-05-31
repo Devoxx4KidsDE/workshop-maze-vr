@@ -111,7 +111,7 @@
 	        name: 'save',
 	        bindKey: { win: "Ctrl-S", "mac": "Cmd-S" },
 	        exec: function exec() {
-	            return evalMaze(getFunctionBodyString(editor.getValue()));
+	            return updateMaze(editor);
 	        }
 	    });
 
@@ -137,6 +137,10 @@
 	    });
 
 	    updateEditor(editor, _example2.default);
+	}
+
+	function updateMaze(editor) {
+	    evalMaze(getFunctionBodyString(editor.getValue()));
 	}
 
 	function evalMaze(mazeBuilderFunctionBodyString) {
