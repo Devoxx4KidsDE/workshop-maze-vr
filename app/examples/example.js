@@ -1,5 +1,6 @@
 /* eslint no-unused-vars: "off" */
 
+export default { build }
 export function build (Maze, Player, Wall, Item, WallTexture) {
 
     const maze = Maze.create({

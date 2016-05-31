@@ -6,7 +6,6 @@
     <title>D4K - MazeVR</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="/node_modules/systemjs/dist/system.js"></script>
-    <script src="/node_modules/ace-builds/src-min/ace.js"></script>
 </head>
 <body class="container">
 
@@ -41,7 +40,7 @@
         };
         System.defaultJSExtensions = true;
         SystemJS.config (config);
-        System.import ('app');
+        System.import ('app').then (app => app.run ());
     </script>
 
 </body>

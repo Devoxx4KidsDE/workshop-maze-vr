@@ -1,0 +1,111 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    color: #ffffff;
+    font-family: Monospace, sans-serif;
+    font-size: 13px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #000000;
+    margin: 0;
+    overflow: hidden;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.found {
+    text-decoration: line-through;
+    color: #00ff00;
+}
+
+.player-information {
+    font-size: 1.2em;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 1em;
+    z-index: 2147483647;
+}
+
+.items {
+    font-size: 1.2em;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-right: 1em;
+    z-index: 2147483647;
+}
+
+.refreshButton {
+    position: absolute;
+    left: 0;
+    top: 5.5em;
+    margin-left: 10px;
+    padding: 1.25em;
+    color: white;
+    font-size: larger;
+    text-decoration: none;
+    border-radius: 1em;
+    background-repeat: no-repeat;
+    background-image: url('./../ui/refresh.svg');
+    background-size: contain;
+    background-color: teal;
+    z-index: 2147483647;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.editor-container {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 0.5em;
+}
+
+.editor {
+    flex-grow: 1;
+    width: 629px;
+}
+
+.save-button {
+    height: 40px;
+    border: none;
+    background-color: navy;
+    color: white;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.playground-container {
+    flex-grow: 1;
+    position: relative;
+    cursor: none;
+}
+
+.example-list {
+    display: flex;
+    flex-direction: row;
+}
+.example-list-item {
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 3px;
+}
+.example-list-item:not(:last-child) {
+    padding-right: 0;
+}
+.example-list-item button {
+    height: 30px;
+    width: 100%;
+}

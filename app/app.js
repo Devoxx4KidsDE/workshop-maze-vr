@@ -1,59 +1,35 @@
 
-Promise.all ([
-    load ('./maze/mazeEvaluator'),
-    load ('./examples/example.js')
-]).then (function start ([ mazeEvaluator, initialExampleMaze ]) {
+import MazeEvaluator from './maze/mazeEvaluator';
+import example from './examples/example'
+import gotham from './examples/gotham_city'
+import portals from './examples/portalExample'
 
-    var activeMaze = null;
+var activeMaze = null;
 
-    function evalMaze (mazeBuilderFunctionBodyString) {
-        prepareHtml ();
-
-        if (activeMaze) {
-            activeMaze.stop ();
-        }
-
-        const maze = mazeEvaluator.evaluate (mazeBuilderFunctionBodyString);
-              maze.start ();
-
-        activeMaze = maze;
-    }
-
-    function updateMaze (editor) {
-        const code = editor.getValue ();
-        evalMaze (getFunctionBodyString (code));
-    }
-
-    function updateEditor (mazeBuilder) {
-        // \x20 -> whitespace but NOT line break
-        const bodyString = mazeBuilder.build.toString ().replace (/\x20\x20/gm, ' ');
-        editor.setValue (bodyString, 1);
-        editor.selection.moveCursorToPosition({row: 0, column: 0});
-
-        return editor;
-    }
+export default { run }
+export function run () {
 
     const showEditor = window.location.search.split (/[?&]/).map (p => p.split ('=')).some (function (p) {
         return p[0] === 'editor' && p[1] === 'true';
     });
 
     if (!showEditor) {
-        evalMaze (getFunctionBodyString (initialExampleMaze.build));
+        evalMaze (getFunctionBodyString (example.build));
         return;
     }
 
     renderEditor ();
 
     const editor = ace.edit ('editor');
-          // editor.setOption  ('showInvisibles', true);
-          editor.getSession ().setTabSize (2);
-          editor.getSession ().setUseSoftTabs (true);
-          editor.getSession ().setMode ('ace/mode/javascript');
+    // editor.setOption  ('showInvisibles', true);
+    editor.getSession ().setTabSize (2);
+    editor.getSession ().setUseSoftTabs (true);
+    editor.getSession ().setMode ('ace/mode/javascript');
 
     editor.commands.addCommand({
         name: 'save',
         bindKey: {win: "Ctrl-S", "mac": "Cmd-S"},
-        exec: updateMaze
+        exec: () => evalMaze (getFunctionBodyString (editor.getValue ()))
     });
 
     document.getElementById ('save').addEventListener ('click', () => updateMaze (editor));
@@ -71,28 +47,33 @@ Promise.all ([
     }, false);
 
 
-    document.getElementById ('gotham-city-button').addEventListener ('click',
-        () => loadMaze ('gotham').then (updateEditor).then (updateMaze));
+    document.getElementById ('gotham-city-button'   ).addEventListener ('click', () => updateEditor (editor, gotham ));
+    document.getElementById ('portal-example-button').addEventListener ('click', () => updateEditor (editor, portals));
 
-    document.getElementById ('portal-example-button').addEventListener ('click',
-        () => loadMaze ('portal').then (updateEditor).then (updateMaze));
-
-    updateEditor (initialExampleMaze);
-    updateMaze   (editor);
-});
-
-function loadMaze (name) {
-    if (name === 'gotham') {
-        return load ('./examples/gotham_city.js');
-    }
-    if (name === 'portal') {
-        return load ('./examples/portalExample.js');
-    }
-    throw new Error (`${name} is an unknown maze :/`);
+    updateEditor (editor, example);
 }
 
-function load (name) {
-    return System.import (name);
+function evalMaze (mazeBuilderFunctionBodyString) {
+    prepareHtml ();
+
+    if (activeMaze) {
+        activeMaze.stop ();
+    }
+
+    const maze = MazeEvaluator.evaluate (mazeBuilderFunctionBodyString);
+          maze.start ();
+
+    activeMaze = maze;
+}
+
+function updateEditor (editor, mazeBuilder) {
+    // \x20 -> whitespace but NOT line break
+    const bodyString = mazeBuilder.build.toString ().replace (/\x20\x20/gm, ' ');
+    editor.setValue (bodyString, 1);
+    editor.selection.moveCursorToPosition({row: 0, column: 0});
+
+    const code = editor.getValue ();
+    evalMaze (getFunctionBodyString (code));
 }
 
 function getFunctionBodyString (fn) {

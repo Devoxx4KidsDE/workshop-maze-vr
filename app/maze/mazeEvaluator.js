@@ -5,6 +5,7 @@ import Wall from './../maze/wall';
 import Item from './../maze/item';
 import * as WallTexture from './../maze/wallTexture';
 
+export default { evaluate }
 export function evaluate (functionBody) {
 
     const mazeBuilder = new Function (

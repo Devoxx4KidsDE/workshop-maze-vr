@@ -15,18 +15,31 @@
   "homepage": "https://github.com/Devoxx4KidsDE/workshop-maze-vr",
   "devDependencies": {
     "ace-builds": "1.2.2",
+    "babel-core": "6.9.1",
+    "babel-loader": "6.2.4",
+    "babel-preset-es2015": "6.9.0",
+    "clean-webpack-plugin": "0.1.9",
+    "copy-webpack-plugin": "3.0.1",
     "eslint": "2.10.2",
+    "html-webpack-plugin": "2.19.0",
     "http-server": "0.9.0",
     "nodemon": "1.9.2",
     "systemjs": "0.19.29",
     "systemjs-plugin-babel": "0.0.11",
     "three": "0.77.1",
+    "webpack": "1.13.0",
     "webvr-boilerplate": "0.4.3",
     "webvr-polyfill": "0.9.10"
   },
   "scripts": {
     "start": "http-server",
     "lint": "eslint ./app",
-    "lint:watch": "nodemon --watch ./app --exec 'npm run lint'"
+    "lint:watch": "nodemon --watch ./app --exec 'npm run lint'",
+    "build": "webpack --config webpack.ghpages.config.js"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
   }
 }
