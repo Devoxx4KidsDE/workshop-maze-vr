@@ -2,6 +2,12 @@
 System.import ('./examples/example.js').then (function (maze) {
     render ();
     maze.default.start ();
+}).catch (function (error) {
+    console.error (error.message, error.stack);
+    fetch ('/api/log', {
+        method: 'POST',
+        body: error.stack
+    });
 });
 
 function render () {

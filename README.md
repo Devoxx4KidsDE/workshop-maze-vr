@@ -44,13 +44,6 @@ npm start
 
 The example maze now available at http://localhost:8080/app
 
-This project uses [http-server](https://github.com/indexzero/http-server) to serve all required files.
-Port 8080 is the default. However, you can set a custom port with the ``-p`` option.
-
-```
-npm start -- -p 8081
-```
-
 
 ## Hack your maze
 
