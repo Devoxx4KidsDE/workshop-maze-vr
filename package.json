@@ -24,7 +24,7 @@
     "webvr-polyfill": "0.9.10"
   },
   "scripts": {
-    "start": "http-server",
+    "start": "http-server -c-1",
     "lint": "eslint ./app",
     "lint:watch": "nodemon --watch ./app --exec 'npm run lint'"
   }
