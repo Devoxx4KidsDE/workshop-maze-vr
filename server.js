@@ -50,6 +50,6 @@ app.post ('/api/log', function logError (req) {
     console.log (message.red);
 });
 
-app.listen (config.port, function () {
-    console.log (`App is listening on https://localhost:${config.port}`);
+app.listen (config.server.port, function () {
+    console.log (`App is listening on https://localhost:${config.server.port}`);
 });
