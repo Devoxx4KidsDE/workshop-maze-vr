@@ -18,7 +18,7 @@ There is even an editor available where you can hack your maze online 🎉 🎉
 
 ## Requirements
 
-* installed NodeJS version >= 0.12.xx
+* installed NodeJS version 6.x
  * see https://nodejs.org/en/download/package-manager/ for more information (e.g. how to install)
 
 ## Start
