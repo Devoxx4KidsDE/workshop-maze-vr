@@ -5,6 +5,7 @@ import Player from './../maze/player';
 import Wall from './../maze/wall';
 import Item from './../maze/item';
 import * as WallTexture from './../maze/wallTexture';
+import Gamepad from './../maze/gamepad';
 
 function start() {
 
@@ -18,6 +19,8 @@ function start() {
         startPoint: {x: 0, z: 0}
     });
     maze.addPlayer(player);
+	
+	const gamepad = new Gamepad.create();
 
     const cube = Item.createCube({x: 0, z: 1, displayName: 'cube'});
     cube.onCollect(function () {
@@ -32,6 +35,16 @@ function start() {
         // but calms down after 5 seconds
         setTimeout(() => player.speed = oldSpeed, 3 * 1000);
     });
+	
+	gamepad.onSpeedUpdate(function(speed){
+		console.log(speed);
+		if (Math.abs(speed) > 0.2){
+			player.speed = -1 * speed *10;
+		}else{
+			player.speed = 0;
+		}
+		
+	});
 
     maze.addItem(cube);
     maze.addItem(fireball);
