@@ -23,7 +23,9 @@
     "systemjs-plugin-babel": "0.0.11",
     "three": "0.77.1",
     "webvr-boilerplate": "0.4.3",
-    "webvr-polyfill": "0.9.10"
+    "webvr-polyfill": "0.9.10",
+	"object-assign": "4.1.0",
+	"es6-promise": "4.0.5"
   },
   "scripts": {
     "start": "node ./server.js",
