@@ -24,12 +24,17 @@ class Irrgarten {
   }
 
   neueWand(x, y, orientation) {
-    if (orientation == 'oben') { orientation = 'front'; }
-    if (orientation == 'unten') { orientation = 'back'; }
-    if (orientation == 'rechts') { orientation = 'right'; }
-    if (orientation == 'links') { orientation = 'left'; }
+    const wall = Wall.create({x: x, z: y, orientation: this.translateOrientation(orientation) });
+    this.meinIrrgarten.addWall(wall);
+    return wall;
+  }
 
-    const wall = Wall.create({x: 1, z: 2, orientation: orientation });
+  neueZufallswand() {
+    var x = Math.floor(Math.random() * this.meinIrrgarten.length);
+    var y = Math.floor(Math.random() * this.meinIrrgarten.width);
+    var richtung = Math.floor(Math.random() * 4)
+
+    const wall = Wall.create({x: x, z: y, orientation: this.translateOrientation(orientation) });
     this.meinIrrgarten.addWall(wall);
     return wall;
   }
@@ -44,6 +49,30 @@ class Irrgarten {
     const feuerball = Item.createFireball({x: x, z: y, displayName: name});
     this.meinIrrgarten.addItem(feuerball);
     return feuerball;
+  }
+
+  neuesPortal(x, y, orientation, nachX, nachY) {
+    const portal = Wall.create({x: x, z: y, orientation: this.translateOrientation(orientation), texture: WallTexture.GATE});
+    portal.isPortalTo({x: nachX, z: nachY});
+    return portal;
+  }
+
+  translateOrientation(orientation) {
+    if (orientation == 'oben') { orientation = 'front'; }
+    if (orientation == 'unten') { orientation = 'back'; }
+    if (orientation == 'rechts') { orientation = 'right'; }
+    if (orientation == 'links') { orientation = 'left'; }
+
+    if (orientation == '0') { orientation = 'front'; }
+    if (orientation == '1') { orientation = 'back'; }
+    if (orientation == '2') { orientation = 'right'; }
+    if (orientation == '3') { orientation = 'left'; }
+
+    return orientation;
+  }
+
+  alleXSekunden(x, callback) {
+    setInterval(callback, x * 1000);
   }
 
   start() {

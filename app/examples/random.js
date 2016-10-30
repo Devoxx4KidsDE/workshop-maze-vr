@@ -7,13 +7,7 @@ function start() {
 
   irrgarten.neuerSpieler('Max Mustermann', 5,5);
 
-  setInterval(function() {
-
-    var x = Math.floor(Math.random() * 10);
-    var y = Math.floor(Math.random() * 10);
-    var richtung = Math.floor(Math.random() * 4)
-    irrgarten.neueWand(x, y, richtung);
-  }, 1000);
+  irrgarten.alleXSekunden(3, irrgarten.neueZufallswand);
 
   irrgarten.start();
 }
