@@ -19,7 +19,7 @@ class Irrgarten {
       name: name,
       startPoint: {x: startX, z: startY}
     });
-    this.meinIrrgarten.addPlayer(this.player);
+    this.meinIrrgarten.addPlayer(this.spieler);
     return this.spieler;
   }
 
@@ -52,8 +52,10 @@ class Irrgarten {
   }
 
   neuesPortal(x, y, orientation, nachX, nachY) {
-    const portal = Wall.create({x: x, z: y, orientation: this.translateOrientation(orientation), texture: WallTexture.GATE});
+    const portal = Wall.create({x: x, z: y, orientation: this.translateOrientation(orientation)});
     portal.isPortalTo({x: nachX, z: nachY});
+    portal.setTexture(WallTexture.GATE);
+    this.meinIrrgarten.addWall(portal);
     return portal;
   }
 

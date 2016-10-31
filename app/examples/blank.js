@@ -3,17 +3,41 @@
 import Irrgarten from './../maze/irrgarten';
 
 function start() {
+
+
   var irrgarten = new Irrgarten(10,10);
 
-  irrgarten.neuerSpieler('Max Mustermann', 5,5);
 
-  setInterval(function() {
+  irrgarten.neuerSpieler('Max Mustermann', 8, 1);
 
-    var x = Math.floor(Math.random() * 10);
-    var y = Math.floor(Math.random() * 10);
-    var richtung = Math.floor(Math.random() * 4)
-    irrgarten.neueWand(x, y, richtung);
-  }, 1000);
+
+  irrgarten.neueWand(6, 2, 'oben');
+  irrgarten.neueWand(6, 2, 'rechts');
+  irrgarten.neueWand(6, 3, 'unten');
+
+
+  irrgarten.neuerWuerfel(3, 0, 'Würfel');
+
+
+  irrgarten.neuerFeuerball(1, 4, 'Feuerball');
+
+
+  irrgarten.neuerWuerfel(1, 1, 'Beschleuniger')
+  .onCollect(function() {
+    irrgarten.spieler.speed *= 2;
+  });
+
+
+  irrgarten.neuesPortal(0, 2, 'rechts', 9, 4);
+
+
+  for (var i = 2; i < 5; i++) {
+    irrgarten.neueWand(1, i, 'oben');
+  }
+
+
+  irrgarten.alleXSekunden(3, irrgarten.neueZufallswand);
+
 
   irrgarten.start();
 }
