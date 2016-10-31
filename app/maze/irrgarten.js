@@ -15,12 +15,12 @@ class Irrgarten {
   }
 
   neuerSpieler(name, startX, startY) {
-    this.player = Player.create({
+    this.spieler = Player.create({
       name: name,
       startPoint: {x: startX, z: startY}
     });
     this.meinIrrgarten.addPlayer(this.player);
-    return this.player;
+    return this.spieler;
   }
 
   neueWand(x, y, orientation) {
