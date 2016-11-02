@@ -1,6 +1,8 @@
 /* eslint no-unused-vars: "off" */
 
 import Irrgarten from './../maze/irrgarten';
+import Wand from './../maze/wall';
+
 
 function start() {
 
@@ -15,6 +17,11 @@ function start() {
   irrgarten.neueWand(6, 2, 'rechts');
   irrgarten.neueWand(6, 3, 'unten');
   irrgarten.neueSpezialWand(6, 4, 'unten');
+
+
+  const meineWand = Wand.erzeugen(6,5, 'back');
+  
+  irrgarten.wandHinzufuegen(meineWand);
 
   irrgarten.neuerWuerfel(3, 0, 'Würfel');
 

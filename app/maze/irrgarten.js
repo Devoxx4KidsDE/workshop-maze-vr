@@ -29,6 +29,11 @@ class Irrgarten {
     return wall;
   }
 
+  wandHinzufuegen(meineWand) {
+    this.meinIrrgarten.addWall(meineWand);
+    return meineWand;
+  }
+
   neueSpezialWand(x, y, orientation) {
     const wall = Wall.create({x: x, z: y, orientation: this.translateOrientation(orientation) });
     wall.setTexture(WallTexture.SPECIAL)

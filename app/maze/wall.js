@@ -85,6 +85,7 @@ class WallPrototype {
     }
 }
 
+
 function create ({x, z, orientation, texture = DefaultTexture}, cellSize = 500) {
 
     const wall = new WallPrototype ({x, z, orientation}, cellSize);
@@ -94,4 +95,8 @@ function create ({x, z, orientation, texture = DefaultTexture}, cellSize = 500) 
     return wall;
 }
 
-export default {create};
+function erzeugen (x, z, orientation, cellSize = 500) {
+    return create({x,z, orientation}, cellSize);
+}
+
+export default {create, erzeugen};
