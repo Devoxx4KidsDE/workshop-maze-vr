@@ -53,3 +53,9 @@ app.post ('/api/log', function logError (req) {
 app.listen (config.server.port, function () {
     console.log (`App is listening on http://localhost:${config.server.port}`);
 });
+
+const starttime = Date.now();
+
+app.get ('/version', function (req, res) {
+    res.send(starttime + '');
+});
