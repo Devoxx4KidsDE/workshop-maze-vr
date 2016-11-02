@@ -14,7 +14,7 @@ function start() {
   irrgarten.neueWand(6, 2, 'oben');
   irrgarten.neueWand(6, 2, 'rechts');
   irrgarten.neueWand(6, 3, 'unten');
-
+  irrgarten.neueSpezialWand(6, 4, 'unten');
 
   irrgarten.neuerWuerfel(3, 0, 'Würfel');
 

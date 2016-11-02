@@ -29,6 +29,13 @@ class Irrgarten {
     return wall;
   }
 
+  neueSpezialWand(x, y, orientation) {
+    const wall = Wall.create({x: x, z: y, orientation: this.translateOrientation(orientation) });
+    wall.setTexture(WallTexture.SPECIAL)
+    this.meinIrrgarten.addWall(wall);
+    return wall;
+  }
+
   neueZufallswand() {
     var x = Math.floor(Math.random() * this.meinIrrgarten.length);
     var y = Math.floor(Math.random() * this.meinIrrgarten.width);
