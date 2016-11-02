@@ -39,7 +39,7 @@ class Irrgarten {
   neueZufallswand() {
     var x = Math.floor(Math.random() * this.meinIrrgarten.length);
     var y = Math.floor(Math.random() * this.meinIrrgarten.width);
-    var richtung = Math.floor(Math.random() * 4)
+    var orientation = Math.floor(Math.random() * 4);
 
     const wall = Wall.create({x: x, z: y, orientation: this.translateOrientation(orientation) });
     this.meinIrrgarten.addWall(wall);
