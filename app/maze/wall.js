@@ -43,6 +43,7 @@ class WallPrototype {
         this._portalTo = point;
     }
 
+
     setTexture (textureName) {
         if    (!textureName) throw new TypeError ('textureName must be defined.');
 
@@ -65,16 +66,16 @@ class WallPrototype {
         this.mesh.position.z = (this.z * cellSize) + (cellSize / 2) + offsize.z;
 
         switch (orientation) {
-            case 'right':
+            case 'right', 'rechts', '0':
                 this.mesh.position.z -= 1;
                 break;
-            case 'left':
+            case 'left', 'links', '1':
                 this.mesh.position.z += 1;
                 break;
-            case 'front':
+            case 'front', 'oben', '2':
                 this.mesh.position.x -= 1;
                 break;
-            case 'back':
+            case 'back', 'unten', '3':
                 this.mesh.position.x += 1;
                 break;
         }
@@ -95,8 +96,9 @@ function create ({x, z, orientation, texture = DefaultTexture}, cellSize = 500) 
     return wall;
 }
 
-function erzeugen (x, z, orientation, cellSize = 500) {
-    return create({x,z, orientation}, cellSize);
+function erzeugen (x, z, orientation, muster, cellSize = 500) {
+    return create({x,z, orientation: orientation, texture : muster}, cellSize);
 }
+
 
 export default {create, erzeugen};
