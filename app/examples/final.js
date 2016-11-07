@@ -6,12 +6,9 @@ import * as Muster from './../maze/wallTexture';
 
 function start() {
 
-
     var irrgarten = new Irrgarten(10,10);
 
-
     irrgarten.neuerSpieler('Max Mustermann', 8, 1);
-
 
     irrgarten.neueWand(6, 2, 'oben');
     irrgarten.neueWand(6, 2, 'rechts');
@@ -39,7 +36,6 @@ function start() {
     for (var i = 2; i < 5; i++) {
         irrgarten.neueWand(1, i, 'oben');
     }
-
 
     irrgarten.alleXSekunden(3, irrgarten.neueZufallswand);
 

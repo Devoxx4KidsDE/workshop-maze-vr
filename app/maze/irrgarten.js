@@ -41,6 +41,10 @@ class Irrgarten {
   }
 
 
+  alleXSekunden(x, callback) {
+    setInterval(callback.bind(this), x * 1000);
+  }
+
   neueZufallswand() {
     var x = Math.floor(Math.random() * this.meinIrrgarten.length);
     var y = Math.floor(Math.random() * this.meinIrrgarten.width);
@@ -72,9 +76,7 @@ class Irrgarten {
   }
 
 
-  alleXSekunden(x, callback) {
-    setInterval(callback, x * 1000);
-  }
+
 
   start() {
     this.meinIrrgarten.start();
