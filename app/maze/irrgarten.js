@@ -1,3 +1,8 @@
+/*
+This is a facade create for German kids that reduces the language barier
+and provides a simplified interface that allows kids to interact with the maze
+without diving right into programming details...
+*/
 
 import Maze from './../maze/mazen';
 import Player from './../maze/player';

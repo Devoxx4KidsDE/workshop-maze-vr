@@ -42,7 +42,13 @@ and once the dependencies are installed simply start the app with
 npm start
 ```
 
-The example maze now available at http://localhost:8080/app
+or type this command if you want the server to restart automatically whenever you change code:
+
+```
+npm run start:watch
+```
+
+The example maze now available at http://localhost:8080/
 
 
 ## Hack your maze
