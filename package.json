@@ -27,7 +27,8 @@
   },
   "scripts": {
     "start": "node ./server.js",
+    "start:watch": "nodemon --watch ./app --exec \"node ./server.js\"",
     "lint": "eslint ./app",
-    "lint:watch": "nodemon --watch ./app --exec 'npm run lint'"
+    "lint:watch": "nodemon --watch ./app --exec \"npm run lint\""
   }
 }
