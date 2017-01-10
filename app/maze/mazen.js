@@ -87,8 +87,8 @@ class MazeTemplate {
         });
     }
 
-    addWall(wall) {
-
+    addWall(wallData) {
+        const wall = Wall.isPrototypeOf (wallData) ? wallData : Wall.create (wallData);
         const wallMesh = wall.getMesh();
 
         this.scene.add(wallMesh);
