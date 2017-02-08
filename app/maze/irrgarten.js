@@ -1,5 +1,5 @@
 /*
-This is a facade create for German kids that reduces the language barier
+This is a facade create for German kids that reduces the language barrier
 and provides a simplified interface that allows kids to interact with the maze
 without diving right into programming details...
 */
@@ -29,7 +29,7 @@ class Irrgarten {
   }
 
   neueWand(x, y, orientation, muster) {
-    var wall;
+    let wall;
     if (muster == null) {
       wall = Wall.create({x: x, z: y, orientation: orientation });
     } else {
@@ -51,9 +51,9 @@ class Irrgarten {
   }
 
   neueZufallswand() {
-    var x = Math.floor(Math.random() * this.meinIrrgarten.length);
-    var y = Math.floor(Math.random() * this.meinIrrgarten.width);
-    var orientation = Math.floor(Math.random() * 4);
+    const x = Math.floor(Math.random() * this.meinIrrgarten.length);
+    const y = Math.floor(Math.random() * this.meinIrrgarten.width);
+    const orientation = Math.floor(Math.random() * 4);
 
     const wall = Wall.create({x: x, z: y, orientation: orientation });
     this.meinIrrgarten.addWall(wall);
@@ -79,9 +79,6 @@ class Irrgarten {
     this.meinIrrgarten.addWall(portal);
     return portal;
   }
-
-
-
 
   start() {
     this.meinIrrgarten.start();

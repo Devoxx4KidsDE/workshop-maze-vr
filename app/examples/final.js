@@ -1,4 +1,5 @@
 /* eslint no-unused-vars: "off" */
+//Example for using the german facade for the maze
 
 import Irrgarten from './../maze/irrgarten';
 import Wand from './../maze/wall';
@@ -6,7 +7,7 @@ import * as Muster from './../maze/wallTexture';
 
 function start() {
 
-    var irrgarten = new Irrgarten(10,10);
+    const irrgarten = new Irrgarten(10,10);
 
     irrgarten.neuerSpieler('Max Mustermann', 8, 1);
 
@@ -33,7 +34,7 @@ function start() {
     irrgarten.neuesPortal(0, 2, 'rechts', 9, 4);
 
 
-    for (var i = 2; i < 5; i++) {
+    for (let i = 2; i < 5; i++) {
         irrgarten.neueWand(1, i, 'oben');
     }
 
