@@ -1,9 +1,9 @@
 /* eslint no-unused-vars: "off" */
 
-import Irrgarten from './../maze/irrgarten';
+import Irrgarten from '../facade/irrgarten';
 
 function start() {
-  var irrgarten = new Irrgarten(10,10);
+  const irrgarten = new Irrgarten(10,10);
 
   irrgarten.neuerSpieler('Max Mustermann', 5,5);
 

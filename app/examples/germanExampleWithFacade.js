@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: "off" */
 //Example for using the german facade for the maze
 
-import Irrgarten from './../maze/irrgarten';
+import Irrgarten from '../facade/irrgarten';
 import Wand from './../maze/wall';
 import * as Muster from './../maze/wallTexture';
 

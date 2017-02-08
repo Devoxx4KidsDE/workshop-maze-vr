@@ -79,7 +79,7 @@ The example maze now available at http://localhost:8080/
 So how to create your own maze you may ask?
 
 1. the simplest way would be to open `app/examples/example.js` and start hacking :-)
-2. a second option would be to create a new file (e.g. `app/examples/myAwesomeMaze.js`) and to adjust `app/app.js` to load the correct file. This need to be done for **workshop 2** as it uses `app/examples/blank.js`as a starting point or `app/examples/final.js`as the result
+2. a second option would be to create a new file (e.g. `app/examples/myAwesomeMaze.js`) and to adjust `app/app.js` to load the correct file. This need to be done for **workshop 2** as it uses `app/examples/blank.js`as a starting point or `app/examples/germanExampleWithFacade.js`as the result
 3. To learn how to create walls and portals please see the [presentation handout workshop 1](https://github.com/Devoxx4KidsDE/workshop-maze-vr/blob/master/presentation/de/workshop1/workshop-maze-vr_handout_ger.pdf) or  [presentation handout workshop 2](https://github.com/Devoxx4KidsDE/workshop-maze-vr/blob/master/presentation/de/workshop2/workshop2-maze-vr_handout_ger.pdf).
 
 # Notes / Hints
