@@ -1,132 +1,134 @@
-
 import THREE from 'three';
-import {STONE as DefaultTexture} from './wallTexture';
+import { STONE as DefaultTexture } from './wallTexture';
 
-function calculateOffsize (orientation, cellSize) {
+function calculateOffsize(orientation, cellSize) {
 
-    var x = 0;
-    var z = 0;
+  let x = 0;
+  let z = 0;
 
-    switch (orientation) {
-        case 'front':
-            x = cellSize / 2;
-            break;
-        case 'back':
-            x = -cellSize / 2;
-            break;
-        case 'left':
-            z = -cellSize / 2;
-            break;
-        case 'right':
-            z = cellSize / 2;
-    }
+  switch (orientation) {
+    case 'front':
+      x = cellSize / 2;
+      break;
+    case 'back':
+      x = -cellSize / 2;
+      break;
+    case 'left':
+      z = -cellSize / 2;
+      break;
+    case 'right':
+      z = cellSize / 2;
+  }
 
-    return {x, z};
+  return { x, z };
 }
 
 class WallPrototype {
 
-    constructor ({x, z, orientation}, cellSize) {
+  constructor({ x, z, orientation }, cellSize) {
 
-        this.x           = x;
-        this.z           = z;
-        this.orientation = mapOrientation(orientation);
-        this.cellSize    = cellSize;
+    this.x = x;
+    this.z = z;
+    this.orientation = mapOrientation(orientation);
+    this.cellSize = cellSize;
 
-    }
+  }
 
-    triggerCollision () {
-        return this._portalTo ? this._portalTo : {};
-    }
+  triggerCollision() {
+    return this._portalTo ? this._portalTo : {};
+  }
 
-    isPortalTo (point) {
-        this._portalTo = point;
-    }
+  isPortalTo(point) {
+    this._portalTo = point;
+  }
 
 
-    setTexture (textureName) {
-        if    (!textureName) throw new TypeError ('textureName must be defined.');
+  setTexture(textureName) {
+    if (!textureName) throw new TypeError('textureName must be defined.');
 
-        const cellSize    = this.cellSize;
-        const orientation = this.orientation;
-        const offsize     = calculateOffsize (orientation, cellSize);
+    const cellSize = this.cellSize;
+    const orientation = this.orientation;
+    const offsize = calculateOffsize(orientation, cellSize);
 
-        const texture = new THREE.TextureLoader ().load (`textures/${textureName}`);
-        texture.anisotropy = 1;
-        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    const texture = new THREE.TextureLoader().load(`textures/${textureName}`);
+    texture.anisotropy = 1;
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
-        const material = new THREE.MeshBasicMaterial ({
-            map: texture,
-            side: THREE.DoubleSide
-        });
+    const material = new THREE.MeshBasicMaterial({
+      map: texture,
+      side: THREE.DoubleSide
+    });
 
-        this.mesh = new THREE.Mesh (new THREE.PlaneBufferGeometry (cellSize, cellSize, 1, 1), material);
-        this.mesh.rotation.y = (orientation === 'left' || orientation === 'right') ? 0 : Math.PI / 2;
-        this.mesh.position.x = (this.x * cellSize) + (cellSize / 2) + offsize.x;
-        this.mesh.position.z = (this.z * cellSize) + (cellSize / 2) + offsize.z;
+    this.mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(cellSize, cellSize, 1, 1), material);
+    this.mesh.rotation.y = (orientation === 'left' || orientation === 'right') ? 0 : Math.PI / 2;
+    this.mesh.position.x = (this.x * cellSize) + (cellSize / 2) + offsize.x;
+    this.mesh.position.z = (this.z * cellSize) + (cellSize / 2) + offsize.z;
 
-        console.log("orientation: "+orientation);
+    console.log("orientation: " + orientation);
 
-        switch (orientation) {
-            case 'right':
-                this.mesh.position.z -= 1;
-                break;
-
-            case 'left':
-                this.mesh.position.z += 1;
-                break;
-
-            case 'front':
-                this.mesh.position.x -= 1;
-                break;
-
-            case 'back':
-                this.mesh.position.x += 1;
-                break;
-        }
-    }
-
-    getMesh () {
-        return this.mesh;
-    }
-}
-
-function mapOrientation (orientation) {
     switch (orientation) {
-        case 'right':
-        case 'rechts':
-        case 0:
-            return "right";
+      case 'right':
+        this.mesh.position.z -= 1;
+        break;
 
-        case 'left':
-        case 'links':
-        case 1:
-            return "left";
+      case 'left':
+        this.mesh.position.z += 1;
+        break;
 
-        case 'front':
-        case 'oben':
-        case 2:
-            return "front";
+      case 'front':
+        this.mesh.position.x -= 1;
+        break;
 
-        case 'back':
-        case 'unten':
-        case 3:
-            return "back";
+      case 'back':
+        this.mesh.position.x += 1;
+        break;
     }
+  }
+
+  getMesh() {
+    return this.mesh;
+  }
 }
 
-function create ({x, z, orientation, texture = DefaultTexture}, cellSize = 500) {
+function mapOrientation(orientation) {
+  switch (orientation) {
+    case 'right':
+    case 'rechts':
+    case 0:
+      return "right";
 
-    const wall = new WallPrototype ({x, z, orientation}, cellSize);
+    case 'left':
+    case 'links':
+    case 1:
+      return "left";
 
-    wall.setTexture (texture);
+    case 'front':
+    case 'oben':
+    case 2:
+      return "front";
 
-    return wall;
+    case 'back':
+    case 'unten':
+    case 3:
+      return "back";
+  }
 }
 
-function erzeugen (x, z, orientation, muster, cellSize = 500) {
-    return create({x,z, orientation: orientation, texture : muster}, cellSize);
+function create({ x, z, orientation, texture = DefaultTexture }, cellSize = 500) {
+
+  const wall = new WallPrototype({ x, z, orientation }, cellSize);
+
+  wall.setTexture(texture);
+
+  return wall;
 }
 
+function erzeugen(x, z, orientation, muster, cellSize = 500) {
+  return create({ x, z, orientation: orientation, texture: muster }, cellSize);
+}
 
-export default {create, erzeugen};
+function generate(x, z, orientation, muster, cellSize = 500) {
+  return create({ x, z, orientation: orientation, texture: muster }, cellSize);
+}
+
+export default { create, erzeugen, generate };
