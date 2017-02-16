@@ -32,10 +32,17 @@ class MazeTemplate {
         this.floor = [];
         this.items = [];
         this.ceiling = [];
+        this.otherPlayers = [];
 
         this[animate] = (timestamp) => {
             requestAnimationFrame(this[animate]);
             this.player.controls.update();
+
+            this.otherPlayers.map(player => {
+              player.mesh.position.x = (player.position.x * this.cellSize) + (this.cellSize / 2);
+              player.mesh.position.y = (player.position.y * this.cellSize);
+              player.mesh.position.z = (player.position.z * this.cellSize) + (this.cellSize / 2);
+            });
 
             const center = x => (x * this.cellSize) + (this.cellSize / 2);
 
@@ -88,11 +95,14 @@ class MazeTemplate {
     }
 
     addWall(wall) {
-
         const wallMesh = wall.getMesh();
-
         this.scene.add(wallMesh);
         this.walls.push(wall);
+    }
+
+    addOtherPlayer(player) {
+        this.otherPlayers.push(player);
+        this.scene.add(player.mesh);
     }
 
     addWalls(walls) {
