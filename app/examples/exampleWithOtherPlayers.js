@@ -21,7 +21,7 @@ function start() {
     maze.addPlayer(player);
 
     // Connect to server
-    const multiplayer = new MultiPlayerController(player, maze, `ws://${window.location.host}/players`);
+    const multiplayer = new MultiPlayerController(maze, `ws://${window.location.host}/players`);
 
     maze.start();
 }

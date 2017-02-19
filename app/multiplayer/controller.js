@@ -2,12 +2,12 @@ import OtherPlayer from '../maze/otherPlayer';
 import SocketConnection from './connection';
 
 class MultiPlayerController {
-  constructor(player, maze, uri) {
-    this.player = player;
+  constructor(maze, uri) {
+    this.player = maze.player.configuration;
     this.maze = maze;
-    this.connection = new SocketConnection(player, uri);
+    this.connection = new SocketConnection(this.player, uri);
 
-    player.onPositionChange = this.handleOwnPositionChange.bind(this);
+    this.player.onPositionChange = this.handleOwnPositionChange.bind(this);
     this.connection.onOtherPlayersUpdated = this.handleOtherPlayersUpdated.bind(this);
   }
 
