@@ -1,4 +1,3 @@
-
 require ('colors');
 const os = require ('os');
 const express = require ('express');
@@ -6,7 +5,7 @@ const bodyParser = require ('body-parser');
 const path = require ('path');
 const app = express ();
 
-require('./websocketServer')(app);
+require('./app/multiplayer/server')(app);
 
 const config = {
     server: {

@@ -2,18 +2,19 @@ const expressWs = require('express-ws');
 const {
   updateState,
   createSyncClientsMessage
-} = require('./app/websocket/messages');
+} = require('./messages');
 
 module.exports = function init(app) {
   expressWs(app);
 
   const playerPool = new Map();
 
-  const isPlayerForOtherWebsocket = (ws) => player => {
+  const filterPlayerByWebsocket = (ws) => player => {
     return playerPool.get(ws) !== player;
   }
 
-  const notifyOtherPlayers = (ws) => {
+  // Notify other sockets about player position
+  const notifyOtherPlayers = (sendingSocket) => {
     const playerStates = [];
     playerPool.forEach((state) => {
       playerStates.push(state);
@@ -21,13 +22,15 @@ module.exports = function init(app) {
 
     const nonEmptyPlayerStates = playerStates.filter(p => p !== null);
 
-    playerPool.forEach((state, socket) => {
-      const statesRelevantForWs = nonEmptyPlayerStates.filter(isPlayerForOtherWebsocket(socket));
-      socket.send(createSyncClientsMessage(statesRelevantForWs));
+    playerPool.forEach((state, targetSocket) => {
+      if (sendingSocket !== targetSocket) {
+        const states = nonEmptyPlayerStates.filter(filterPlayerByWebsocket(targetSocket));
+        targetSocket.send(createSyncClientsMessage(states));
+      }
     });
   }
 
-  app.ws('/players', function(ws, req) {
+  app.ws('/players', function(ws) {
     playerPool.set(ws, null);
 
     // Player connection closed
@@ -36,6 +39,7 @@ module.exports = function init(app) {
       notifyOtherPlayers(ws);
     });
 
+    // Player message received
     ws.on('message', (msg) => {
       const newState = updateState(playerPool.get(ws), msg);
       playerPool.set(ws, newState)

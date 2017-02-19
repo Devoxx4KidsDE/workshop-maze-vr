@@ -5,7 +5,7 @@ import Player from './../maze/player';
 import Wall from './../maze/wall';
 import Item from './../maze/item';
 import * as WallTexture from './../maze/wallTexture';
-import MultiPlayerController from '../websocket/multiPlayerController';
+import MultiPlayerController from '../multiplayer/controller';
 
 function start() {
     const maze = Maze.create({
@@ -15,13 +15,13 @@ function start() {
 
     const player = Player.create({
         name: 'Bruce Wayne',
-        startPoint: {x: 5, z: 5},
-        // speed: 0.8,
+        startPoint: {x: 5, z: 5}
     });
+
     maze.addPlayer(player);
 
     // Connect to server
-    const multiplayer = new MultiPlayerController(player, maze, 'ws://localhost:8080/players');
+    const multiplayer = new MultiPlayerController(player, maze, `ws://${window.location.host}/players`);
 
     maze.start();
 }

@@ -1,4 +1,3 @@
-// const TYPE_JOIN = 'join';
 const TYPE_PLAYER_POSITION = 'player_position';
 const TYPE_SYNC_CLIENTS = 'sync_clients';
 
@@ -17,13 +16,9 @@ function parseMessage(data) {
 function createMessage(type, data = {}) {
   return encodeMessage({
     type,
-    data,
+    data
   });
 }
-
-// function createJoinMessage(playerId) {
-//   return createMessage(TYPE_JOIN, { playerId });
-// }
 
 function createPlayerPositionUpdateMessage(playerId, position) {
   return createMessage(TYPE_PLAYER_POSITION, {
@@ -39,18 +34,11 @@ function createSyncClientsMessage(data) {
 function updateState(state, messageAsString) {
   const { type, data } = parseMessage(messageAsString);
   switch (type) {
-    // case TYPE_JOIN:
-    //   return Object.assign({}, state, {
-    //     playerId: data.playerId,
-    //     position: data.position
-    //   });
-    //   break;
     case TYPE_PLAYER_POSITION:
       return Object.assign({}, state, {
         playerId: data.playerId,
-        position: data.position,
+        position: data.position
       });
-      break;
     default:
       return state;
   }

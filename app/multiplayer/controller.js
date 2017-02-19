@@ -7,30 +7,11 @@ class MultiPlayerController {
     this.maze = maze;
     this.connection = new SocketConnection(player, uri);
 
-    // this.connection.onPlayerJoined = this.handleOtherPlayerJoined.bind(this);
-    // this.connection.onPlayerLeft = this.handleOtherPlayerLeft.bind(this);
     player.onPositionChange = this.handleOwnPositionChange.bind(this);
     this.connection.onOtherPlayersUpdated = this.handleOtherPlayersUpdated.bind(this);
-
-    // this.connection.onMessage = this.handleMessage.bind(this);
-
   }
 
-  // handleMessage() {
-  //   const otherPlayer = OtherPlayer.create({x: 3, z: 0}, 'Hans');
-  //   this.maze.addOtherPlayer(otherPlayer);
-  // }
-  //
-  // handleOtherPlayerJoined() {
-  //   const otherPlayer = OtherPlayer.create({x: 3, z: 0}, 'Hans');
-  //   this.maze.addOtherPlayer(otherPlayer);
-  // }
-  //
-  // handleOtherPlayerLeft() {
-  //
-  // }
-
-  findOtherPlayerById(id) {
+  getOtherPlayerById(id) {
     return this.maze.otherPlayers.reduce((found, player) => {
       if (found === null) {
         if (player.id === id) {
@@ -41,7 +22,7 @@ class MultiPlayerController {
     }, null);
   }
 
-  findPlayerInfoById(playerInfos, id) {
+  getPlayerInfoById(playerInfos, id) {
     return playerInfos.reduce((found, playerInfo) => {
       if (found === null) {
         if (playerInfo.playerId === id) {
@@ -54,7 +35,7 @@ class MultiPlayerController {
 
   removeDisconnectedPlayers(playerInfos) {
     const disconnectedOtherPlayers = this.maze.otherPlayers.reduce((playersToRemove, player) => {
-      if (this.findPlayerInfoById(playerInfos, player.id) === null) {
+      if (this.getPlayerInfoById(playerInfos, player.id) === null) {
         return playersToRemove.concat([player]);
       }
       return playersToRemove;
@@ -69,7 +50,6 @@ class MultiPlayerController {
   addJoinedPlayers(playerInfos) {
     playerInfos.forEach((playerInfo) => {
       if(this.isNewOtherPlayer(playerInfo)) {
-        console.log(playerInfo.position, playerInfo.playerId);
         const otherPlayer = OtherPlayer.create(playerInfo.position, playerInfo.playerId);
         this.maze.addOtherPlayer(otherPlayer);
         console.log('new player joined', playerInfo.playerId);
@@ -79,7 +59,7 @@ class MultiPlayerController {
 
   updateOtherPlayerPositions(playerInfos) {
     this.maze.otherPlayers.forEach((otherPlayer) => {
-      const playerInfo = this.findPlayerInfoById(playerInfos, otherPlayer.id);
+      const playerInfo = this.getPlayerInfoById(playerInfos, otherPlayer.id);
       if (playerInfo !== null) {
         otherPlayer.setPosition(playerInfo.position);
       }
@@ -87,7 +67,7 @@ class MultiPlayerController {
   }
 
   isNewOtherPlayer(playerInfo) {
-    const player = this.findOtherPlayerById(playerInfo.playerId);
+    const player = this.getOtherPlayerById(playerInfo.playerId);
     return player === null;
   }
 

@@ -1,7 +1,6 @@
 import {
   TYPE_SYNC_CLIENTS,
   parseMessage,
-  createJoinMessage,
   createPlayerPositionUpdateMessage
 } from './messages';
 
