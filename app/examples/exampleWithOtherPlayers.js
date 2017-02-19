@@ -4,11 +4,10 @@ import Maze from './../maze/mazen';
 import Player from './../maze/player';
 import Wall from './../maze/wall';
 import Item from './../maze/item';
-import OtherPlayer from './../maze/otherPlayer';
 import * as WallTexture from './../maze/wallTexture';
+import MultiPlayerController from '../websocket/multiPlayerController';
 
 function start() {
-
     const maze = Maze.create({
         length: 10,
         width: 10
@@ -16,16 +15,13 @@ function start() {
 
     const player = Player.create({
         name: 'Bruce Wayne',
-        startPoint: {x: 0, z: 0}
+        startPoint: {x: 5, z: 5},
+        // speed: 0.8,
     });
     maze.addPlayer(player);
 
-    const otherPlayer = OtherPlayer.create({x: 3, z: 0}, 'Hans');
-    maze.addOtherPlayer(otherPlayer);
-
-    setInterval(() => {
-      otherPlayer.setPosition(otherPlayer.position.x + 0.1, otherPlayer.position.z + 0.1);
-    }, 200);
+    // Connect to server
+    const multiplayer = new MultiPlayerController(player, maze, 'ws://localhost:8080/players');
 
     maze.start();
 }

@@ -20,6 +20,7 @@ class MazeTemplate {
         this.length = undefined;
         this.width = undefined;
         this.cellSize = undefined;
+
         this.scene = undefined;
 
         this.player = {
@@ -34,15 +35,10 @@ class MazeTemplate {
         this.ceiling = [];
         this.otherPlayers = [];
 
+
         this[animate] = (timestamp) => {
             requestAnimationFrame(this[animate]);
             this.player.controls.update();
-
-            this.otherPlayers.map(player => {
-              player.mesh.position.x = (player.position.x * this.cellSize) + (this.cellSize / 2);
-              player.mesh.position.y = (player.position.y * this.cellSize);
-              player.mesh.position.z = (player.position.z * this.cellSize) + (this.cellSize / 2);
-            });
 
             const center = x => (x * this.cellSize) + (this.cellSize / 2);
 
@@ -57,6 +53,12 @@ class MazeTemplate {
                 //walk on
                 camera.translateZ(-this.player.configuration.speed);
             }
+
+            camera.position.setY(0); //no movement up and down
+
+
+            // Update the players position
+            this.player.configuration.setPositionByCamera(camera.position, this.cellSize);
 
             this.items.forEach(item => {
                 if (!item.isCollected) {
@@ -75,7 +77,12 @@ class MazeTemplate {
                 }
             });
 
-            camera.position.setY(0); //no movement up and down
+            this.otherPlayers.map(player => {
+              player.mesh.position.x = (player.position.x * this.cellSize) + (this.cellSize / 2);
+              player.mesh.position.y = (player.position.y * this.cellSize);
+              player.mesh.position.z = (player.position.z * this.cellSize) + (this.cellSize / 2);
+            });
+
             this.manager.render(this.scene, camera, timestamp);
         };
     }
@@ -105,29 +112,38 @@ class MazeTemplate {
         this.scene.add(player.mesh);
     }
 
+    removeOtherPlayer(player) {
+        this.otherPlayers.splice(this.otherPlayers.indexOf(player), 1);
+        this.scene.remove(player.mesh);
+    }
+
     addWalls(walls) {
         walls.forEach(w => this.addWall(w));
     }
 
     addPlayer(playerConfiguration) {
-
         this.player.configuration = playerConfiguration;
         this.player.collisionDetector = CollisionDetector.create();
         camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 10000);
-        camera.position.x = (this.player.configuration.position.x * this.cellSize) + (this.cellSize / 2);
-        camera.position.z = (this.player.configuration.position.z * this.cellSize) + (this.cellSize / 2);
+        this.setCameraToPlayerPosition();
         // looking into the maze
         let lookAtPoint = new THREE.Vector3(this.cellSize, 0, this.cellSize / 2);
         camera.lookAt(lookAtPoint);
     }
 
     addItem(item) {
-
         item.geometry.position.x = (item.geometry.position.x * this.cellSize) + (this.cellSize / 2);
         item.geometry.position.y = (item.geometry.position.y * this.cellSize);
         item.geometry.position.z = (item.geometry.position.z * this.cellSize) + (this.cellSize / 2);
         this.items.push(item);
         this.scene.add(item.geometry);
+    }
+
+    setCameraToPlayerPosition() {
+      const cameraPosition = this.player.configuration.getCameraPosition(this.cellSize);
+      camera.position.setX(cameraPosition.x);
+      camera.position.setY(0);
+      camera.position.setZ(cameraPosition.z);
     }
 
     start() {

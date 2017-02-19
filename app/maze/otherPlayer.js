@@ -2,8 +2,8 @@
 import THREE from 'three';
 
 class OtherPlayer {
-    constructor({ x, z }, name) {
-        this.name = name;
+    constructor({ x, z }, id) {
+        this.id = id;
         this.x = x;
         this.y = 0;
         this.z = z;
@@ -21,14 +21,14 @@ class OtherPlayer {
         this.mesh = mesh;
     }
 
-    setPosition(x, z) {
+    setPosition({ x, z }) {
       this.position.x = x;
       this.position.z = z;
     }
 }
 
-function create(position, name) {
-    return new OtherPlayer(position, name);
+function create(position, id) {
+    return new OtherPlayer(position, id);
 }
 
 export default {create};

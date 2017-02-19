@@ -6,6 +6,8 @@ const bodyParser = require ('body-parser');
 const path = require ('path');
 const app = express ();
 
+require('./websocketServer')(app);
+
 const config = {
     server: {
         port: 8080,
@@ -28,7 +30,7 @@ function getTime () {
 
 app.use (function logRequestedResources (req, res, next) {
     if (req.method === 'GET') {
-        console.log (`[${getTime ()}] Serving requested file ${path.basename(req.url) || 'index.html'}`.dim);
+        // console.log (`[${getTime ()}] Serving requested file ${path.basename(req.url) || 'index.html'}`.dim);
     }
     next ();
 });
