@@ -41,7 +41,7 @@ class Player {
     }
 }
 
-function create ({name = 'Anonymous', speed = 5, startPoint = {x:0, z:0}}) {
+function create ({name = 'Anonymous', speed = 5, startPoint = {x:0, z:0}, color = "rgb(30,30,30)"}) {
     let player = new Player();
 
     player.name = name;
@@ -49,6 +49,7 @@ function create ({name = 'Anonymous', speed = 5, startPoint = {x:0, z:0}}) {
     player.position.x = startPoint.x;
     player.position.z = startPoint.z;
     player.position.y = 0;
+    player.color = color;
 
     return player;
 }

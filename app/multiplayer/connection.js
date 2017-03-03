@@ -40,7 +40,7 @@ class SocketConnection {
 
   sendPlayerPosition() {
     if (this.open) {
-      this.socket.send(createPlayerPositionUpdateMessage(this.playerId, this.player.position));
+      this.socket.send(createPlayerPositionUpdateMessage(this.playerId, this.player.position, this.player.color));
     }
   }
 

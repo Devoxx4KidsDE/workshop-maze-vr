@@ -20,10 +20,11 @@ function createMessage(type, data = {}) {
   });
 }
 
-function createPlayerPositionUpdateMessage(playerId, position) {
+function createPlayerPositionUpdateMessage(playerId, position, color) {
   return createMessage(TYPE_PLAYER_POSITION, {
     playerId,
-    position
+    position,
+    color
   });
 }
 
@@ -37,7 +38,8 @@ function updateState(state, messageAsString) {
     case TYPE_PLAYER_POSITION:
       return Object.assign({}, state, {
         playerId: data.playerId,
-        position: data.position
+        position: data.position,
+        color: data.color
       });
     default:
       return state;

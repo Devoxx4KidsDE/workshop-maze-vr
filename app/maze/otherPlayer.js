@@ -2,7 +2,7 @@
 import THREE from 'three';
 
 class OtherPlayer {
-    constructor({ x, z }, id) {
+    constructor({ x, z }, id, color= "rgb(0,0,255)") {
         this.id = id;
         this.x = x;
         this.y = 0;
@@ -14,11 +14,12 @@ class OtherPlayer {
           z
         };
 
-        const otherPlayerGeometry = new THREE.SphereGeometry(100);
-        const otherPlayerMaterial = new THREE.MeshBasicMaterial({map: new THREE.TextureLoader ().load ('textures/player_texture.jpg')});
-        const mesh = new THREE.Mesh(otherPlayerGeometry, otherPlayerMaterial);
 
-        this.mesh = mesh;
+        const otherPlayerGeometry = new THREE.SphereGeometry(250, 32, 32);
+        const otherPlayerMaterial = new THREE.MeshBasicMaterial( {color: new THREE.Color(color) , wireframe: true});
+        const sphere = new THREE.Mesh( otherPlayerGeometry, otherPlayerMaterial );
+
+        this.mesh = sphere;
     }
 
     setPosition({ x, z }) {
@@ -27,8 +28,8 @@ class OtherPlayer {
     }
 }
 
-function create(position, id) {
-    return new OtherPlayer(position, id);
+function create(position, id, color) {
+    return new OtherPlayer(position, id, color);
 }
 
 export default {create};

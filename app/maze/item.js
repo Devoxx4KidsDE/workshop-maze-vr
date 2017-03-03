@@ -37,7 +37,7 @@ function create(name,
     return item;
 }
 
-function createCube({x, z, displayName, color = 0x00ff00}) {
+function createCube({x, z, displayName, color = "#00ff00"}) {
     let cubeGeometry = new THREE.BoxGeometry( 100, 100, 100 );
     let cubeMaterial = new THREE.MeshBasicMaterial( { color: color } );
     let cube = new THREE.Mesh( cubeGeometry, cubeMaterial );

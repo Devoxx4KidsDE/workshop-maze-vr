@@ -50,7 +50,7 @@ class MultiPlayerController {
   addJoinedPlayers(playerInfos) {
     playerInfos.forEach((playerInfo) => {
       if(this.isNewOtherPlayer(playerInfo)) {
-        const otherPlayer = OtherPlayer.create(playerInfo.position, playerInfo.playerId);
+        const otherPlayer = OtherPlayer.create(playerInfo.position, playerInfo.playerId, playerInfo.color);
         this.maze.addOtherPlayer(otherPlayer);
         console.log('new player joined', playerInfo.playerId);
       }
