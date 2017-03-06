@@ -4,25 +4,25 @@
  *
  */
 
-var playerName = "Ironman";
-var playerColor = "rgb(255,0,0)";
-var playerSpeed = 10;
+const defaultParams = {
+  name: "Ironman",
+  color: "rgb(255,0,0)",
+  speed: 10
+};
 
 function retrievePlayerParamsFromURL() {
-    var params = window.location.search
+    return window.location.search
         .substring(1)
         .split("&")
         .map(v => v.split("="))
-        .reduce((map, [key, value]) => map.set(key, decodeURIComponent(value)), new Map());
-
-    playerName = params.get("name");
-    playerColor = params.get("color");
-    playerSpeed = params.get("speed");
+        .filter(pairs => pairs.length === 2)
+        .reduce((map, [key, value]) => {
+          map[key] = decodeURIComponent(value);
+          return map;
+        }, {});
 }
 
-module.exports = {
-    playerName,
-    playerColor,
-    playerSpeed,
-    retrievePlayerParamsFromURL
+export default function mergeWithUrlParams(ownParams) {
+  const urlParams = retrievePlayerParamsFromURL();
+  return Object.assign({}, defaultParams, urlParams, ownParams);
 }
