@@ -7,7 +7,7 @@
 const defaultParams = {
   name: "Ironman",
   color: "rgb(255,0,0)",
-  speed: 10
+  speed: 5
 };
 
 function retrievePlayerParamsFromURL() {
@@ -24,5 +24,12 @@ function retrievePlayerParamsFromURL() {
 
 export default function mergeWithUrlParams(ownParams) {
   const urlParams = retrievePlayerParamsFromURL();
-  return Object.assign({}, defaultParams, urlParams, ownParams);
+    
+  if (urlParams.x != undefined) {
+      ownParams.startPoint.x = urlParams.x;
+  }
+  if (urlParams.y != undefined) {
+      ownParams.startPoint.y = urlParams.y;
+  }
+  return Object.assign({}, defaultParams, ownParams, urlParams );
 }

@@ -2,6 +2,7 @@
 import Labyrinth from '../facade/labyrinth';
 import Wall from './../maze/wall';
 import * as Texture from './../maze/wallTexture';
+import MultiPlayerController from '../multiplayer/controller';
 
 function start() {
 
