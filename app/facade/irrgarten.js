@@ -10,6 +10,8 @@ import Wall from '../maze/wall';
 import Item from '../maze/item';
 import * as WallTexture from '../maze/wallTexture';
 import mergeWithUrlParams from '../maze/playerParams';
+import MultiPlayerController from '../multiplayer/controller';
+
 
 class Irrgarten {
 
@@ -86,6 +88,10 @@ class Irrgarten {
     portal.setTexture(WallTexture.GATE);
     this.meinIrrgarten.addWall(portal);
     return portal;
+  }
+
+  starteMultiplayer() {
+      const multiplayer = new MultiPlayerController(this.meinIrrgarten, `ws://${window.location.host}/players`);
   }
 
   start() {

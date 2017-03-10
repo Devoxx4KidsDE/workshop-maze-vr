@@ -4,7 +4,6 @@
 import Irrgarten from '../facade/irrgarten';
 import Wand from './../maze/wall';
 import * as Muster from './../maze/wallTexture';
-import MultiPlayerController from '../multiplayer/controller';
 
 function start() {
 
@@ -43,9 +42,8 @@ function start() {
     irrgarten.alleXSekunden(3, irrgarten.neueZufallswand);
 
 
-    // Connect to server
-    const multiplayer = new MultiPlayerController(irrgarten.meinIrrgarten, `ws://${window.location.host}/players`);
-
+    // Uns sollen auch die anderen Spieler sehen
+    irrgarten.starteMultiplayer();
 
     irrgarten.meinIrrgarten.start(); // nicht vergessen, dass der Irrgarten einen Spieler braucht
 }

@@ -28,8 +28,8 @@ export default function mergeWithUrlParams(ownParams) {
   if (urlParams.x != undefined) {
       ownParams.startPoint.x = urlParams.x;
   }
-  if (urlParams.y != undefined) {
-      ownParams.startPoint.y = urlParams.y;
+  if (urlParams.z != undefined) {
+      ownParams.startPoint.z = urlParams.z;
   }
   return Object.assign({}, defaultParams, ownParams, urlParams );
 }
