@@ -9,6 +9,7 @@ function start() {
 
     const irrgarten = new Irrgarten(10,10);
 
+    // Überprüfen, ob das Setzen des Spielernames funktioniert
     irrgarten.neuerSpieler('Max Mustermann', 8, 1);
 
     irrgarten.neueWand(6, 2, 'oben');
@@ -41,7 +42,10 @@ function start() {
     irrgarten.alleXSekunden(3, irrgarten.neueZufallswand);
 
 
-    irrgarten.start(); // nicht vergessen, dass der Irrgarten einen Spieler braucht
+    // Uns sollen auch die anderen Spieler sehen
+    irrgarten.starteMultiplayer();
+
+    irrgarten.meinIrrgarten.start(); // nicht vergessen, dass der Irrgarten einen Spieler braucht
 }
 
 export default {start};

@@ -64,7 +64,7 @@ class WallPrototype {
     this.mesh.position.x = (this.x * cellSize) + (cellSize / 2) + offsize.x;
     this.mesh.position.z = (this.z * cellSize) + (cellSize / 2) + offsize.z;
 
-    console.log("orientation: " + orientation);
+   // console.log("orientation: " + orientation);
 
     switch (orientation) {
       case 'right':

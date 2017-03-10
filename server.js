@@ -1,10 +1,11 @@
-
 require ('colors');
 const os = require ('os');
 const express = require ('express');
 const bodyParser = require ('body-parser');
 const path = require ('path');
 const app = express ();
+
+require('./app/multiplayer/server')(app);
 
 const config = {
     server: {
@@ -28,7 +29,7 @@ function getTime () {
 
 app.use (function logRequestedResources (req, res, next) {
     if (req.method === 'GET') {
-        console.log (`[${getTime ()}] Serving requested file ${path.basename(req.url) || 'index.html'}`.dim);
+        // console.log (`[${getTime ()}] Serving requested file ${path.basename(req.url) || 'index.html'}`.dim);
     }
     next ();
 });
