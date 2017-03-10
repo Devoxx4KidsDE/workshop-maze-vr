@@ -10,9 +10,11 @@ and see what their maze in virtual reality look like
 
 ![stereoscopic view](https://raw.githubusercontent.com/Devoxx4KidsDE/workshop-maze-vr/master/presentation/screenshot-splitscreen.png)
 
-There is even an editor available where you can hack your maze online ð ð
+There is even an editor available where you can hack your maze online
 
 ➡ http://devoxx4kidsde.github.io/workshop-maze-vr/build/?editor=true
+
+and... (drum roll) - the newest version supports *multi player support*!
 
 # How To
 
@@ -24,7 +26,7 @@ __1) A more "object oriented" programming language related workshop__
 
 * This one is more object oriented.
 * It is "nearer" to the real javascript language
-* It uses English programming commands 
+* It uses English programming commands
 * It is mainly available in open office format and pdf
 * It can be found under presentation/de/workshop 1
 
@@ -37,13 +39,11 @@ __2) A simplified version for younger children__
 * It is only available in Powerpoint format and pdf
 * It can be found under /presentation/de/workshop 2
 
-__Note: Sorry, the workshops themselves have not been translated into english. Don't hesitate to get in touch with us in case you need the english version via http://www.devoxx4kids.de/kontakt/.__
-
 ### How to add new languages for facades for workshop 2
 
 1. create a new js file in the folder facade
 1. fill this file with a facade in the new language (basis can be the german (irrgarten.js) or the english (labyrinth.js) facade)
-1. the new translations also must be add in the maze/wall.js: 
+1. the new translations also must be add in the maze/wall.js:
    1. for the orientation of the walls you have to add the new translations to the function mapOrientation
    1. for the new command for creating a wall you have to add a new function with the new translated name see function erzeugen or generate
 1. to use the new facade you must import the facade in your example (see exampleWithFacade.js)
@@ -136,4 +136,4 @@ This project is based on:
 * [webvr-boilerplate](https://github.com/borismus/webvr-boilerplate)
 * [Maze3D](https://github.com/agar3s/maze3D)
 
-Have
+Have Fun as much as we do!
