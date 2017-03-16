@@ -26,13 +26,8 @@ class Irrgarten {
 
       this.spieler = Player.create(mergeWithUrlParams({
           name: name,
-          startPoint: {x: 0, z: 0}
+          startPoint: {x: startX, z: startY}
       }));
-
-/*    this.spieler = Player.create({
-      name: name,
-      startPoint: {x: startX, z: startY}
-    });*/
 
     this.meinIrrgarten.addPlayer(this.spieler);
     return this.spieler;

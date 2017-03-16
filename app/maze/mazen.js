@@ -146,10 +146,20 @@ class MazeTemplate {
       camera.position.setZ(cameraPosition.z);
     }
 
+    /*
+    onCardboardTouch( ) {
+        UI.draw({
+            id: 'clickedTouch',
+            text: 'clicked button'
+        });
+        console.log("button touched")
+    }*/
+
     start() {
 
         renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(window.innerWidth, window.innerHeight);
+        //renderer.domElement.addEventListener( 'touchstart', this.onCardboardTouch );
         document.getElementById('maze').appendChild(renderer.domElement);
 
         // Apply VR stereo rendering to renderer.
