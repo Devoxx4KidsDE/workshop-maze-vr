@@ -17,6 +17,10 @@
           }
         });
       }, 5000);
+
+      function start() {
+        System.import ('app');
+      }
     </script>
 </head>
 <body>
@@ -25,31 +29,63 @@
         <p>Lade...</p>
     </div>
 
+    <div id="settings">
+        <form>
+            <fieldset>
+                <label for="name">Name</label>
+                <input id="name" type="text" name="name" value="Max Mustermann" placeholder="Name" />
+
+                <label for="color">Farbe</label> 
+                <input id="color" type="text" name="color" value="blue" placeholder="Farbe" />
+
+                <label for="speed">Geschwindigkeit</label>        
+                <input id="speed" type="number" name="speed" value="2" placeholder="Geschwindigkeit" />
+
+                <label>Startpositon</label>
+                <p>
+                    X <input class="small" type="number" name="x" value="0" /> 
+                    Z <input class="small" type="number" name="z" value="0" />
+                </p>
+
+                <button>Los gehts!</button>
+            </fieldset>
+        </form>
+    </div>
+
     <script>
-        const nodeModulesPath = './../node_modules';
-        const config = {
-            baseUrl: './app',
-            meta: {
-                'three': {
-                    format: 'global',
-                    exports: 'THREE'
-                }
-            },
-            map: {
-                'plugin-babel'        : nodeModulesPath + '/systemjs-plugin-babel/plugin-babel.js',
-                'systemjs-babel-build': nodeModulesPath + '/systemjs-plugin-babel/systemjs-babel-browser.js',
-                'three'               : nodeModulesPath + '/three/build/three.min.js',
-                'three/examples'      : nodeModulesPath + '/three/examples',
-                'webvr-polyfill'      : nodeModulesPath + '/webvr-polyfill/src/main.js',
-                'webvr-boilerplate'   : nodeModulesPath + '/webvr-boilerplate/src/main.js',
-                'es6-promise'         : nodeModulesPath + '/es6-promise/dist/es6-promise.min.js',
-                'object-assign'       : nodeModulesPath + '/object-assign/index.js'
-            },
-            transpiler: 'plugin-babel'
-        };
-        System.defaultJSExtensions = true;
-        SystemJS.config (config);
-        System.import ('app');
+        if (window.location.search.indexOf('name') === -1 ||
+            window.location.search.indexOf('color') === -1 ||
+            window.location.search.indexOf('speed') === -1
+        ) {
+            document.getElementById('loading').setAttribute('style', 'display: none;');
+            document.getElementById('settings').setAttribute('style', 'display: block;');
+        } else {
+
+            const nodeModulesPath = './../node_modules';
+            const config = {
+                baseUrl: './app',
+                meta: {
+                    'three': {
+                        format: 'global',
+                        exports: 'THREE'
+                    }
+                },
+                map: {
+                    'plugin-babel'        : nodeModulesPath + '/systemjs-plugin-babel/plugin-babel.js',
+                    'systemjs-babel-build': nodeModulesPath + '/systemjs-plugin-babel/systemjs-babel-browser.js',
+                    'three'               : nodeModulesPath + '/three/build/three.min.js',
+                    'three/examples'      : nodeModulesPath + '/three/examples',
+                    'webvr-polyfill'      : nodeModulesPath + '/webvr-polyfill/src/main.js',
+                    'webvr-boilerplate'   : nodeModulesPath + '/webvr-boilerplate/src/main.js',
+                    'es6-promise'         : nodeModulesPath + '/es6-promise/dist/es6-promise.min.js',
+                    'object-assign'       : nodeModulesPath + '/object-assign/index.js'
+                },
+                transpiler: 'plugin-babel'
+            };
+            System.defaultJSExtensions = true;
+            SystemJS.config (config);
+            System.import ('app');
+        }
     </script>
 
 </body>
