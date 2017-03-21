@@ -15,7 +15,7 @@ function start() {
     irrgarten.neueWand(6, 2, 'oben');
     irrgarten.neueWand(6, 2, 'rechts');
     irrgarten.neueWand(6, 3, 'unten');
-    irrgarten.neueWand(6, 4, 'unten', Muster.SPECIAL);
+    irrgarten.neueWand(6, 4, 'unten', Muster.SPEZIAL);
 
     const meineWand = Wand.erzeugen(6,6, 'unten', Muster.HECKE);
     irrgarten.wandHinzufuegen(meineWand);
