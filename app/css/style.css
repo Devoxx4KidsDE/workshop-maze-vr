@@ -62,3 +62,31 @@ ul {
     z-index: 2147483647;
 }
 
+/********************* 
+    Player Settings
+**********************/
+#settings {
+    display: none;
+    width: 25%;
+    min-width: 300px;
+    margin: 1% auto;
+}
+
+#settings label {
+    display: block;    
+}
+
+#settings input {
+    padding: 5px 10px;
+    margin-bottom: 10px;
+}
+
+#settings input.small {
+    width: 25px;
+}
+
+#settings button {
+    display: block;
+    margin: 15px auto;
+    padding: 5px 10px;
+}

@@ -17,7 +17,7 @@ function retrievePlayerParamsFromURL() {
         .map(v => v.split("="))
         .filter(pairs => pairs.length === 2)
         .reduce((map, [key, value]) => {
-          map[key] = decodeURIComponent(value);
+          map[key] = decodeURIComponent(value).replace(/\+/g, ' ');
           return map;
         }, {});
 }

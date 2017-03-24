@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="/node_modules/systemjs/dist/system.js"></script>
     <script type="text/javascript">
+      if (history.pushState) { //IE10+
+        var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + decodeURIComponent(window.location.search);
+        window.history.pushState({path:newurl},'',newurl);
+      }
+
       function microAjax(B,A){this.bindFunction=function(E,D){return function(){return E.apply(D,[D])}};this.stateChange=function(D){if(this.request.readyState==4){this.callbackFunction(this.request.responseText)}};this.getRequest=function(){if(window.ActiveXObject){return new ActiveXObject("Microsoft.XMLHTTP")}else{if(window.XMLHttpRequest){return new XMLHttpRequest()}}return false};this.postBody=(arguments[2]||"");this.callbackFunction=A;this.url=B;this.request=this.getRequest();if(this.request){var C=this.request;C.onreadystatechange=this.bindFunction(this.stateChange,this);if(this.postBody!==""){C.open("POST",B,true);C.setRequestHeader("X-Requested-With","XMLHttpRequest");C.setRequestHeader("Content-type","application/x-www-form-urlencoded");C.setRequestHeader("Connection","close")}else{C.open("GET",B,true)}C.send(this.postBody)}};
       var currentVersion;
       setInterval(function() {
@@ -17,6 +22,22 @@
           }
         });
       }, 5000);
+
+      function hexToRgb(hex) {
+        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+        var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+            return r + r + g + g + b + b;
+        });
+    
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return parseInt(result[1], 16) + ',' + parseInt(result[2], 16) + ',' + parseInt(result[3], 16);
+      }
+      
+      function convertHexToRgb() {
+          document.getElementById('color').setAttribute('type', 'text');
+          document.getElementById('color').value = 'rgb(' + hexToRgb(document.getElementById('color').value) + ')';
+      }
     </script>
 </head>
 <body>
@@ -25,31 +46,63 @@
         <p>Lade...</p>
     </div>
 
+    <div id="settings">
+        <form>
+            <fieldset>
+                <label for="name">Name</label>
+                <input id="name" type="text" name="name" value="Max Mustermann" placeholder="Name" />
+
+                <label for="color">Farbe</label> 
+                <input id="color" type="color" name="color" value="#ff0000" placeholder="Farbe" />
+
+                <label for="speed">Geschwindigkeit</label>        
+                <input id="speed" type="number" name="speed" value="2" placeholder="Geschwindigkeit" />
+
+                <label>Startposition</label>
+                <p>
+                    X <input class="small" type="number" name="x" value="0" /> 
+                    Z <input class="small" type="number" name="z" value="0" />
+                </p>
+
+                <button onclick="convertHexToRgb();">Los gehts!</button>
+            </fieldset>
+        </form>
+    </div>
+
     <script>
-        const nodeModulesPath = './../node_modules';
-        const config = {
-            baseUrl: './app',
-            meta: {
-                'three': {
-                    format: 'global',
-                    exports: 'THREE'
-                }
-            },
-            map: {
-                'plugin-babel'        : nodeModulesPath + '/systemjs-plugin-babel/plugin-babel.js',
-                'systemjs-babel-build': nodeModulesPath + '/systemjs-plugin-babel/systemjs-babel-browser.js',
-                'three'               : nodeModulesPath + '/three/build/three.min.js',
-                'three/examples'      : nodeModulesPath + '/three/examples',
-                'webvr-polyfill'      : nodeModulesPath + '/webvr-polyfill/src/main.js',
-                'webvr-boilerplate'   : nodeModulesPath + '/webvr-boilerplate/src/main.js',
-                'es6-promise'         : nodeModulesPath + '/es6-promise/dist/es6-promise.min.js',
-                'object-assign'       : nodeModulesPath + '/object-assign/index.js'
-            },
-            transpiler: 'plugin-babel'
-        };
-        System.defaultJSExtensions = true;
-        SystemJS.config (config);
-        System.import ('app');
+        if (window.location.search.indexOf('name') === -1 ||
+            window.location.search.indexOf('color') === -1 ||
+            window.location.search.indexOf('speed') === -1
+        ) {
+            document.getElementById('loading').setAttribute('style', 'display: none;');
+            document.getElementById('settings').setAttribute('style', 'display: block;');
+        } else {
+
+            const nodeModulesPath = './../node_modules';
+            const config = {
+                baseUrl: './app',
+                meta: {
+                    'three': {
+                        format: 'global',
+                        exports: 'THREE'
+                    }
+                },
+                map: {
+                    'plugin-babel'        : nodeModulesPath + '/systemjs-plugin-babel/plugin-babel.js',
+                    'systemjs-babel-build': nodeModulesPath + '/systemjs-plugin-babel/systemjs-babel-browser.js',
+                    'three'               : nodeModulesPath + '/three/build/three.min.js',
+                    'three/examples'      : nodeModulesPath + '/three/examples',
+                    'webvr-polyfill'      : nodeModulesPath + '/webvr-polyfill/src/main.js',
+                    'webvr-boilerplate'   : nodeModulesPath + '/webvr-boilerplate/src/main.js',
+                    'es6-promise'         : nodeModulesPath + '/es6-promise/dist/es6-promise.min.js',
+                    'object-assign'       : nodeModulesPath + '/object-assign/index.js'
+                },
+                transpiler: 'plugin-babel'
+            };
+            System.defaultJSExtensions = true;
+            SystemJS.config (config);
+            System.import ('app');
+        }
     </script>
 
 </body>
