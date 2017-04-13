@@ -33,12 +33,12 @@ class Irrgarten {
     return this.spieler;
   }
 
-  neueWand(x, y, orientation, muster) {
+  neueWand(x, z, orientierung, muster) {
     let wall;
     if (muster == null) {
-      wall = Wall.create({x: x, z: y, orientation: orientation });
+      wall = Wall.create({x: x, z: z, orientation: orientierung });
     } else {
-      wall = Wall.create({x: x, z: y, texture: muster, orientation: orientation });
+      wall = Wall.create({x: x, z: z, texture: muster, orientation: orientierung });
     }
 
     this.meinIrrgarten.addWall(wall);
@@ -60,25 +60,25 @@ class Irrgarten {
     const y = Math.floor(Math.random() * this.meinIrrgarten.width);
     const orientation = Math.floor(Math.random() * 4);
 
-    const wall = Wall.create({x: x, z: y, orientation: orientation });
+    const wall = Wall.create({x: x, z: z, orientation: orientation });
     this.meinIrrgarten.addWall(wall);
     return wall;
   }
 
-  neuerWuerfel(x, y, name) {
-    const cube = Item.createCube({x: x, z: y, displayName: name});
+  neuerWuerfel(x, z, name) {
+    const cube = Item.createCube({x: x, z: z, displayName: name});
     this.meinIrrgarten.addItem(cube);
     return cube;
   }
 
-  neuerFeuerball(x, y, name) {
-    const feuerball = Item.createFireball({x: x, z: y, displayName: name});
+  neuerFeuerball(x, z, name) {
+    const feuerball = Item.createFireball({x: x, z: z, displayName: name});
     this.meinIrrgarten.addItem(feuerball);
     return feuerball;
   }
 
-  neuesPortal(x, y, orientation, nachX, nachY) {
-    const portal = Wall.create({x: x, z: y, orientation: orientation});
+  neuesPortal(x, z, orientation, nachX, nachZ) {
+    const portal = Wall.create({x: x, z: z, orientation: orientation});
     portal.isPortalTo({x: nachX, z: nachY});
     portal.setTexture(WallTexture.GATE);
     this.meinIrrgarten.addWall(portal);
