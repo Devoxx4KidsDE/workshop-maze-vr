@@ -70,9 +70,10 @@
     </div>
 
     <script>
-        if (window.location.search.indexOf('name') === -1 ||
+        if ((window.location.search.indexOf('name') === -1 ||
             window.location.search.indexOf('color') === -1 ||
-            window.location.search.indexOf('speed') === -1
+            window.location.search.indexOf('speed') === -1) &&
+                window.location.search.indexOf('start') === -1
         ) {
             document.getElementById('loading').setAttribute('style', 'display: none;');
             document.getElementById('settings').setAttribute('style', 'display: block;');
