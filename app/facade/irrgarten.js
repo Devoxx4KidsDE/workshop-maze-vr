@@ -79,7 +79,7 @@ class Irrgarten {
 
   neuesPortal(x, z, orientation, nachX, nachZ) {
     const portal = Wall.create({x: x, z: z, orientation: orientation});
-    portal.isPortalTo({x: nachX, z: nachY});
+    portal.isPortalTo({x: nachX, z: nachZ});
     portal.setTexture(WallTexture.GATE);
     this.meinIrrgarten.addWall(portal);
     return portal;
