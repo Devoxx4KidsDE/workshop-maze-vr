@@ -73,7 +73,6 @@ class MultiPlayerController {
     if (remoteItem === undefined) {
       return;
     }
-    console.log(remoteItem);
 
     this.maze.items.forEach((item) => {
       if ( item.geometry.id === remoteItem.id) {
