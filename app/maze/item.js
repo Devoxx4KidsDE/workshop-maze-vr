@@ -20,6 +20,17 @@ class Item {
         });
     }
 
+    setCollected(value) {
+      this.isCollected = value;
+      if (value === true) {
+       this.geometry.visible = false;
+      }
+    }
+
+    setVisibility(value) {
+      this.geometry.visible = value;
+    }
+
     onCollect (listener) {
         this.onCollectListener = listener;
     }

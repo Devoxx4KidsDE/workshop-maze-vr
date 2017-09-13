@@ -5,10 +5,13 @@ class MultiPlayerController {
   constructor(maze, uri) {
     this.player = maze.player.configuration;
     this.maze = maze;
-    this.connection = new SocketConnection(this.player, uri);
+    this.items = maze.items;
+    this.connection = new SocketConnection(this.player, this.items, uri);
 
     this.player.onPositionChange = this.handleOwnPositionChange.bind(this);
+    this.items.onCollectListener = this.handleItemChange.bind(this);
     this.connection.onOtherPlayersUpdated = this.handleOtherPlayersUpdated.bind(this);
+    this.connection.onItemsUpdated = this.handleItemsUpdated.bind(this);
   }
 
   getOtherPlayerById(id) {
@@ -66,19 +69,44 @@ class MultiPlayerController {
     });
   }
 
+  updateItems(remoteItem) {
+    if (remoteItem === undefined) {
+      return;
+    }
+    console.log(remoteItem);
+
+    this.maze.items.forEach((item) => {
+      if ( item.geometry.id === remoteItem.id) {
+        item.setCollected(remoteItem.collected);
+        if (remoteItem.collected === true) {
+          item.setVisibility = false;
+          this.maze.removeFoundItem(item.name);
+        }
+      }
+    });
+  }
+
   isNewOtherPlayer(playerInfo) {
     const player = this.getOtherPlayerById(playerInfo.playerId);
     return player === null;
   }
 
   handleOwnPositionChange() {
-    this.connection.sendPlayerPosition()
+    this.connection.sendPlayerPosition()    
   }
 
   handleOtherPlayersUpdated(playerInfos) {
     this.addJoinedPlayers(playerInfos);
     this.removeDisconnectedPlayers(playerInfos);
     this.updateOtherPlayerPositions(playerInfos);
+  }
+
+  handleItemChange() {
+    this.connection.sendItems()
+  }
+
+  handleItemsUpdated(item) {
+    this.updateItems(item);
   }
 }
 

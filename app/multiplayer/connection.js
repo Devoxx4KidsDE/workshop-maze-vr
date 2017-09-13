@@ -1,7 +1,8 @@
 import {
   TYPE_SYNC_CLIENTS,
   parseMessage,
-  createPlayerPositionUpdateMessage
+  createPlayerPositionUpdateMessage,
+  createItemUpdateMessage,
 } from './messages';
 
 const uniqueId = () => {
@@ -9,9 +10,10 @@ const uniqueId = () => {
 };
 
 class SocketConnection {
-  constructor(player, uri) {
+  constructor(player, items, uri) {
     this.player = player;
     this.playerId = uniqueId();
+    this.items = items;
     this.open = false;
 
     this.socket = new WebSocket(uri);
@@ -32,6 +34,7 @@ class SocketConnection {
         switch (type) {
           case TYPE_SYNC_CLIENTS:
             this.emitOtherPlayersUpdated(data);
+            this.emitItemsUpdated(data);
             break;
           default:
         }
@@ -44,9 +47,24 @@ class SocketConnection {
     }
   }
 
+  sendItems() {
+    if (this.open) { 
+      console.log(11);
+      this.items.forEach((item) => {
+        this.socket.send(createItemUpdateMessage(item.geometry.id, item.isCollected));
+      });
+    }
+  }
+
   emitOtherPlayersUpdated(data) {
     if (typeof this.onOtherPlayersUpdated === 'function') {
       this.onOtherPlayersUpdated(data);
+    }
+  }
+
+  emitItemsUpdated(data) {
+    if (typeof this.onItemsUpdated === 'function') {
+      this.onItemsUpdated(data[0].item);
     }
   }
 }

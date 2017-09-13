@@ -21,6 +21,12 @@ function start() {
 
     maze.addPlayer(player);
 
+    const cube = Item.createCube({x: 0, z: 1, displayName: 'cube'});
+    const cube1 = Item.createCube({x: 0, z: 5, displayName: 'cube1'});
+
+    maze.addItem(cube);
+    maze.addItem(cube1);
+
     // Connect to server
     const multiplayer = new MultiPlayerController(maze, `ws://${window.location.host}/players`);
 
