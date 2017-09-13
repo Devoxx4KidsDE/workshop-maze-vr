@@ -22,9 +22,6 @@ class Item {
 
     setCollected(value) {
       this.isCollected = value;
-      if (value === true) {
-       this.geometry.visible = false;
-      }
     }
 
     setVisibility(value) {

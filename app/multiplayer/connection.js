@@ -48,8 +48,7 @@ class SocketConnection {
   }
 
   sendItems() {
-    if (this.open) { 
-      console.log(11);
+    if (this.open) {
       this.items.forEach((item) => {
         this.socket.send(createItemUpdateMessage(item.geometry.id, item.isCollected));
       });
