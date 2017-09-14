@@ -11,7 +11,8 @@ class MultiPlayerController {
     this.player.onPositionChange = this.handleOwnPositionChange.bind(this);
     this.items.onCollectListener = this.handleItemChange.bind(this);
     this.connection.onOtherPlayersUpdated = this.handleOtherPlayersUpdated.bind(this);
-    this.connection.onItemsUpdated = this.handleItemsUpdated.bind(this);
+    this.connection.onItemUpdated = this.handleItemUpdated.bind(this);
+    this.connection.onItemListUpdated = this.handleItemListUpdated.bind(this);
   }
 
   getOtherPlayerById(id) {
@@ -36,6 +37,17 @@ class MultiPlayerController {
     }, null);
   }
 
+  getItemById(items, id) {
+    return items.reduce((found, item) => {
+      if (found === null) {
+        if (item.id === id) {
+          return item;
+        }
+      }
+      return found;
+    }, null);
+  }
+
   removeDisconnectedPlayers(playerInfos) {
     const disconnectedOtherPlayers = this.maze.otherPlayers.reduce((playersToRemove, player) => {
       if (this.getPlayerInfoById(playerInfos, player.id) === null) {
@@ -53,6 +65,9 @@ class MultiPlayerController {
   addJoinedPlayers(playerInfos) {
     playerInfos.forEach((playerInfo) => {
       if(this.isNewOtherPlayer(playerInfo)) {
+        if (playerInfo.created > this.player.created) {
+          this.connection.sendAvailableItemsToPlayer(playerInfo.playerId);
+        }
         const otherPlayer = OtherPlayer.create(playerInfo.position, playerInfo.playerId, playerInfo.color);
         this.maze.addOtherPlayer(otherPlayer);
         console.log('new player joined', playerInfo.playerId);
@@ -69,7 +84,7 @@ class MultiPlayerController {
     });
   }
 
-  updateItems(remoteItem) {
+  updateItem(remoteItem) {
     if (remoteItem === undefined) {
       return;
     }
@@ -78,9 +93,28 @@ class MultiPlayerController {
       if ( item.geometry.id === remoteItem.id) {
         item.setCollected(remoteItem.collected);
         if (remoteItem.collected === true) {
-          item.setVisibility = false;
+          item.setVisibility(false);
           this.maze.removeFoundItem(item.name);
         }
+      }
+    });
+  }
+
+  updateItemList(remoteItems) {
+    if (remoteItems === undefined) {
+      return;
+    }
+
+    this.maze.items.forEach((item) => {
+      const foundItem = this.getItemById(remoteItems, item.geometry.id);
+      if (foundItem !== null) {
+        item.isCollected = foundItem.collected;
+        if (foundItem.collected === true) {
+          item.setVisibility(false);
+          this.maze.removeFoundItem(item.name);
+        }
+      } else {
+        this.maze.removeFoundItem(item.name);
       }
     });
   }
@@ -104,8 +138,12 @@ class MultiPlayerController {
     this.connection.sendItems()
   }
 
-  handleItemsUpdated(item) {
-    this.updateItems(item);
+  handleItemUpdated(item) {
+    this.updateItem(item);
+  }
+
+  handleItemListUpdated(items) {
+    this.updateItemList(items);
   }
 }
 
