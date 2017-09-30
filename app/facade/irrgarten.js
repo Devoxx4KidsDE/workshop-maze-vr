@@ -85,12 +85,61 @@ class Irrgarten {
     return portal;
   }
 
+  geradeWand(xvon, zvon, xbis, zbis, orientierung){
+    var dx = Math.abs(xbis-xvon);
+    var dy = Math.abs(zbis-zvon);
+    var sx = (xvon < xbis) ? 1 : -1;
+    var sy = (zvon < zbis) ? 1 : -1;
+    var err = dx-dy;
+
+    while(true){
+        this.neueWand(xvon, zvon, orientierung, WallTexture.HECKE);
+
+        if ((xvon==xbis) && (zvon==zbis)) break;
+        var e2 = 2*err;
+        if (e2 >-dy){ err -= dy; xvon  += sx; }
+        if (e2 < dx){ err += dx; zvon  += sy; }
+    }
+  }
+
+  punkte(xvon, zvon, xbis, zbis){
+    var dx = Math.abs(xbis-xvon);
+    var dy = Math.abs(zbis-zvon);
+    var sx = (xvon < xbis) ? 1 : -1;
+    var sy = (zvon < zbis) ? 1 : -1;
+    var err = dx-dy;
+
+    while(true){
+        this.neuerWuerfel(xvon, zvon, 'Würfel');;
+
+        if ((xvon==xbis) && (zvon==zbis)) break;
+        var e2 = 2*err;
+        if (e2 >-dy){ err -= dy; xvon  += sx; }
+        if (e2 < dx){ err += dx; zvon  += sy; }
+    }
+  }
+
+  wandx(von, bis, z) {
+    for (let x = von; x <= bis; x++) {
+        this.neueWand(x, z, 'links');
+    }
+  }
+
+  wandz( von, bis, x) {
+    for (let z = von; z <= bis; z++) {
+        this.neueWand(x, z, 'oben');
+    }
+  }
+
+
   starteMultiplayer() {
       const multiplayer = new MultiPlayerController(this.meinIrrgarten, `ws://${window.location.host}/players`);
   }
 
-  start() {
-    this.meinIrrgarten.start();
+
+
+  start(flughoehe=0) {
+    this.meinIrrgarten.start(flughoehe);
   }
 }
 

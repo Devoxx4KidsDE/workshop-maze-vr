@@ -20,6 +20,7 @@ class MazeTemplate {
         this.length = undefined;
         this.width = undefined;
         this.cellSize = undefined;
+        this.flyheight = 0;
 
         this.scene = undefined;
 
@@ -54,7 +55,7 @@ class MazeTemplate {
                 camera.translateZ(-this.player.configuration.speed);
             }
 
-            camera.position.setY(0); //no movement up and down
+            camera.position.setY(this.flyheight); //no movement up and down
 
 
             // Update the players position
@@ -155,7 +156,8 @@ class MazeTemplate {
         console.log("button touched")
     }*/
 
-    start() {
+    start(flyheight = 0) {
+        this.flyheight = flyheight;
 
         renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(window.innerWidth, window.innerHeight);
