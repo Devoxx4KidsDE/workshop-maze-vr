@@ -138,9 +138,16 @@ class Irrgarten {
       const multiplayer = new MultiPlayerController(this.meinIrrgarten, `ws://${window.location.host}/players`);
   }
 
-
-
   start(flughoehe=0) {
+    var urlParams = mergeWithUrlParams({
+      observer: flughoehe
+    });
+
+    if (urlParams.observer == 1) {
+      flughoehe = 2000;
+    }
+    console.log(flughoehe);
+
     this.meinIrrgarten.start(flughoehe);
   }
 }

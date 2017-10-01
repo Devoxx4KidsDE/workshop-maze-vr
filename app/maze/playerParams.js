@@ -24,11 +24,11 @@ function retrievePlayerParamsFromURL() {
 
 export default function mergeWithUrlParams(ownParams) {
   const urlParams = retrievePlayerParamsFromURL();
-    
-  if (urlParams.x != undefined) {
+ 
+  if (ownParams.startPoint != undefined && urlParams.x != undefined) {
       ownParams.startPoint.x = urlParams.x;
   }
-  if (urlParams.z != undefined) {
+  if (ownParams.startPoint != undefined && urlParams.z != undefined) {
       ownParams.startPoint.z = urlParams.z;
   }
   return Object.assign({}, defaultParams, ownParams, urlParams );

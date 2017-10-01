@@ -62,6 +62,7 @@ ul {
     z-index: 2147483647;
 }
 
+
 /********************* 
     Player Settings
 **********************/
@@ -74,6 +75,10 @@ ul {
 
 #settings label {
     display: block;    
+}
+
+#settings label.inline {
+    display: inline-block;
 }
 
 #settings input {
