@@ -14,6 +14,14 @@ function update(id, classId) {
     element.className = element.className + classId;
 }
 
+function hasClassName(id, classId) {
+    let element = document.getElementById(id);
+    if (element.className === classId) {
+        return true;
+    }
+    return false;
+}
+
 function pageTitle() {
     document.title = 'D4K-' + location.host.slice(11, 13) + ' - MazeVR';
 }
@@ -27,4 +35,4 @@ function refreshButton() {
     document.getElementById('controls').appendChild(refreshButton);
 }
 
-export default {draw, add, update, pageTitle, refreshButton};
+export default {draw, add, update, hasClassName, pageTitle, refreshButton};

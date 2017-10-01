@@ -12,7 +12,6 @@ import * as WallTexture from '../maze/wallTexture';
 import mergeWithUrlParams from '../maze/playerParams';
 import MultiPlayerController from '../multiplayer/controller';
 
-
 class Irrgarten {
 
   constructor(laenge, breite) {
@@ -20,6 +19,8 @@ class Irrgarten {
         length: laenge,
         width: breite
     });
+
+    this.wuerfelZaehler = 1;
   }
 
   neuerSpieler(name, startX, startY) {
@@ -110,7 +111,8 @@ class Irrgarten {
     var err = dx-dy;
 
     while(true){
-        this.neuerWuerfel(xvon, zvon, 'Würfel');;
+        this.neuerWuerfel(xvon, zvon, 'Würfel ' + this.wuerfelZaehler);
+        this.wuerfelZaehler++;
 
         if ((xvon==xbis) && (zvon==zbis)) break;
         var e2 = 2*err;

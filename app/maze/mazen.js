@@ -65,6 +65,7 @@ class MazeTemplate {
                 if (!item.isCollected) {
                     if (this.player.collisionDetector.hasCollision(camera, [item.geometry])) {
                         item.isCollected = true;
+                        this.items.onCollectListener ();
                         UI.update(item.name, 'found');
 
                         for (let i = this.scene.children.length - 1; i >= 0; i--) {
@@ -138,6 +139,17 @@ class MazeTemplate {
         item.geometry.position.z = (item.geometry.position.z * this.cellSize) + (this.cellSize / 2);
         this.items.push(item);
         this.scene.add(item.geometry);
+    }
+
+    removeItem(item) {
+        this.items.splice(this.items.indexOf(item), 1);
+        this.scene.remove(item.geometry);
+    }
+
+    removeCollectedItem(name) {
+        if (UI.hasClassName(name, 'found') === false) {
+            UI.update(name, 'found');
+        }
     }
 
     setCameraToPlayerPosition() {

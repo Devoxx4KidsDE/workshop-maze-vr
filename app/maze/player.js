@@ -15,6 +15,7 @@ class Player {
             y: undefined,
             z: undefined
         };
+        this.created = undefined;
     }
 
     setPosition(pos) {
@@ -50,6 +51,7 @@ function create ({name = 'Anonymous', speed = 5, startPoint = {x:0, z:0}, color 
     player.position.z = startPoint.z;
     player.position.y = 0;
     player.color = color;
+    player.created = new Date().getTime();
 
     return player;
 }
