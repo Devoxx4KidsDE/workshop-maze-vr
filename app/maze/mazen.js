@@ -146,8 +146,10 @@ class MazeTemplate {
         this.scene.remove(item.geometry);
     }
 
-    removeFoundItem(name) {
-        UI.update(name, 'found');
+    removeCollectedItem(name) {
+        if (UI.hasClassName(name, 'found') === false) {
+            UI.update(name, 'found');
+        }
     }
 
     setCameraToPlayerPosition() {

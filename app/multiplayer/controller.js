@@ -94,7 +94,7 @@ class MultiPlayerController {
         item.setCollected(remoteItem.collected);
         if (remoteItem.collected === true) {
           item.setVisibility(false);
-          this.maze.removeFoundItem(item.name);
+          this.maze.removeCollectedItem(item.name);
         }
       }
     });
@@ -111,10 +111,10 @@ class MultiPlayerController {
         item.isCollected = foundItem.collected;
         if (foundItem.collected === true) {
           item.setVisibility(false);
-          this.maze.removeFoundItem(item.name);
+          this.maze.removeCollectedItem(item.name);
         }
       } else {
-        this.maze.removeFoundItem(item.name);
+        this.maze.removeCollectedItem(item.name);
       }
     });
   }
