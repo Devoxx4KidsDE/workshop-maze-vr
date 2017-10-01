@@ -33,12 +33,12 @@ class Irrgarten {
     return this.spieler;
   }
 
-  neueWand(x, y, orientation, muster) {
+  neueWand(x, z, orientierung, muster) {
     let wall;
     if (muster == null) {
-      wall = Wall.create({x: x, z: y, orientation: orientation });
+      wall = Wall.create({x: x, z: z, orientation: orientierung });
     } else {
-      wall = Wall.create({x: x, z: y, texture: muster, orientation: orientation });
+      wall = Wall.create({x: x, z: z, texture: muster, orientation: orientierung });
     }
 
     this.meinIrrgarten.addWall(wall);
@@ -60,37 +60,86 @@ class Irrgarten {
     const y = Math.floor(Math.random() * this.meinIrrgarten.width);
     const orientation = Math.floor(Math.random() * 4);
 
-    const wall = Wall.create({x: x, z: y, orientation: orientation });
+    const wall = Wall.create({x: x, z: z, orientation: orientation });
     this.meinIrrgarten.addWall(wall);
     return wall;
   }
 
-  neuerWuerfel(x, y, name) {
-    const cube = Item.createCube({x: x, z: y, displayName: name});
+  neuerWuerfel(x, z, name) {
+    const cube = Item.createCube({x: x, z: z, displayName: name});
     this.meinIrrgarten.addItem(cube);
     return cube;
   }
 
-  neuerFeuerball(x, y, name) {
-    const feuerball = Item.createFireball({x: x, z: y, displayName: name});
+  neuerFeuerball(x, z, name) {
+    const feuerball = Item.createFireball({x: x, z: z, displayName: name});
     this.meinIrrgarten.addItem(feuerball);
     return feuerball;
   }
 
-  neuesPortal(x, y, orientation, nachX, nachY) {
-    const portal = Wall.create({x: x, z: y, orientation: orientation});
-    portal.isPortalTo({x: nachX, z: nachY});
+  neuesPortal(x, z, orientation, nachX, nachZ) {
+    const portal = Wall.create({x: x, z: z, orientation: orientation});
+    portal.isPortalTo({x: nachX, z: nachZ});
     portal.setTexture(WallTexture.GATE);
     this.meinIrrgarten.addWall(portal);
     return portal;
   }
 
+  geradeWand(xvon, zvon, xbis, zbis, orientierung){
+    var dx = Math.abs(xbis-xvon);
+    var dy = Math.abs(zbis-zvon);
+    var sx = (xvon < xbis) ? 1 : -1;
+    var sy = (zvon < zbis) ? 1 : -1;
+    var err = dx-dy;
+
+    while(true){
+        this.neueWand(xvon, zvon, orientierung, WallTexture.HECKE);
+
+        if ((xvon==xbis) && (zvon==zbis)) break;
+        var e2 = 2*err;
+        if (e2 >-dy){ err -= dy; xvon  += sx; }
+        if (e2 < dx){ err += dx; zvon  += sy; }
+    }
+  }
+
+  punkte(xvon, zvon, xbis, zbis){
+    var dx = Math.abs(xbis-xvon);
+    var dy = Math.abs(zbis-zvon);
+    var sx = (xvon < xbis) ? 1 : -1;
+    var sy = (zvon < zbis) ? 1 : -1;
+    var err = dx-dy;
+
+    while(true){
+        this.neuerWuerfel(xvon, zvon, 'Würfel');;
+
+        if ((xvon==xbis) && (zvon==zbis)) break;
+        var e2 = 2*err;
+        if (e2 >-dy){ err -= dy; xvon  += sx; }
+        if (e2 < dx){ err += dx; zvon  += sy; }
+    }
+  }
+
+  wandx(von, bis, z) {
+    for (let x = von; x <= bis; x++) {
+        this.neueWand(x, z, 'links');
+    }
+  }
+
+  wandz( von, bis, x) {
+    for (let z = von; z <= bis; z++) {
+        this.neueWand(x, z, 'oben');
+    }
+  }
+
+
   starteMultiplayer() {
       const multiplayer = new MultiPlayerController(this.meinIrrgarten, `ws://${window.location.host}/players`);
   }
 
-  start() {
-    this.meinIrrgarten.start();
+
+
+  start(flughoehe=0) {
+    this.meinIrrgarten.start(flughoehe);
   }
 }
 

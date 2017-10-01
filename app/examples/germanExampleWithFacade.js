@@ -9,7 +9,6 @@ function start() {
 
     const irrgarten = new Irrgarten(10,10);
 
-    // Überprüfen, ob das Setzen des Spielernames funktioniert
     irrgarten.neuerSpieler('Max Mustermann', 8, 1);
 
     irrgarten.neueWand(6, 2, 'oben');
@@ -26,8 +25,7 @@ function start() {
     irrgarten.neuerFeuerball(1, 4, 'Feuerball');
 
 
-    irrgarten.neuerWuerfel(1, 1, 'Beschleuniger')
-        .onCollect(function() {
+    irrgarten.neuerWuerfel(1, 1, 'Beschleuniger').onCollect(function() {
             irrgarten.spieler.speed *= 2;
         });
 

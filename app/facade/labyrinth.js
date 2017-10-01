@@ -79,8 +79,8 @@ class Labyrinth {
     return portal;
   }
 
-  start() {
-    this.myMaze.start();
+  start(flyheight = 0) {
+    this.myMaze.start(flyheight);
   }
 }
 
