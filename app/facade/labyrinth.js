@@ -9,6 +9,8 @@ import Player from '../maze/player';
 import Wall from '../maze/wall';
 import Item from '../maze/item';
 import * as WallTexture from '../maze/wallTexture';
+import mergeWithUrlParams from '../maze/playerParams';
+import MultiPlayerController from '../multiplayer/controller';
 
 class Labyrinth {
 
@@ -79,9 +81,17 @@ class Labyrinth {
     return portal;
   }
 
-  start(flyheight = 0) {
-    this.myMaze.start(flyheight);
-  }
+    start(flyheight=0) {
+        var urlParams = mergeWithUrlParams({
+            observer: flyheight
+        });
+
+        if (urlParams.observer == 1) {
+            flyheight = 2000;
+        }
+
+        this.myMaze.start(flyheight);
+    }
 }
 
 

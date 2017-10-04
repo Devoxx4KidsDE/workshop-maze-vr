@@ -126,10 +126,11 @@ class MazeTemplate {
     addPlayer(playerConfiguration) {
         this.player.configuration = playerConfiguration;
         this.player.collisionDetector = CollisionDetector.create();
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 10000);
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 15000);
+
         this.setCameraToPlayerPosition();
         // looking into the maze
-        let lookAtPoint = new THREE.Vector3(this.cellSize, 0, this.cellSize / 2);
+        let lookAtPoint = new THREE.Vector3(this.cellSize*2, 0, this.cellSize*1.5);
         camera.lookAt(lookAtPoint);
     }
 

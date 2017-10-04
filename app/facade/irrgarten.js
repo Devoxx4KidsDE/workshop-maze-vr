@@ -146,7 +146,6 @@ class Irrgarten {
     if (urlParams.observer == 1) {
       flughoehe = 2000;
     }
-    console.log(flughoehe);
 
     this.meinIrrgarten.start(flughoehe);
   }
