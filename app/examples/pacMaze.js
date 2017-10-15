@@ -13,12 +13,20 @@ function start() {
     irrgarten.neuerSpieler('Pac ', 1, 1);
 
     // Aufgabe 1: Zeichne Portal an die Stellen, wo die gelben Wände sind (siehe pacman)
-    
+
+
 
     // Aufgabe 2: Zeichne alle Würfel im Labyrinth im unteren Gang
     //
-    // Aufgabe 3: Erweitere Aufgabe mit onCollect auf dem Würfel und spiele einen Sound
+    // Aufgabe 3: Erweitere Aufgabe 2 mit onCollect auf dem Würfel und spiele einen Sound
     //            wenn einer deiner Würfel gefressen wird.
+    //
+    //      wuerfel.onCollect(function()
+    //          {
+    //
+    //           }
+    //      );
+    //
     //            Zum Abspielen des Sound kannst du folgenden Code benutzen:
     //
     //            new Audio('./sounds/pacmanFressen.wav').play();

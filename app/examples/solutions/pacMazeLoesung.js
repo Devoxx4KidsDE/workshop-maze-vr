@@ -19,13 +19,19 @@ function start() {
 
     // Aufgabe 2: Zeichne alle Würfel im Labyrinth im unteren Gang
     //
-    // Aufgabe 3: Erweitere Aufgabe mit onCollect auf dem Würfel und spiele einen Sound
+    // Aufgabe 3: Erweitere Aufgabe 2 mit onCollect auf dem Würfel und spiele einen Sound
     //            wenn einer deiner Würfel gefressen wird.
+    //
+    //      wuerfel.onCollect(function()
+    //          {
+    //
+    //           }
+    //      );
+    //
     //            Zum Abspielen des Sound kannst du folgenden Code benutzen:
     //
     //            new Audio('./sounds/pacmanFressen.wav').play();
     //
-
 
      for (var z = 1; z <= 26; z++) {
      var wuerfel = irrgarten.neuerWuerfel(1,z, 'Würfel');
@@ -41,7 +47,6 @@ function start() {
     // Aufgabe 4: Zeichne einen Feuerball etwa in der Mitte des Labyrinth (im Mittel-Raum) 16,14
 
     var feuerball = irrgarten.neuerFeuerball(2,1, 'Spiel Ende');
-
 
     // Aufgabe 5: Verwende onCollect auf dem Feuerball
     //
