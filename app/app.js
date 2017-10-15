@@ -1,5 +1,5 @@
 
-System.import ('./examples/pacMaze.js').then (function (maze) {
+System.import ('./examples/blank.js').then (function (maze) {
     render ();
     maze.default.start ();
 }).catch (function (error) {

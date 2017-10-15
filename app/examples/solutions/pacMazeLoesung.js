@@ -34,7 +34,8 @@ function start() {
     //
 
      for (var z = 1; z <= 26; z++) {
-     var wuerfel = irrgarten.neuerWuerfel(1,z, 'Würfel');
+
+         var wuerfel = irrgarten.neuerWuerfel(1,z, 'Würfel');
 
          // Aufgabe 3
          wuerfel.onCollect(function()
@@ -42,11 +43,12 @@ function start() {
                 new Audio('./sounds/pacmanFressen.wav').play();
             }
          );
+
      }
 
     // Aufgabe 4: Zeichne einen Feuerball etwa in der Mitte des Labyrinth (im Mittel-Raum) 16,14
 
-    var feuerball = irrgarten.neuerFeuerball(2,1, 'Spiel Ende');
+    var feuerball = irrgarten.neuerFeuerball(15,14, 'Spiel Ende');
 
     // Aufgabe 5: Verwende onCollect auf dem Feuerball
     //
