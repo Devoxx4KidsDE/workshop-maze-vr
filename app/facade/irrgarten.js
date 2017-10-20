@@ -58,7 +58,7 @@ class Irrgarten {
 
   neueZufallswand() {
     const x = Math.floor(Math.random() * this.meinIrrgarten.length);
-    const y = Math.floor(Math.random() * this.meinIrrgarten.width);
+    const z = Math.floor(Math.random() * this.meinIrrgarten.width);
     const orientation = Math.floor(Math.random() * 4);
 
     const wall = Wall.create({x: x, z: z, orientation: orientation });
