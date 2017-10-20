@@ -47,8 +47,8 @@ class Labyrinth {
     return myWall;
   }
 
-  everyXSeconds(x, callback) {
-    setInterval(callback.bind(this), x * 1000);
+  everyXSeconds(seconds, callback) {
+    setInterval(callback.bind(this), seconds * 1000);
   }
 
   newRandomWall() {

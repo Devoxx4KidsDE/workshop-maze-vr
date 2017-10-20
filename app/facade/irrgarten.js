@@ -52,8 +52,8 @@ class Irrgarten {
   }
 
 
-  alleXSekunden(x, callback) {
-    setInterval(callback.bind(this), x * 1000);
+  alleXSekunden(sekunden, callback) {
+    setInterval(callback.bind(this), sekunden * 1000);
   }
 
   neueZufallswand() {
