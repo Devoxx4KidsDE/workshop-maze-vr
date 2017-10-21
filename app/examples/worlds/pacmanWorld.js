@@ -18,7 +18,7 @@ export default function zeichnePacmanLabyrinth(irrgarten) {
     irrgarten.geradeWand( 11, 5, 15, 5, 'rechts'); // nach oben
     irrgarten.geradeWand( 15, 5, 15, 1, 'oben'); // nach links zum Ausgang
 
-    irrgarten.neueWand(16, 1, 'links', Muster.STEIN); // Ausgang versperrt
+    irrgarten.neueWand(16, 0, 'links', Muster.STEIN); // Ausgang versperrt
 
     irrgarten.geradeWand( 17, 5, 17, 1, 'unten'); // oben drüber
     irrgarten.geradeWand( 17, 5, 21, 5, 'rechts'); // hoch
@@ -46,7 +46,7 @@ export default function zeichnePacmanLabyrinth(irrgarten) {
     irrgarten.geradeWand( 11, 22, 15, 22, 'links');
     irrgarten.geradeWand( 15, 22, 15, 26, 'oben');  // zum Ausgang rechts
 
-    irrgarten.neueWand(16, 26, 'rechts', Muster.STEIN); // Ausgang versperrt
+    irrgarten.neueWand(16, 27, 'rechts', Muster.STEIN); // Ausgang versperrt
 
 
     irrgarten.geradeWand( 17, 22, 17, 26, 'unten');

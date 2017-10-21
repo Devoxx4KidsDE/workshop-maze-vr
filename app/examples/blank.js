@@ -11,8 +11,7 @@ function start() {
 
     irrgarten.neuerSpieler('Max Mustermann', 8, 1);
 
-
-    irrgarten.meinIrrgarten.start(); // nicht vergessen, dass der Irrgarten einen Spieler braucht
+    irrgarten.start(); // nicht vergessen, dass der Irrgarten einen Spieler braucht
 }
 
 export default {start};
