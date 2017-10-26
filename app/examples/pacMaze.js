@@ -101,7 +101,7 @@ function start() {
     //   Nun trage die aktionAmEnde  in onCollect ein, damit die function aufgerufen, wenn du den Feuerball
     //   aufrufst
     //
-    //   Aufgabe 6: Spiele den Sound pacmanFressen.wav  , wenn der Feuerball gefunden wurde
+    //   Aufgabe 6: Spiele den Sound pacmanEnde.wav  , wenn der Feuerball gefunden wurde
     //
 
 
