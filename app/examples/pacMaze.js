@@ -106,7 +106,7 @@ function start() {
 
 
     // Uns sollen auch die anderen Spieler sehen
-    irrgarten.starteMultiplayer();
+    //irrgarten.starteMultiplayer();
 
     irrgarten.start(); // nicht vergessen, dass der Irrgarten einen Spieler braucht
 }
