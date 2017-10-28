@@ -126,7 +126,7 @@ class MazeTemplate {
     addPlayer(playerConfiguration) {
         this.player.configuration = playerConfiguration;
         this.player.collisionDetector = CollisionDetector.create();
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 15000);
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 5000);
 
         this.setCameraToPlayerPosition();
         // looking into the maze
@@ -171,6 +171,13 @@ class MazeTemplate {
 
     start(flyheight = 0) {
         this.flyheight = flyheight;
+
+        // only set the rendering depth very deep (=15000( if we fly over the maze,
+        // otherwise the walk through the maze will be unnecessarily deep calculated.
+
+        if (this.flyheight != 0)
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 15000);
+
 
         renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(window.innerWidth, window.innerHeight);
