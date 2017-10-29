@@ -37,7 +37,7 @@ class CollisionDetector {
 
 function create() {
 
-    let detector = new CollisionDetector();
+    const detector = new CollisionDetector();
     detector.raycaster = new THREE.Raycaster();
 
     return detector;

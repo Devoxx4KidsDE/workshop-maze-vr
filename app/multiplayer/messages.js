@@ -1,3 +1,5 @@
+/*global module*/
+
 const TYPE_PLAYER_POSITION = 'player_position';
 const TYPE_ITEM = 'item';
 const TYPE_ITEMLIST = 'itemList';

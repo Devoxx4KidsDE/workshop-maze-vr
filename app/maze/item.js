@@ -36,7 +36,7 @@ class Item {
 function create(name,
                 geometry,
                 isCollected = false) {
-    let item = new Item();
+    const item = new Item();
 
     item.name = name;
     item.geometry = geometry;
@@ -46,9 +46,9 @@ function create(name,
 }
 
 function createCube({x, z, displayName, color = "#00ff00"}) {
-    let cubeGeometry = new THREE.BoxGeometry( 100, 100, 100 );
-    let cubeMaterial = new THREE.MeshBasicMaterial( { color: color } );
-    let cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
+    const cubeGeometry = new THREE.BoxGeometry( 100, 100, 100 );
+    const cubeMaterial = new THREE.MeshBasicMaterial( { color: color } );
+    const cube = new THREE.Mesh( cubeGeometry, cubeMaterial );
     cube.position.x = x;
     cube.position.y = 0;
     cube.position.z = z;
@@ -57,9 +57,9 @@ function createCube({x, z, displayName, color = "#00ff00"}) {
 }
 
 function createFireball({x, z, displayName}) {
-    let fireballGeometry = new THREE.SphereGeometry(100);
-    let fireballMaterial = new THREE.MeshBasicMaterial({map: new THREE.TextureLoader ().load ('textures/fire_texture.jpg')});
-    let fireball = new THREE.Mesh(fireballGeometry, fireballMaterial);
+    const fireballGeometry = new THREE.SphereGeometry(100);
+    const fireballMaterial = new THREE.MeshBasicMaterial({map: new THREE.TextureLoader ().load ('textures/fire_texture.jpg')});
+    const fireball = new THREE.Mesh(fireballGeometry, fireballMaterial);
 
     fireball.position.x = x;
     fireball.position.y = 0;

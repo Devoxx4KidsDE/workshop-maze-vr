@@ -1,3 +1,5 @@
+/*global require,module*/
+
 const expressWs = require('express-ws');
 const {
   updateState,
@@ -34,7 +36,7 @@ module.exports = function init(app) {
     playerPool.set(ws, null);
 
     // Player connection closed
-    ws.addEventListener('close', (e) => {
+    ws.addEventListener('close', () => {
       playerPool.delete(ws);
       notifyOtherPlayers(ws);
     });
