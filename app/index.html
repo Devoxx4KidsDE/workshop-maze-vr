@@ -93,6 +93,8 @@
                     }
                 },
                 map: {
+                    'app': 'app',
+                   // 'examples': 'app/examples',
                     'plugin-babel'        : nodeModulesPath + '/systemjs-plugin-babel/plugin-babel.js',
                     'systemjs-babel-build': nodeModulesPath + '/systemjs-plugin-babel/systemjs-babel-browser.js',
                     'three'               : nodeModulesPath + '/three/build/three.min.js',
@@ -102,11 +104,16 @@
                     'es6-promise'         : nodeModulesPath + '/es6-promise/dist/es6-promise.min.js',
                     'object-assign'       : nodeModulesPath + '/object-assign/index.js'
                 },
-                transpiler: 'plugin-babel'
+                transpiler: 'plugin-babel',
+                packages: {
+                    app: {
+                        defaultExtension: 'js'
+                    }
+                }
             };
             System.defaultJSExtensions = true;
             SystemJS.config (config);
-            System.import ('app');
+            SystemJS.import ('app.js');
         }
     </script>
 
