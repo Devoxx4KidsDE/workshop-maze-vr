@@ -5,7 +5,7 @@ import UI from './ui';
 import CollisionDetector from './collisionDetector';
 import DeviceOrientationController from './deviceOrientationController';
 import 'three/examples/js/effects/VREffect';
-import 'webvr-boilerplate'; /* global WebVRManager: true */
+import WebVRManager from 'webvr-boilerplate'; /* global WebVRManager: true */
 import 'webvr-polyfill';
 
 const animate = Symbol();

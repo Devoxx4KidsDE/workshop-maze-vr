@@ -92,6 +92,9 @@
                         exports: 'THREE'
                     }
                 },
+                //packageConfigPaths: [
+                //    nodeModulesPath + '/*/package.json'
+                //],
                 map: {
                     'app': 'app',
                    // 'examples': 'app/examples',
@@ -99,15 +102,35 @@
                     'systemjs-babel-build': nodeModulesPath + '/systemjs-plugin-babel/systemjs-babel-browser.js',
                     'three'               : nodeModulesPath + '/three/build/three.min.js',
                     'three/examples'      : nodeModulesPath + '/three/examples',
-                    'webvr-polyfill'      : nodeModulesPath + '/webvr-polyfill/src/main.js',
-                    'webvr-boilerplate'   : nodeModulesPath + '/webvr-boilerplate/src/main.js',
+                    'webvr-polyfill'      : nodeModulesPath + '/webvr-polyfill/build/webvr-polyfill.js',
+                    'webvr-polyfill/src'  : nodeModulesPath + '/webvr-polyfill/src',
+                    'webvr-polyfill/src/dpdb': nodeModulesPath + '/webvr-polyfill/src/dpdb',
+                    'webvr-boilerplate'   : nodeModulesPath + '/webvr-boilerplate/build/webvr-manager.js',
                     'es6-promise'         : nodeModulesPath + '/es6-promise/dist/es6-promise.min.js',
                     'object-assign'       : nodeModulesPath + '/object-assign/index.js'
                 },
                 transpiler: 'plugin-babel',
                 packages: {
+                    facade: {
+                        defaultExtension: 'js'
+                    },
+                    maze: {
+                        defaultExtension: 'js'
+                    },
+                    multiplayer: {
+                        defaultExtension: 'js'
+                    },
                     app: {
                         defaultExtension: 'js'
+                    },
+                    'three/examples': {
+                        defaultExtension: 'js'
+                    },
+                    'webvr-polyfill/src': {
+                        defaultExtension: 'js'
+                    },
+                    'webvr-polyfill/src/dpdb': {
+                        defaultExtension: false
                     }
                 }
             };
