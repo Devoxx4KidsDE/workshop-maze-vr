@@ -69,7 +69,7 @@ class MazeTemplate {
                         UI.update(item.name, 'found');
 
                         for (let i = this.scene.children.length - 1; i >= 0; i--) {
-                            let obj = this.scene.children[i];
+                            const obj = this.scene.children[i];
                             if (obj === item.geometry) {
                                 this.scene.remove(obj);
                             }
@@ -130,7 +130,7 @@ class MazeTemplate {
 
         this.setCameraToPlayerPosition();
         // looking into the maze
-        let lookAtPoint = new THREE.Vector3(this.cellSize*2, 0, this.cellSize*1.5);
+        const lookAtPoint = new THREE.Vector3(this.cellSize*2, 0, this.cellSize*1.5);
         camera.lookAt(lookAtPoint);
     }
 
@@ -222,7 +222,7 @@ class MazeTemplate {
 }
 
 function create({length = 10, width = 10, cellSize = 500}) {
-    let maze = new MazeTemplate();
+    const maze = new MazeTemplate();
 
     maze.length = length;
     maze.width = width;
@@ -231,7 +231,7 @@ function create({length = 10, width = 10, cellSize = 500}) {
     maze.scene = new THREE.Scene();
 
     // ceiling
-    let ceiling = new THREE.Mesh(
+    const ceiling = new THREE.Mesh(
         new THREE.PlaneBufferGeometry(2 * length * cellSize, 2 * width * cellSize),
         new THREE.MeshBasicMaterial({
             map: new THREE.TextureLoader ().load ('textures/ceiling.jpg')
@@ -244,13 +244,13 @@ function create({length = 10, width = 10, cellSize = 500}) {
     maze.addCeilings([ceiling]);
 
     // floor
-    let floorTexture = new THREE.TextureLoader ().load ('textures/floor.png');
+    const floorTexture = new THREE.TextureLoader ().load ('textures/floor.png');
     floorTexture.anisotropy = 1;
     floorTexture.wrapS = THREE.RepeatWrapping;
     floorTexture.wrapT = THREE.RepeatWrapping;
     floorTexture.repeat.set(length, width);
 
-    let floor = new THREE.Mesh(
+    const floor = new THREE.Mesh(
         new THREE.PlaneBufferGeometry(length * cellSize, width * cellSize),
         new THREE.MeshBasicMaterial({
             map: floorTexture
@@ -264,14 +264,14 @@ function create({length = 10, width = 10, cellSize = 500}) {
 
     // East and Wests walls
     for (let actualMazeLength = 0; actualMazeLength < length; actualMazeLength++) {
-        let borderWallBack = Wall.create({
+        const borderWallBack = Wall.create({
             z: 0,
             x: actualMazeLength,
             orientation: 'left'
         }, cellSize);
         maze.addWalls([borderWallBack]);
 
-        let borderWallFront = Wall.create({
+        const borderWallFront = Wall.create({
             z: width - 1,
             x: actualMazeLength,
             orientation: 'right'
@@ -281,14 +281,14 @@ function create({length = 10, width = 10, cellSize = 500}) {
 
     // North and South walls
     for (let actualMazeWidth = 0; actualMazeWidth < width; actualMazeWidth++) {
-        let borderWallRight = Wall.create({
+        const borderWallRight = Wall.create({
             z: actualMazeWidth,
             x: length - 1,
             orientation: 'front'
         }, cellSize);
         maze.addWalls([borderWallRight]);
 
-        let borderWallLeft = Wall.create({
+        const borderWallLeft = Wall.create({
             z: actualMazeWidth,
             x: 0,
             orientation: 'back'

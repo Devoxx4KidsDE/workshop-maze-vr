@@ -1,3 +1,5 @@
+/*eslint no-unused-vars: "warn"*/
+
 /*
  This is a translated copy from the facade for the german kids (see irrgarten.js).
  It provides a simplified interface that allows kids to interact with the maze

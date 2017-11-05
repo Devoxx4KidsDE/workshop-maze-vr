@@ -10,12 +10,12 @@ function add({id, text}, parentId) {
 }
 
 function update(id, classId) {
-    let element = document.getElementById(id);
+    const element = document.getElementById(id);
     element.className = element.className + classId;
 }
 
 function hasClassName(id, classId) {
-    let element = document.getElementById(id);
+    const element = document.getElementById(id);
     if (element.className === classId) {
         return true;
     }
@@ -28,7 +28,7 @@ function pageTitle() {
 
 function refreshButton() {
 
-    let refreshButton = document.createElement('a');
+    const refreshButton = document.createElement('a');
     refreshButton.setAttribute('class', 'refreshButton');
     refreshButton.setAttribute('href', 'javascript:location.reload(false)');
 

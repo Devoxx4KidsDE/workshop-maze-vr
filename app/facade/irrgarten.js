@@ -1,3 +1,5 @@
+/*eslint no-unused-vars: "warn"*/
+
 /*
 This is a facade create for German kids that reduces the language barrier
 and provides a simplified interface that allows kids to interact with the maze
@@ -87,16 +89,18 @@ class Irrgarten {
   }
 
   geradeWand(xvon, zvon, xbis, zbis, orientierung){
+    var run = true;    
     var dx = Math.abs(xbis-xvon);
     var dy = Math.abs(zbis-zvon);
     var sx = (xvon < xbis) ? 1 : -1;
     var sy = (zvon < zbis) ? 1 : -1;
     var err = dx-dy;
 
-    while(true){
+    while(run === true) {
         this.neueWand(xvon, zvon, orientierung, WallTexture.HECKE);
 
-        if ((xvon==xbis) && (zvon==zbis)) break;
+        if ((xvon==xbis) && (zvon==zbis)) run = false;
+
         var e2 = 2*err;
         if (e2 >-dy){ err -= dy; xvon  += sx; }
         if (e2 < dx){ err += dx; zvon  += sy; }
@@ -104,17 +108,19 @@ class Irrgarten {
   }
 
   punkte(xvon, zvon, xbis, zbis){
+    var run = true;
     var dx = Math.abs(xbis-xvon);
     var dy = Math.abs(zbis-zvon);
     var sx = (xvon < xbis) ? 1 : -1;
     var sy = (zvon < zbis) ? 1 : -1;
     var err = dx-dy;
 
-    while(true){
+    while(run === true){
         this.neuerWuerfel(xvon, zvon, 'Würfel ' + this.wuerfelZaehler);
         this.wuerfelZaehler++;
 
-        if ((xvon==xbis) && (zvon==zbis)) break;
+        if ((xvon==xbis) && (zvon==zbis)) run = false;
+
         var e2 = 2*err;
         if (e2 >-dy){ err -= dy; xvon  += sx; }
         if (e2 < dx){ err += dx; zvon  += sy; }
@@ -140,7 +146,7 @@ class Irrgarten {
     text2.style.width = 100;
     text2.style.height = 100;
     text2.style.fontSize = '3em';
-    text2.style.backgroundColor = "red";
+    text2.style.backgroundColor = 'red';
     text2.innerHTML = text;
     text2.style.top = punkteVonOben + 'px';
     text2.style.left = punkteVonLinks + 'px';
