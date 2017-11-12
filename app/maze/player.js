@@ -43,7 +43,7 @@ class Player {
 }
 
 function create ({name = 'Anonymous', speed = 5, startPoint = {x:0, z:0}, color = "rgb(30,30,30)"}) {
-    let player = new Player();
+    const player = new Player();
 
     player.name = name;
     player.speed = speed;
