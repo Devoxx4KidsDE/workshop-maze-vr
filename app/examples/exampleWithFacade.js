@@ -1,3 +1,5 @@
+/*eslint no-unused-vars: "warn"*/
+
 //Example for using the english facade for the maze
 import Labyrinth from '../facade/labyrinth';
 import Wall from './../maze/wall';

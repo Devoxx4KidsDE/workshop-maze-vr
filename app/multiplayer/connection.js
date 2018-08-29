@@ -3,7 +3,7 @@ import {
   parseMessage,
   createPlayerPositionUpdateMessage,
   createItemUpdateMessage,
-  createItemListForPlayerMessage,
+  createItemListForPlayerMessage
 } from './messages';
 
 const uniqueId = () => {
