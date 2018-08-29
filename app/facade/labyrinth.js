@@ -19,7 +19,21 @@ class Labyrinth {
       length: length,
       width: width
     });
+
+    this.myMaze.setButtonCallback(this.onButtonClick.bind(this));
   }
+
+    onButtonClick() {
+        if (this.player!==undefined) {
+            if (this.player.speed > 0) {
+                this.lastSpeed = this.player.speed;
+                this.player.speed = 0;
+            } else {
+                this.player.speed = this.lastSpeed;
+            }
+        }
+
+    }
 
   newPlayer(name, startX, startY) {
     this.player = Player.create({
@@ -80,6 +94,14 @@ class Labyrinth {
     this.myMaze.addWall(portal);
     return portal;
   }
+
+    startMultiplayer() {
+        var wsProtocol = "ws://";
+        if (window.location.protocol==="https:") {
+            wsProtocol = "wss://"
+        }
+        const multiplayer = new MultiPlayerController(this.myMaze, `${wsProtocol}${window.location.host}/players`);
+    }
 
     start(flyheight=0) {
         var urlParams = mergeWithUrlParams({

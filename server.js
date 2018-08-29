@@ -4,12 +4,14 @@ const express = require ('express');
 const bodyParser = require ('body-parser');
 const path = require ('path');
 const app = express ();
-
-require('./app/multiplayer/server')(app);
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
 
 const config = {
     server: {
         port: 8080,
+        sslPort: 8443
     },
     datetime: {
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
@@ -51,9 +53,27 @@ app.post ('/api/log', function logError (req) {
     console.log (message.red);
 });
 
-app.listen (config.server.port, function () {
-    console.log (`App is listening on http://localhost:${config.server.port}`);
+
+  var httpServer =  app.listen (config.server.port, function () {
+     console.log (`App is listening on http://localhost:${config.server.port}`);
+    });
+
+// we need SSL when using web sensors: https://aghassi.github.io/ssl-using-express-4/
+
+var sslOptions = {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem'),
+    passphrase: 'devoxx4kids'
+};
+
+var httpsServer = https.createServer(sslOptions, app).listen(config.server.sslPort, function () {
+    console.log (`App is listening on https://localhost:${config.server.sslPort}`);
 });
+
+// to make sure
+require('./app/multiplayer/server')(app, httpsServer);
+require('./app/multiplayer/server')(app, httpServer);
+
 
 const starttime = Date.now();
 

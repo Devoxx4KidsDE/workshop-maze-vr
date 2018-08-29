@@ -17,10 +17,23 @@ class Irrgarten {
   constructor(laenge, breite) {
     this.meinIrrgarten = Maze.create({
         length: laenge,
-        width: breite
+        width: breite,
     });
+    this.meinIrrgarten.setButtonCallback(this.onButtonClick.bind(this));
 
     this.wuerfelZaehler = 1;
+  }
+
+  onButtonClick() {
+    if (this.spieler!==undefined) {
+      if (this.spieler.speed > 0) {
+        this.lastSpeed = this.spieler.speed;
+        this.spieler.speed = 0;
+      } else {
+        this.spieler.speed = this.lastSpeed;
+      }
+    }
+
   }
 
   neuerSpieler(name, startX, startY) {
@@ -148,7 +161,11 @@ class Irrgarten {
 }
 
   starteMultiplayer() {
-      const multiplayer = new MultiPlayerController(this.meinIrrgarten, `ws://${window.location.host}/players`);
+      var wsProtocol = "ws://";
+      if (window.location.protocol==="https:") {
+          wsProtocol = "wss://"
+      }
+      const multiplayer = new MultiPlayerController(this.meinIrrgarten, `${wsProtocol}${window.location.host}/players`);
   }
 
   start(flughoehe=0) {

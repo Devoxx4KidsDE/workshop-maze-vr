@@ -20,6 +20,8 @@ class MazeTemplate {
         this.length = undefined;
         this.width = undefined;
         this.cellSize = undefined;
+        this.buttonCallback = undefined;
+
         this.flyheight = 0;
 
         this.scene = undefined;
@@ -35,6 +37,59 @@ class MazeTemplate {
         this.items = [];
         this.ceiling = [];
         this.otherPlayers = [];
+        this.lastSensorX = 0;
+
+
+        /*
+            Magnetometer support in Chrome
+
+            see
+            - https://developers.google.com/web/updates/2017/09/sensors-for-the-web
+            - https://www.w3.org/TR/generic-sensor/
+            - https://w3c.github.io/magnetometer/
+
+            - You need to have at least Chrome version 63
+            - You need to enable
+            -- chrome://flags/#enable-generic-sensor
+            -- chrome://flags/#enable-generic-sensor-extra-classes
+            -- Code must be delivered via HTTPs !
+
+         */
+
+        try {
+            this.sensor = new Magnetometer();
+            if (this.sensor!==undefined) {
+                this.sensor.start();
+            }
+        } catch(err) {
+            console.log("Magnetometer not supported. Make sure you configure chrome://flags/#enable-generic-sensor-extra-classes and deliver Maze via HTTPS.");
+            writeText(1,100,"Magnetometer not supported. Try setting the chrome://flags");
+        }
+
+        // Check major differences on Magnetometer and identify this as a button-click
+        if (this.sensor !== undefined) {
+            this.sensor.onreading = () => {
+                var delta= this.sensor.x-this.lastSensorX;
+                //writeText(300,250,delta.toFixed(2)+"...................");
+                if (delta > 100 ) {
+                    try {
+                        if (this.buttonCallback!==undefined)
+                            this.buttonCallback();
+                    }
+                    catch(err) {
+                        writeText(1,100,err.message);
+                        console.log(err.message);
+                    }
+
+                }
+
+                //writeText(300,300,this.sensor.x.toFixed(2)+"/"+this.sensor.y.toFixed(2)+"/"+this.sensor.z.toFixed(2));
+                this.lastSensorX = this.sensor.x.toFixed(2);
+            };
+
+            this.sensor.onerror = event => console.log(event.error.name + " (Magnetometer): ", event.error.message);
+
+        }
 
 
         this[animate] = (timestamp) => {
@@ -87,6 +142,10 @@ class MazeTemplate {
 
             this.manager.render(this.scene, camera, timestamp);
         };
+    }
+
+    setButtonCallback(buttonCallback) {
+        this.buttonCallback = buttonCallback;
     }
 
     addCeilings(ceilings) {
@@ -160,28 +219,26 @@ class MazeTemplate {
       camera.position.setZ(cameraPosition.z);
     }
 
-    /*
-    onCardboardTouch( ) {
-        UI.draw({
-            id: 'clickedTouch',
-            text: 'clicked button'
-        });
-        console.log("button touched")
-    }*/
-
     start(flyheight = 0) {
         this.flyheight = flyheight;
 
-        // only set the rendering depth very deep (=15000( if we fly over the maze,
+
+
+        // only set the rendering depth very deep (=15000) if we fly over the maze,
         // otherwise the walk through the maze will be unnecessarily deep calculated.
 
-        if (this.flyheight != 0)
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.3, 15000);
+        if (this.flyheight != 0) {
 
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.5, 15000);
+
+            // look north east over the map
+            let lookAtPoint = new THREE.Vector3(this.cellSize*2, 0, this.cellSize*2);
+            camera.lookAt(lookAtPoint);
+        }
 
         renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setSize(window.innerWidth, window.innerHeight);
-        //renderer.domElement.addEventListener( 'touchstart', this.onCardboardTouch );
+
         document.getElementById('maze').appendChild(renderer.domElement);
 
         // Apply VR stereo rendering to renderer.
@@ -220,6 +277,23 @@ class MazeTemplate {
     }
 
 }
+
+
+
+function writeText(pixelsFromLeft,punkteVonOben, text) {
+    var text2 = document.createElement('div');
+    text2.style.position = 'absolute';
+    //text2.style.zIndex = 1;    // if you still don't see the label, try uncommenting this
+    text2.style.width = 100;
+    text2.style.height = 100;
+    text2.style.fontSize = '3em';
+    text2.style.backgroundColor = "red";
+    text2.innerHTML = text;
+    text2.style.top = punkteVonOben + 'px';
+    text2.style.left = pixelsFromLeft + 'px';
+    document.body.appendChild(text2);
+}
+
 
 function create({length = 10, width = 10, cellSize = 500}) {
     let maze = new MazeTemplate();

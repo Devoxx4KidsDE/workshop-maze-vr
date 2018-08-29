@@ -6,6 +6,8 @@ import zeichnePacmanLabyrinth from './worlds/pacmanWorld';
 
 var irrgarten;
 
+var punkte = 0;
+
 function start() {
 
     irrgarten = new Irrgarten(31,28);
@@ -34,9 +36,9 @@ function start() {
     //      wuerfel.onCollect(spieleFressenTonAb);
     //
     //  "spieleFressenSoundAb" ist eine function. Funktionen sind Codeblöcke, die wir immer wieder verwenden können.
-    //  Die leere function spieleFressenSoundAb sieht so aus
+    //  Die leere function aktionWuerfelGefressen sieht so aus
     //
-    //     function spieleFressenSoundAb() {
+    //     function aktionWuerfelGefressen() {
     //
     //     }
     //
@@ -58,15 +60,25 @@ function start() {
         var wuerfel = irrgarten.neuerWuerfel(1,z, 'Würfel');
 
         // Aufgabe 3
-        wuerfel.onCollect(spieleFressenSoundAb);
+        wuerfel.onCollect(aktionWuerfelGefressen);
 
     }
 
-    // Aufgabe 4: Zeichne einen Feuerball etwa in der Mitte des Labyrinth (im Mittel-Raum) 16,14
+    // Aufgabe 4: Immer wenn ein Wuerfel gefressen wird, zähle die Variable "punkte" um eins hoch
+    //
+    //            Tipp die Variable muss "global" sein
+    //
+    //            Benutze
+    //
+    //                    irrgarten.schreibeText (abstandVonLinks, abstandVonOben, punkte)
+    //
+    //            um die Variable "punkte" auszugeben
+
+    // Aufgabe 5: Zeichne einen Feuerball etwa in der Mitte des Labyrinth (im Mittel-Raum) 16,14
 
     var feuerball = irrgarten.neuerFeuerball(15,14, 'Spiel Ende');
 
-    // Aufgabe 5: Verwende onCollect auf dem Feuerball
+    // Aufgabe 6: Verwende onCollect auf dem Feuerball
     //
     //  feuerball.onCollect( );
     //
@@ -94,8 +106,10 @@ function start() {
     irrgarten.start(); // nicht vergessen, dass der Irrgarten einen Spieler braucht
 }
 
-function spieleFressenSoundAb() {
+function aktionWuerfelGefressen() {
     new Audio('./sounds/pacmanFressen.mp3').play();
+    punkte++;
+    irrgarten.schreibeText(100, 100, punkte);
 }
 
 function aktionAmEnde() {

@@ -4,8 +4,8 @@ const {
   createSyncClientsMessage
 } = require('./messages');
 
-module.exports = function init(app) {
-  expressWs(app);
+module.exports = function init(app, server) {
+  expressWs(app, server);
 
   const playerPool = new Map();
 
