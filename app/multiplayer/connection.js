@@ -1,10 +1,4 @@
-import {
-  TYPE_SYNC_CLIENTS,
-  parseMessage,
-  createPlayerPositionUpdateMessage,
-  createItemUpdateMessage,
-  createItemListForPlayerMessage
-} from './messages';
+import messages from './messages';
 
 const uniqueId = () => {
   return 'id-' + Math.random().toString(36).substr(2, 16);
@@ -31,9 +25,9 @@ class SocketConnection {
 
     // Listen for messages
     this.socket.addEventListener('message', (event) => {
-        const { type, data } = parseMessage(event.data);
+        const { type, data } = messages.parseMessage(event.data);
         switch (type) {
-          case TYPE_SYNC_CLIENTS:
+          case messages.TYPE_SYNC_CLIENTS:
             this.emitAvailableItemsUpdated(data);
             this.emitOtherPlayersUpdated(data);
             this.emitItemUpdated(data);
@@ -46,7 +40,7 @@ class SocketConnection {
   sendPlayerPosition() {
     if (this.open) {
       this.socket.send(
-        createPlayerPositionUpdateMessage(this.playerId, this.player.position, this.player.color, this.player.created)
+        messages.createPlayerPositionUpdateMessage(this.playerId, this.player.position, this.player.color, this.player.created)
       );
     }
   }
@@ -54,7 +48,7 @@ class SocketConnection {
   sendItems() {
     if (this.open) {
       this.items.forEach((item) => {
-        this.socket.send(createItemUpdateMessage(item.geometry.id, item.isCollected));
+        this.socket.send(messages.createItemUpdateMessage(item.geometry.id, item.isCollected));
       });
     }
   }
@@ -71,7 +65,7 @@ class SocketConnection {
         });
       });
 
-      this.socket.send(createItemListForPlayerMessage(playerId, itemList));
+      this.socket.send(messages.createItemListForPlayerMessage(playerId, itemList));
     }
   }
 
